@@ -22,10 +22,10 @@ import {
   Wine,
   Utensils,
   ArrowRight,
-  Play,
-  Pause,
   Pizza,
   Users,
+  ArrowUp,
+  PhoneCall,
 } from "lucide-react"
 
 // Interfaces
@@ -187,6 +187,7 @@ const testimonials = [
 ]
 
 // Gallery images
+// Gallery images
 const galleryImages = [
   "https://images.unsplash.com/photo-1564936281291-294551497d81?q=80&w=300&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=300&auto=format&fit=crop",
@@ -222,13 +223,13 @@ const Button = ({
   [key: string]: any
 }) => {
   const baseStyles =
-    "inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 disabled:pointer-events-none disabled:opacity-50"
+    "inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:pointer-events-none disabled:opacity-50"
 
   const variants = {
-    default: "bg-red-600 text-white hover:bg-red-700",
+    default: "bg-green-800 text-white hover:bg-green-900",
     outline: "border border-white text-white hover:bg-white/10",
     ghost: "text-white hover:bg-gray-800",
-    link: "text-red-500 underline-offset-4 hover:underline",
+    link: "text-green-700 underline-offset-4 hover:underline",
     icon: "p-0",
   }
 
@@ -275,7 +276,7 @@ const Input = ({
       placeholder={placeholder}
       required={required}
       className={cn(
-        "flex h-10 w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:cursor-not-allowed disabled:opacity-50",
+        "flex h-10 w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-700 disabled:cursor-not-allowed disabled:opacity-50",
         className,
       )}
       {...props}
@@ -306,7 +307,7 @@ const Textarea = ({
       rows={rows}
       required={required}
       className={cn(
-        "flex w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:cursor-not-allowed disabled:opacity-50",
+        "flex w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-700 disabled:cursor-not-allowed disabled:opacity-50",
         className,
       )}
       {...props}
@@ -346,7 +347,7 @@ const Badge = ({
   [key: string]: any
 }) => {
   const variants = {
-    default: "bg-red-600 text-white",
+    default: "bg-green-800 text-white",
     outline: "bg-transparent border border-current",
   }
 
@@ -486,7 +487,11 @@ const RatingStars = ({ rating }: { rating: number }) => {
   return (
     <div className="flex">
       {[...Array(5)].map((_, i) => (
-        <Star key={i} size={16} className={cn("mr-0.5", i < rating ? "text-red-500 fill-red-500" : "text-gray-300")} />
+        <Star
+          key={i}
+          size={16}
+          className={cn("mr-0.5", i < rating ? "text-green-700 fill-green-700" : "text-gray-300")}
+        />
       ))}
     </div>
   )
@@ -529,7 +534,7 @@ const MenuItem = ({ item, onAddToCart }: { item: MenuItem; onAddToCart: (item: M
 
         <div className="absolute top-2 right-2 flex flex-col gap-1">
           {item.popular && (
-            <Badge variant="default" className="bg-red-600 text-white border-none">
+            <Badge variant="default" className="bg-green-800 text-white border-none">
               Beliebt
             </Badge>
           )}
@@ -554,7 +559,7 @@ const MenuItem = ({ item, onAddToCart }: { item: MenuItem; onAddToCart: (item: M
       <div className="p-4">
         <div className="flex justify-between items-start mb-2">
           <h3 className="text-lg font-medium text-white">{item.name}</h3>
-          <span className="text-red-500 font-semibold">${item.price.toFixed(2)}</span>
+          <span className="text-green-700 font-semibold">${item.price.toFixed(2)}</span>
         </div>
         <p className="text-gray-400 text-sm mb-4 line-clamp-2">{item.description}</p>
 
@@ -562,7 +567,7 @@ const MenuItem = ({ item, onAddToCart }: { item: MenuItem; onAddToCart: (item: M
           onClick={handleAddToCart}
           className={cn(
             "w-full py-2 px-4 flex items-center justify-center transition-colors rounded-md",
-            isAdded ? "bg-green-600 text-white" : "bg-red-600 text-white hover:bg-red-700",
+            isAdded ? "bg-green-600 text-white" : "bg-green-800 text-white hover:bg-green-900",
           )}
           whileTap={{ scale: 0.95 }}
           disabled={isAdded}
@@ -625,14 +630,12 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
             key={index}
             className={cn(
               "w-2 h-2 rounded-full transition-all",
-              currentIndex === index ? "bg-red-500 w-6" : "bg-white/50",
+              currentIndex === index ? "bg-green-700 w-6" : "bg-white/50",
             )}
             onClick={() => setCurrentIndex(index)}
           />
         ))}
       </div>
-
- 
     </div>
   )
 }
@@ -685,6 +688,9 @@ export default function PizzeriaWebsite() {
   const [orderSuccess, setOrderSuccess] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [activeCategory, setActiveCategory] = useState("pizzas")
+  const [showButton, setShowButton] = useState(true)
+  const [isScrollingDown, setIsScrollingDown] = useState(false)
+  const [lastScrollY, setLastScrollY] = useState(0)
 
   // Form state for reservation
   const [reservationDate, setReservationDate] = useState("")
@@ -716,9 +722,40 @@ export default function PizzeriaWebsite() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // Detectar cuando mostrar el botón y su tipo (teléfono o subir)
+  useEffect(() => {
+    const handleScrollForButton = () => {
+      const scrollY = window.scrollY
+
+      // Determinar si estamos desplazándonos hacia arriba o hacia abajo
+      const isDown = scrollY > lastScrollY
+      setIsScrollingDown(isDown)
+      setLastScrollY(scrollY)
+
+      // El botón siempre está visible, solo cambiamos su función
+      setShowButton(true)
+    }
+
+    window.addEventListener("scroll", handleScrollForButton)
+    return () => window.removeEventListener("scroll", handleScrollForButton)
+  }, [lastScrollY])
+
   // Toggle mobile menu
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
+  }
+
+  // Función para desplazarse hacia arriba
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    })
+  }
+
+  // Función para llamar por teléfono
+  const callPhone = () => {
+    window.location.href = "tel:+41817851000"
   }
 
   // Add item to cart
@@ -822,7 +859,7 @@ export default function PizzeriaWebsite() {
         <div className="container mx-auto px-4 md:px-6 max-w-full overflow-hidden flex justify-between items-center">
           {/* Logo */}
           <a href="#home" className="text-2xl md:text-3xl font-bold text-white">
-            <span className="text-red-500">Pizza</span>Roma
+            <span className="text-green-600">Bouquet </span>Mediterraneo
           </a>
 
           {/* Desktop Navigation */}
@@ -837,7 +874,7 @@ export default function PizzeriaWebsite() {
               <motion.a
                 key={id}
                 href={`#${id}`}
-                className="text-gray-300 hover:text-red-500 transition-colors text-sm uppercase tracking-widest"
+                className="text-gray-300 hover:text-green-700 transition-colors text-sm uppercase tracking-widest"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -849,7 +886,7 @@ export default function PizzeriaWebsite() {
           <div className="flex items-center space-x-4">
             <motion.button
               onClick={() => setReservationOpen(true)}
-              className="hidden md:flex items-center space-x-2 bg-transparent border border-red-500 text-red-500 px-4 py-2 text-sm uppercase tracking-wider hover:bg-red-500 hover:text-black transition-colors rounded-md"
+              className="hidden md:flex items-center space-x-2 bg-transparent border border-green-700 text-green-700 px-4 py-2 text-sm uppercase tracking-wider hover:bg-green-700 hover:text-black transition-colors rounded-md"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, x: 20 }}
@@ -871,7 +908,7 @@ export default function PizzeriaWebsite() {
             >
               <ShoppingBag className="h-6 w-6 text-white" />
               {cartItems.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                <span className="absolute -top-1 -right-2 bg-green-700 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
                   {cartItems.reduce((total, item) => total + item.quantity, 0)}
                 </span>
               )}
@@ -904,7 +941,7 @@ export default function PizzeriaWebsite() {
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
             >
               <div className="flex justify-between items-center mb-8">
-                <h2 className="text-red-500 font-bold">PizzaRoma</h2>
+                <h2 className="text-green-600 font-bold">Bouquet Mediterraneo</h2>
                 <button className="text-white" onClick={toggleMobileMenu}>
                   <X size={24} />
                 </button>
@@ -921,7 +958,7 @@ export default function PizzeriaWebsite() {
                   <a
                     key={id}
                     href={`#${id}`}
-                    className="text-gray-300 hover:text-red-500 transition-colors py-2 border-b border-gray-800 text-sm uppercase tracking-widest"
+                    className="text-gray-300 hover:text-green-700 transition-colors py-2 border-b border-gray-800 text-sm uppercase tracking-widest"
                     onClick={toggleMobileMenu}
                   >
                     {label}
@@ -935,7 +972,7 @@ export default function PizzeriaWebsite() {
                     setReservationOpen(true)
                     toggleMobileMenu()
                   }}
-                  className="w-full bg-transparent border border-red-500 text-red-500 hover:bg-red-500 hover:text-black"
+                  className="w-full bg-transparent border border-green-700 text-green-600 hover:bg-green-700 hover:text-black"
                 >
                   <Calendar className="h-4 w-4 mr-2" />
                   Tisch reservieren
@@ -947,12 +984,12 @@ export default function PizzeriaWebsite() {
                     toggleMobileMenu()
                   }}
                   variant="default"
-                  className="w-full bg-red-600 text-white hover:bg-red-700"
+                  className="w-full bg-green-800 text-white hover:bg-green-900"
                 >
                   <ShoppingBag className="h-4 w-4 mr-2" />
                   Jetzt bestellen
                   {cartItems.length > 0 && (
-                    <span className="ml-2 bg-black text-red-500 text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    <span className="ml-2 bg-black text-green-700 text-xs rounded-full h-5 w-5 flex items-center justify-center">
                       {cartItems.reduce((total, item) => total + item.quantity, 0)}
                     </span>
                   )}
@@ -982,7 +1019,7 @@ export default function PizzeriaWebsite() {
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <Button
                   onClick={() => setReservationOpen(true)}
-                  className="bg-red-600 text-white hover:bg-red-700"
+                  className="bg-green-800 text-white hover:bg-green-900"
                   size="lg"
                 >
                   <Calendar className="h-4 w-4 mr-2" />
@@ -1010,17 +1047,17 @@ export default function PizzeriaWebsite() {
             className="flex flex-wrap md:flex-nowrap items-center justify-center gap-4 md:gap-8 bg-black/70 backdrop-blur-sm px-4 md:px-8 py-4 rounded-xl"
           >
             <div className="text-center w-full sm:w-auto mb-2 sm:mb-0">
-              <ChefHat className="h-6 w-6 text-red-500 mx-auto mb-2" />
+              <ChefHat className="h-6 w-6 text-green-600 mx-auto mb-2" />
               <p className="text-sm text-gray-300">Meisterlicher Pizzabäcker</p>
             </div>
 
             <div className="text-center w-full sm:w-auto mb-2 sm:mb-0">
-              <Utensils className="h-6 w-6 text-red-500 mx-auto mb-2" />
+              <Utensils className="h-6 w-6 text-green-600 mx-auto mb-2" />
               <p className="text-sm text-gray-300">Frische Qualitätszutaten</p>
             </div>
 
             <div className="text-center w-full sm:w-auto">
-              <Wine className="h-6 w-6 text-red-500 mx-auto mb-2" />
+              <Wine className="h-6 w-6 text-green-600 mx-auto mb-2" />
               <p className="text-sm text-gray-300">Ausgewählte Weine</p>
             </div>
           </motion.div>
@@ -1045,7 +1082,7 @@ export default function PizzeriaWebsite() {
                   className="object-cover h-[500px] w-full"
                 />
               </div>
-              <div className="absolute -bottom-6 -right-6 w-64 h-64 border-2 border-red-500 z-0"></div>
+              <div className="absolute -bottom-6 -right-6 w-64 h-64 border-2 border-green-700 z-0"></div>
             </motion.div>
 
             <motion.div
@@ -1054,8 +1091,8 @@ export default function PizzeriaWebsite() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-3xl font-bold mb-2 text-red-500">Unsere Geschichte</h2>
-              <h3 className="text-4xl font-bold mb-8 text-white">Familientradition seit 1985</h3>
+              <h2 className="text-3xl font-bold mb-2 text-green-600">Unsere Geschichte</h2>
+              <h3 className="text-4xl font-bold mb-8 text-white">Familientradition</h3>
 
               <p className="text-gray-300 mb-6 leading-relaxed">
                 Was mit einem kleinen Familienrestaurant in Neapel begann, ist heute eine leidenschaftliche Reise, um
@@ -1071,22 +1108,22 @@ export default function PizzeriaWebsite() {
 
               <div className="grid grid-cols-3 gap-8 mt-12">
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-red-500 mb-2">
+                  <div className="text-4xl font-bold text-green-600 mb-2">
                     <AnimatedNumber value={35} suffix="+" />
                   </div>
                   <p className="text-gray-400 text-sm">Jahre Erfahrung</p>
                 </div>
 
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-red-500 mb-2">
+                  <div className="text-4xl font-bold text-green-600 mb-2">
                     <AnimatedNumber value={12} />
                   </div>
                   <p className="text-gray-400 text-sm">Pizzasorten</p>
                 </div>
 
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-red-500 mb-2">
-                    <AnimatedNumber value={5000} suffix="+" />
+                  <div className="text-4xl font-bold text-green-600 mb-2">
+                    <AnimatedNumber value={500} suffix="+" />
                   </div>
                   <p className="text-gray-400 text-sm">Zufriedene Gäste</p>
                 </div>
@@ -1106,7 +1143,7 @@ export default function PizzeriaWebsite() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl font-bold mb-2 text-red-500">Köstliche Auswahl</h2>
+            <h2 className="text-3xl font-bold mb-2 text-green-600">Köstliche Auswahl</h2>
             <h3 className="text-4xl font-bold mb-8 text-white">Unsere Speisekarte</h3>
             <p className="text-gray-300 max-w-2xl mx-auto">
               Entdecken Sie unsere handgefertigten Pizzen und italienischen Spezialitäten mit frischen, saisonalen
@@ -1115,7 +1152,7 @@ export default function PizzeriaWebsite() {
           </motion.div>
 
           <div className="mb-12">
-            <div className="flex justify-center overflow-x-auto pb-4 px-2">
+            <div className="flex justify-start md:justify-center overflow-x-auto pb-4 px-2">
               {[
                 ["pizzas", "Pizza"],
                 ["starters", "Vorspeisen"],
@@ -1126,9 +1163,9 @@ export default function PizzeriaWebsite() {
                   key={category}
                   onClick={() => setActiveCategory(category)}
                   className={cn(
-                    "px-6 py-2 mx-2 text-sm uppercase tracking-wider transition-colors rounded-md",
+                    "px-6 py-2 mx-2 text-sm uppercase tracking-wider transition-colors rounded-md flex-shrink-0",
                     activeCategory === category
-                      ? "bg-red-600 text-white"
+                      ? "bg-green-800 text-white"
                       : "bg-gray-900 text-gray-300 hover:bg-gray-800",
                   )}
                   whileHover={{ y: -2 }}
@@ -1161,7 +1198,7 @@ export default function PizzeriaWebsite() {
           </motion.div>
 
           <div className="text-center mt-16">
-            <Button onClick={() => setOrderOpen(true)} className="bg-red-600 text-white hover:bg-red-700" size="lg">
+            <Button onClick={() => setOrderOpen(true)} className="bg-green-800 text-white hover:bg-green-900" size="lg">
               <ShoppingBag className="h-4 w-4 mr-2" />
               Jetzt bestellen
             </Button>
@@ -1179,7 +1216,7 @@ export default function PizzeriaWebsite() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl font-bold mb-2 text-red-500">Bewertungen</h2>
+            <h2 className="text-3xl font-bold mb-2 text-green-600">Bewertungen</h2>
             <h3 className="text-4xl font-bold mb-8 text-white">Was unsere Gäste sagen</h3>
           </motion.div>
 
@@ -1227,7 +1264,7 @@ export default function PizzeriaWebsite() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl font-bold mb-2 text-red-500">Unsere Galerie</h2>
+            <h2 className="text-3xl font-bold mb-2 text-green-600">Unsere Galerie</h2>
             <h3 className="text-4xl font-bold mb-8 text-white">Einblicke in unser Restaurant</h3>
           </motion.div>
 
@@ -1266,7 +1303,7 @@ export default function PizzeriaWebsite() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl font-bold mb-2 text-red-500">Kontakt</h2>
+            <h2 className="text-3xl font-bold mb-2 text-green-600">Kontakt</h2>
             <h3 className="text-4xl font-bold mb-8 text-white">Kontaktieren Sie uns</h3>
           </motion.div>
 
@@ -1281,35 +1318,37 @@ export default function PizzeriaWebsite() {
 
               <div className="space-y-8">
                 <div className="flex items-start gap-4">
-                  <MapPin className="h-5 w-5 text-red-500 mt-1 flex-shrink-0" />
+                  <MapPin className="h-5 w-5 text-green-700 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="text-white font-medium">Adresse</h4>
-                    <p className="text-gray-300">Pizzastraße 123, 10115 Berlin</p>
+                    <p className="text-gray-300">Bahnhofstrasse 46, 9475 Sevelen</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <Phone className="h-5 w-5 text-red-500 mt-1 flex-shrink-0" />
+                  <Phone className="h-5 w-5 text-green-700 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="text-white font-medium">Telefon</h4>
-                    <p className="text-gray-300">+49 (30) 123-4567</p>
+                    <p className="text-gray-300">081 785 10 00</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <Mail className="h-5 w-5 text-red-500 mt-1 flex-shrink-0" />
+                  <Mail className="h-5 w-5 text-green-700 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="text-white font-medium">E-Mail</h4>
-                    <p className="text-gray-300">info@pizzaroma.de</p>
+                    <p className="text-gray-300">info@bouquetmediterraneo.ch</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <Clock className="h-5 w-5 text-red-500 mt-1 flex-shrink-0" />
+                  <Clock className="h-5 w-5 text-green-700 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="text-white font-medium">Öffnungszeiten</h4>
-                    <p className="text-gray-300">Dienstag - Sonntag: 12:00 - 22:00 Uhr</p>
-                    <p className="text-gray-300">Montags geschlossen</p>
+                    <p className="text-gray-300">Dienstag - Donnerstag: 11:00–14:00, 17:00–22:00 Uhr</p>
+                    <p className="text-gray-300">Freitag: 11:00–14:00, 17:00–22:00 Uhr</p>
+                    <p className="text-gray-300">Samstag: 11:00–14:00, 17:00–23:00 Uhr</p>
+                    <p className="text-gray-300">Sonntag, Montag: Geschlossen</p>
                   </div>
                 </div>
               </div>
@@ -1319,7 +1358,7 @@ export default function PizzeriaWebsite() {
                 <div className="flex gap-4">
                   <motion.a
                     href="#"
-                    className="bg-gray-900 w-10 h-10 rounded-full flex items-center justify-center text-red-500 hover:bg-red-600 hover:text-white transition-colors"
+                    className="bg-gray-900 w-10 h-10 rounded-full flex items-center justify-center text-green-700 hover:bg-green-800 hover:text-white transition-colors"
                     whileHover={{ y: -5 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -1327,7 +1366,7 @@ export default function PizzeriaWebsite() {
                   </motion.a>
                   <motion.a
                     href="#"
-                    className="bg-gray-900 w-10 h-10 rounded-full flex items-center justify-center text-red-500 hover:bg-red-600 hover:text-white transition-colors"
+                    className="bg-gray-900 w-10 h-10 rounded-full flex items-center justify-center text-green-700 hover:bg-green-800 hover:text-white transition-colors"
                     whileHover={{ y: -5 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -1335,7 +1374,7 @@ export default function PizzeriaWebsite() {
                   </motion.a>
                   <motion.a
                     href="#"
-                    className="bg-gray-900 w-10 h-10 rounded-full flex items-center justify-center text-red-500 hover:bg-red-600 hover:text-white transition-colors"
+                    className="bg-gray-900 w-10 h-10 rounded-full flex items-center justify-center text-green-700 hover:bg-green-800 hover:text-white transition-colors"
                     whileHover={{ y: -5 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -1363,7 +1402,7 @@ export default function PizzeriaWebsite() {
                     <Input
                       id="name"
                       placeholder="Ihr Name"
-                      className="mt-2 bg-gray-800 border-gray-700 text-white focus:border-red-500 focus:ring-red-500"
+                      className="mt-2 bg-gray-800 border-gray-700 text-white focus:border-green-700 focus:ring-green-700"
                     />
                   </div>
                   <div>
@@ -1374,7 +1413,7 @@ export default function PizzeriaWebsite() {
                       id="email"
                       type="email"
                       placeholder="Ihre E-Mail"
-                      className="mt-2 bg-gray-800 border-gray-700 text-white focus:border-red-500 focus:ring-red-500"
+                      className="mt-2 bg-gray-800 border-gray-700 text-white focus:border-green-700 focus:ring-green-700"
                     />
                   </div>
                 </div>
@@ -1386,7 +1425,7 @@ export default function PizzeriaWebsite() {
                   <Input
                     id="subject"
                     placeholder="Betreff"
-                    className="mt-2 bg-gray-800 border-gray-700 text-white focus:border-red-500 focus:ring-red-500"
+                    className="mt-2 bg-gray-800 border-gray-700 text-white focus:border-green-700 focus:ring-green-700"
                   />
                 </div>
 
@@ -1398,11 +1437,11 @@ export default function PizzeriaWebsite() {
                     id="message"
                     placeholder="Ihre Nachricht"
                     rows={4}
-                    className="mt-2 bg-gray-800 border-gray-700 text-white focus:border-red-500 focus:ring-red-500"
+                    className="mt-2 bg-gray-800 border-gray-700 text-white focus:border-green-700 focus:ring-green-700"
                   />
                 </div>
 
-                <Button className="w-full bg-red-600 text-white hover:bg-red-700">Nachricht senden</Button>
+                <Button className="w-full bg-green-800 text-white hover:bg-green-900">Nachricht senden</Button>
               </form>
             </motion.div>
           </div>
@@ -1415,7 +1454,7 @@ export default function PizzeriaWebsite() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0">
               <h2 className="text-2xl font-bold text-white mb-2 text-center">
-                <span className="text-red-500">Pizza</span>Roma
+                <span className="text-green-600">Bouquet </span>Mediterraneo
               </h2>
               <p className="text-gray-400 text-sm">Authentische italienische Pizza seit 1985</p>
             </div>
@@ -1423,43 +1462,45 @@ export default function PizzeriaWebsite() {
             <div className="flex flex-col md:flex-row gap-8 items-center">
               <a
                 href="#home"
-                className="text-gray-300 hover:text-red-500 transition-colors text-sm uppercase tracking-widest"
+                className="text-gray-300 hover:text-green-700 transition-colors text-sm uppercase tracking-widest"
               >
                 Startseite
               </a>
               <a
                 href="#menu"
-                className="text-gray-300 hover:text-red-500 transition-colors text-sm uppercase tracking-widest"
+                className="text-gray-300 hover:text-green-700 transition-colors text-sm uppercase tracking-widest"
               >
                 Speisekarte
               </a>
               <a
                 href="#about"
-                className="text-gray-300 hover:text-red-500 transition-colors text-sm uppercase tracking-widest"
+                className="text-gray-300 hover:text-green-700 transition-colors text-sm uppercase tracking-widest"
               >
                 Über uns
               </a>
               <a
                 href="#gallery"
-                className="text-gray-300 hover:text-red-500 transition-colors text-sm uppercase tracking-widest"
+                className="text-gray-300 hover:text-green-700 transition-colors text-sm uppercase tracking-widest"
               >
                 Galerie
               </a>
               <a
                 href="#contact"
-                className="text-gray-300 hover:text-red-500 transition-colors text-sm uppercase tracking-widest"
+                className="text-gray-300 hover:text-green-700 transition-colors text-sm uppercase tracking-widest"
               >
                 Kontakt
               </a>
 
-              <Button onClick={() => setReservationOpen(true)} className="bg-red-600 text-white hover:bg-red-700">
+              <Button onClick={() => setReservationOpen(true)} className="bg-green-800 text-white hover:bg-green-900">
                 Jetzt reservieren
               </Button>
             </div>
           </div>
 
           <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-            <p className="text-gray-400 text-sm">© {new Date().getFullYear()} PizzaRoma. Alle Rechte vorbehalten.</p>
+            <p className="text-gray-400 text-sm">
+              © {new Date().getFullYear()} Bouquet Mediterraneo. Alle Rechte vorbehalten.
+            </p>
           </div>
         </div>
       </footer>
@@ -1471,16 +1512,16 @@ export default function PizzeriaWebsite() {
           onClose={() => setReservationOpen(false)}
         >
           <DialogHeader>
-            <DialogTitle className="font-bold text-xl text-red-500">Tisch reservieren</DialogTitle>
+            <DialogTitle className="font-bold text-xl text-green-700">Tisch reservieren</DialogTitle>
             <DialogDescription className="text-gray-300">
-              Füllen Sie das Formular aus, um Ihren Tisch bei PizzaRoma zu reservieren.
+              Füllen Sie das Formular aus, um Ihren Tisch bei Bouquet Mediterraneo zu reservieren.
             </DialogDescription>
           </DialogHeader>
 
           {reservationSuccess ? (
             <div className="py-6 text-center">
-              <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Check className="h-8 w-8 text-red-500" />
+              <div className="w-16 h-16 bg-green-700/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="h-8 w-8 text-green-700" />
               </div>
               <h3 className="text-xl font-bold mb-2 text-white">Reservierung bestätigt!</h3>
               <p className="text-gray-300">
@@ -1501,7 +1542,7 @@ export default function PizzeriaWebsite() {
                     value={reservationDate}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setReservationDate(e.target.value)}
                     min={new Date().toISOString().split("T")[0]}
-                    className="bg-gray-800 border-gray-700 text-white focus:border-red-500 focus:ring-red-500"
+                    className="bg-gray-800 border-gray-700 text-white focus:border-green-700 focus:ring-green-700"
                   />
                 </div>
                 <div className="space-y-2">
@@ -1514,7 +1555,7 @@ export default function PizzeriaWebsite() {
                       value={reservationTime}
                       onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setReservationTime(e.target.value)}
                       required
-                      className="flex h-10 w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white appearance-none focus:outline-none focus:ring-2 focus:ring-red-500"
+                      className="flex h-10 w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white appearance-none focus:outline-none focus:ring-2 focus:ring-green-700"
                     >
                       <option value="" disabled>
                         Uhrzeit wählen
@@ -1542,7 +1583,7 @@ export default function PizzeriaWebsite() {
                     value={reservationGuests}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setReservationGuests(e.target.value)}
                     required
-                    className="flex h-10 w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white appearance-none focus:outline-none focus:ring-2 focus:ring-red-500"
+                    className="flex h-10 w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white appearance-none focus:outline-none focus:ring-2 focus:ring-green-700"
                   >
                     <option value="" disabled>
                       Anzahl wählen
@@ -1569,7 +1610,7 @@ export default function PizzeriaWebsite() {
                   required
                   value={reservationName}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setReservationName(e.target.value)}
-                  className="bg-gray-800 border-gray-700 text-white focus:border-red-500 focus:ring-red-500"
+                  className="bg-gray-800 border-gray-700 text-white focus:border-green-700 focus:ring-green-700"
                 />
               </div>
 
@@ -1584,7 +1625,7 @@ export default function PizzeriaWebsite() {
                   required
                   value={reservationEmail}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setReservationEmail(e.target.value)}
-                  className="bg-gray-800 border-gray-700 text-white focus:border-red-500 focus:ring-red-500"
+                  className="bg-gray-800 border-gray-700 text-white focus:border-green-700 focus:ring-green-700"
                 />
               </div>
 
@@ -1598,7 +1639,7 @@ export default function PizzeriaWebsite() {
                   required
                   value={reservationPhone}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setReservationPhone(e.target.value)}
-                  className="bg-gray-800 border-gray-700 text-white focus:border-red-500 focus:ring-red-500"
+                  className="bg-gray-800 border-gray-700 text-white focus:border-green-700 focus:ring-green-700"
                 />
               </div>
 
@@ -1611,12 +1652,16 @@ export default function PizzeriaWebsite() {
                   placeholder="Besondere Wünsche oder Ernährungsbedürfnisse"
                   value={reservationNotes}
                   onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setReservationNotes(e.target.value)}
-                  className="bg-gray-800 border-gray-700 text-white focus:border-red-500 focus:ring-red-500"
+                  className="bg-gray-800 border-gray-700 text-white focus:border-green-700 focus:ring-green-700"
                 />
               </div>
 
               <DialogFooter>
-                <Button type="submit" className="w-full bg-red-600 text-white hover:bg-red-700" disabled={isSubmitting}>
+                <Button
+                  type="submit"
+                  className="w-full bg-green-800 text-white hover:bg-green-900"
+                  disabled={isSubmitting}
+                >
                   {isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -1639,7 +1684,7 @@ export default function PizzeriaWebsite() {
           onClose={() => setOrderOpen(false)}
         >
           <DialogHeader>
-            <DialogTitle className="font-bold text-xl text-red-500">Ihre Bestellung</DialogTitle>
+            <DialogTitle className="font-bold text-xl text-green-700">Ihre Bestellung</DialogTitle>
             <DialogDescription className="text-gray-300">
               Überprüfen Sie Ihre Artikel und schließen Sie Ihre Bestellung ab.
             </DialogDescription>
@@ -1647,8 +1692,8 @@ export default function PizzeriaWebsite() {
 
           {orderSuccess ? (
             <div className="py-6 text-center">
-              <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Check className="h-8 w-8 text-red-500" />
+              <div className="w-16 h-16 bg-green-700/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="h-8 w-8 text-green-700" />
               </div>
               <h3 className="text-xl font-bold mb-2 text-white">Bestellung bestätigt!</h3>
               <p className="text-gray-300">
@@ -1665,7 +1710,7 @@ export default function PizzeriaWebsite() {
                   <p className="text-gray-400 mb-4">
                     Fügen Sie einige köstliche Gerichte aus unserer Speisekarte hinzu!
                   </p>
-                  <Button onClick={() => setOrderOpen(false)} className="bg-red-600 text-white hover:bg-red-700">
+                  <Button onClick={() => setOrderOpen(false)} className="bg-green-800 text-white hover:bg-green-900">
                     Speisekarte durchsuchen
                   </Button>
                 </div>
@@ -1714,7 +1759,7 @@ export default function PizzeriaWebsite() {
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="h-6 sm:h-8 px-1 sm:px-2 text-xs sm:text-sm text-red-400 hover:text-red-500 hover:bg-gray-800"
+                            className="h-6 sm:h-8 px-1 sm:px-2 text-xs sm:text-sm text-green-600 hover:text-green-700 hover:bg-gray-800"
                             onClick={() => removeFromCart(item.id)}
                           >
                             Entfernen
@@ -1735,7 +1780,7 @@ export default function PizzeriaWebsite() {
                     </div>
                     <div className="flex justify-between font-bold text-lg">
                       <span className="text-white">Gesamtsumme</span>
-                      <span className="text-red-500">${(cartTotal * 1.08).toFixed(2)}</span>
+                      <span className="text-green-700">${(cartTotal * 1.08).toFixed(2)}</span>
                     </div>
                   </div>
 
@@ -1752,7 +1797,7 @@ export default function PizzeriaWebsite() {
                             name="delivery-type"
                             value="pickup"
                             defaultChecked
-                            className="h-4 w-4 text-red-500 border-gray-700 focus:ring-red-500"
+                            className="h-4 w-4 text-green-700 border-gray-700 focus:ring-green-700"
                           />
                           <Label htmlFor="pickup" className="text-gray-300">
                             Abholung (Fertig in 30 Min.)
@@ -1764,7 +1809,7 @@ export default function PizzeriaWebsite() {
                             id="delivery"
                             name="delivery-type"
                             value="delivery"
-                            className="h-4 w-4 text-red-500 border-gray-700 focus:ring-red-500"
+                            className="h-4 w-4 text-green-700 border-gray-700 focus:ring-green-700"
                           />
                           <Label htmlFor="delivery" className="text-gray-300">
                             Lieferung (45-60 Min.)
@@ -1782,7 +1827,7 @@ export default function PizzeriaWebsite() {
                           id="name"
                           placeholder="Ihr Name"
                           required
-                          className="bg-gray-800 border-gray-700 text-white focus:border-red-500 focus:ring-red-500"
+                          className="bg-gray-800 border-gray-700 text-white focus:border-green-700 focus:ring-green-700"
                         />
                       </div>
                       <div className="space-y-2">
@@ -1793,7 +1838,7 @@ export default function PizzeriaWebsite() {
                           id="phone"
                           placeholder="Ihre Telefonnummer"
                           required
-                          className="bg-gray-800 border-gray-700 text-white focus:border-red-500 focus:ring-red-500"
+                          className="bg-gray-800 border-gray-700 text-white focus:border-green-700 focus:ring-green-700"
                         />
                       </div>
                     </div>
@@ -1807,7 +1852,7 @@ export default function PizzeriaWebsite() {
                         type="email"
                         placeholder="Ihre E-Mail"
                         required
-                        className="bg-gray-800 border-gray-700 text-white focus:border-red-500 focus:ring-red-500"
+                        className="bg-gray-800 border-gray-700 text-white focus:border-green-700 focus:ring-green-700"
                       />
                     </div>
 
@@ -1818,7 +1863,7 @@ export default function PizzeriaWebsite() {
                       <Input
                         id="address"
                         placeholder="Lieferadresse"
-                        className="bg-gray-800 border-gray-700 text-white focus:border-red-500 focus:ring-red-500"
+                        className="bg-gray-800 border-gray-700 text-white focus:border-green-700 focus:ring-green-700"
                       />
                     </div>
 
@@ -1829,7 +1874,7 @@ export default function PizzeriaWebsite() {
                       <Textarea
                         id="notes"
                         placeholder="Besondere Wünsche oder Hinweise"
-                        className="bg-gray-800 border-gray-700 text-white focus:border-red-500 focus:ring-red-500"
+                        className="bg-gray-800 border-gray-700 text-white focus:border-green-700 focus:ring-green-700"
                       />
                     </div>
                   </div>
@@ -1837,7 +1882,7 @@ export default function PizzeriaWebsite() {
                   <DialogFooter>
                     <Button
                       type="submit"
-                      className="w-full bg-red-600 text-white hover:bg-red-700"
+                      className="w-full bg-green-800 text-white hover:bg-green-900"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? (
@@ -1856,6 +1901,47 @@ export default function PizzeriaWebsite() {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Botón flotante multifuncional (teléfono/subir) */}
+      <AnimatePresence>
+        {showButton && (
+          <motion.button
+            onClick={isScrollingDown ? scrollToTop : callPhone}
+            className="fixed bottom-6 right-6 z-40 flex items-center justify-center w-12 h-12 rounded-full bg-black/80 border border-gray-800 shadow-lg hover:bg-black"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            aria-label={isScrollingDown ? "Volver arriba" : "Llamar por teléfono"}
+          >
+            <AnimatePresence mode="wait">
+              {isScrollingDown ? (
+                <motion.div
+                  key="arrow-up"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ArrowUp className="h-5 w-5 text-green-600" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="phone"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <PhoneCall className="h-5 w-5 text-green-600" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

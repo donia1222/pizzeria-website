@@ -1,40 +1,38 @@
-# Welcome to Remix!
+# PizzaRoma - Authentic Italian Pizzeria Website
 
-- 📖 [Remix docs](https://remix.run/docs)
+A modern and attractive website for an authentic Italian pizzeria, with table reservation and online food ordering capabilities.
 
-## Development
+## Features
 
-Run the dev server:
+- Responsive design adapted to all devices
+- Table reservation system with date, time, and number of people selection
+- Shopping cart for online orders
+- Interactive menu with categories (pizzas, starters, desserts, drinks)
+- Image gallery
+- Customer testimonials section
+- Contact information and location
 
-```shellscript
-npm run dev
-```
+## Technologies Used
 
-## Deployment
+- React.js
+- Next.js
+- Framer Motion for animations
+- Tailwind CSS for styling
 
-First, build your app for production:
+## Live Demo
 
-```sh
-npm run build
-```
+You can see the website in action here: [PizzaRoma Demo](https://pizzeria-website-red.vercel.app)
 
-Then run the app in production mode:
 
-```sh
-npm start
-```
 
-Now you'll need to pick a host to deploy it to.
 
-### DIY
+## Installation and Usage
 
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
+1. Clone this repository
+2. Install dependencies: `npm install`
+3. Start the development server: `npm run dev`
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-Make sure to deploy the output of `npm run build`
+## License
 
-- `build/server`
-- `build/client`
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+MIT

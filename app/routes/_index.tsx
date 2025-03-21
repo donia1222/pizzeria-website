@@ -24,7 +24,6 @@ import {
   ArrowRight,
   Pizza,
   Users,
-  ArrowUp,
   PhoneCall,
 } from "lucide-react"
 
@@ -186,7 +185,6 @@ const testimonials = [
   },
 ]
 
-// Gallery images
 // Gallery images
 const galleryImages = [
   "https://images.unsplash.com/photo-1564936281291-294551497d81?q=80&w=300&auto=format&fit=crop",
@@ -689,8 +687,6 @@ export default function PizzeriaWebsite() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [activeCategory, setActiveCategory] = useState("pizzas")
   const [showButton, setShowButton] = useState(true)
-  const [isScrollingDown, setIsScrollingDown] = useState(false)
-  const [lastScrollY, setLastScrollY] = useState(0)
 
   // Form state for reservation
   const [reservationDate, setReservationDate] = useState("")
@@ -722,38 +718,17 @@ export default function PizzeriaWebsite() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // Detectar cuando mostrar el botón y su tipo (teléfono o subir)
+  // Always show the phone button
   useEffect(() => {
-    const handleScrollForButton = () => {
-      const scrollY = window.scrollY
-
-      // Determinar si estamos desplazándonos hacia arriba o hacia abajo
-      const isDown = scrollY > lastScrollY
-      setIsScrollingDown(isDown)
-      setLastScrollY(scrollY)
-
-      // El botón siempre está visible, solo cambiamos su función
-      setShowButton(true)
-    }
-
-    window.addEventListener("scroll", handleScrollForButton)
-    return () => window.removeEventListener("scroll", handleScrollForButton)
-  }, [lastScrollY])
+    setShowButton(true)
+  }, [])
 
   // Toggle mobile menu
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
   }
 
-  // Función para desplazarse hacia arriba
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    })
-  }
-
-  // Función para llamar por teléfono
+  // Function to make a phone call
   const callPhone = () => {
     window.location.href = "tel:+41817851000"
   }
@@ -1902,11 +1877,11 @@ export default function PizzeriaWebsite() {
         </DialogContent>
       </Dialog>
 
-      {/* Botón flotante multifuncional (teléfono/subir) */}
+      {/* Phone button (removed the scroll up functionality) */}
       <AnimatePresence>
         {showButton && (
           <motion.button
-            onClick={isScrollingDown ? scrollToTop : callPhone}
+            onClick={callPhone}
             className="fixed bottom-6 right-6 z-40 flex items-center justify-center w-12 h-12 rounded-full bg-black/80 border border-gray-800 shadow-lg hover:bg-black"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -1914,31 +1889,9 @@ export default function PizzeriaWebsite() {
             transition={{ duration: 0.3 }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            aria-label={isScrollingDown ? "Volver arriba" : "Llamar por teléfono"}
+            aria-label="Llamar por teléfono"
           >
-            <AnimatePresence mode="wait">
-              {isScrollingDown ? (
-                <motion.div
-                  key="arrow-up"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.5 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <ArrowUp className="h-5 w-5 text-green-600" />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="phone"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.5 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <PhoneCall className="h-5 w-5 text-green-600" />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <PhoneCall className="h-5 w-5 text-green-600" />
           </motion.button>
         )}
       </AnimatePresence>

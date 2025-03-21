@@ -1,0 +1,1429 @@
+/* Container */
+.container {
+    background-color: #f9fafb;
+    min-height: 100vh;
+    font-family: var(--font-sans);
+  }
+  
+  /* Header */
+  .header {
+    background-color: white;
+    color: #1f2937;
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    transition: all 0.3s ease;
+  }
+  
+  .scrolledHeader {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .headerContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .logoText {
+    font-size: 1.5rem;
+    font-family: var(--font-serif);
+    letter-spacing: 0.05em;
+    color: #b91c1c;
+  }
+  
+  .desktopNav {
+    display: none;
+    gap: 2rem;
+  }
+  
+  @media (min-width: 768px) {
+    .desktopNav {
+      display: flex;
+    }
+  }
+  
+  .navLink {
+    transition: color 0.2s ease;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+  }
+  
+  .navLink:hover {
+    color: #b91c1c;
+  }
+  
+  .headerButtons {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .reservationButton {
+    display: none;
+    align-items: center;
+    gap: 0.25rem;
+    background-color: #b91c1c;
+    color: white;
+    padding: 0.5rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    transition: background-color 0.2s ease;
+    border: none;
+  }
+  
+  .reservationButton:hover {
+    background-color: #881337;
+  }
+  
+  .orderButton {
+    display: none;
+    align-items: center;
+    gap: 0.25rem;
+    background-color: white;
+    color: #1f2937;
+    border: 1px solid #374151;
+    padding: 0.5rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    transition: background-color 0.2s ease;
+    position: relative;
+  }
+  
+  .orderButton:hover {
+    background-color: #f3f4f6;
+  }
+  
+  @media (min-width: 768px) {
+    .reservationButton,
+    .orderButton {
+      display: flex;
+    }
+  }
+  
+  .buttonIcon {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+  }
+  
+  .cartBadge {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    background-color: #dc2626;
+    color: white;
+    font-size: 0.75rem;
+    border-radius: 9999px;
+    height: 1.25rem;
+    width: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .mobileMenuButton {
+    display: block;
+    background: none;
+    border: none;
+    color: #1f2937;
+  }
+  
+  @media (min-width: 768px) {
+    .mobileMenuButton {
+      display: none;
+    }
+  }
+  
+  /* Mobile Menu */
+  .mobileMenuOverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+  }
+  
+  .mobileMenu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 16rem;
+    background-color: white;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+  
+  .mobileMenuHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .mobileMenuTitle {
+    color: #b91c1c;
+    font-family: var(--font-serif);
+  }
+  
+  .closeButton {
+    background: none;
+    border: none;
+    color: #1f2937;
+  }
+  
+  .mobileNav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .mobileNavLink {
+    color: #1f2937;
+    transition: color 0.2s ease;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f3f4f6;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+  }
+  
+  .mobileNavLink:hover {
+    color: #b91c1c;
+  }
+  
+  .mobileMenuFooter {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .mobileReservationButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #b91c1c;
+    color: white;
+    padding: 0.5rem;
+    width: 100%;
+    border: none;
+    font-weight: 400;
+  }
+  
+  .mobileOrderButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    color: #1f2937;
+    border: 1px solid #374151;
+    padding: 0.5rem;
+    width: 100%;
+    font-weight: 400;
+  }
+  
+  .mobileCartBadge {
+    margin-left: 0.5rem;
+    background-color: #10b981;
+    color: white;
+    font-size: 0.75rem;
+    border-radius: 9999px;
+    height: 1.25rem;
+    width: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Hero Section */
+  .heroSection {
+    position: relative;
+    height: 700px;
+    overflow: hidden;
+  }
+  
+  .heroOverlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 10;
+  }
+  
+  .heroBackground {
+    position: absolute;
+    inset: 0;
+  }
+  
+  .heroImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .heroContent {
+    position: relative;
+    z-index: 10;
+    max-width: 1280px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+    color: white;
+  }
+  
+  .heroText {
+    max-width: 36rem;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 2rem;
+    backdrop-filter: blur(4px);
+  }
+  
+  .heroTitle {
+    font-size: 2.25rem;
+    font-family: var(--font-serif);
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+  }
+  
+  @media (min-width: 768px) {
+    .heroTitle {
+      font-size: 3.75rem;
+    }
+  }
+  
+  .heroDescription {
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+  }
+  
+  @media (min-width: 768px) {
+    .heroDescription {
+      font-size: 1.25rem;
+    }
+  }
+  
+  .heroButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  @media (min-width: 640px) {
+    .heroButtons {
+      flex-direction: row;
+    }
+  }
+  
+  .heroReservationButton {
+    display: flex;
+    align-items: center;
+    background-color: #1f2937;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    font-size: 1rem;
+  }
+  
+  .heroOrderButton {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    color: white;
+    border: 1px solid white;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .heroOrderButton:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Info Section */
+  .infoSection {
+    padding: 3rem 0;
+    background-color: white;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .infoContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .infoGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  
+  @media (min-width: 768px) {
+    .infoGrid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .infoItem {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .infoIcon {
+    background-color: #fee2e2;
+    padding: 0.75rem;
+    border-radius: 9999px;
+  }
+  
+  .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #b91c1c;
+  }
+  
+  .infoTitle {
+    font-family: var(--font-serif);
+    color: #1f2937;
+  }
+  
+  .infoText {
+    color: #6b7280;
+    font-size: 0.875rem;
+    font-weight: 300;
+  }
+  
+  /* Menu Section */
+  .menuSection {
+    padding: 5rem 0;
+  }
+  
+  .menuContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .sectionHeader {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.875rem;
+    font-family: var(--font-serif);
+    margin-bottom: 1rem;
+    color: #1f2937;
+  }
+  
+  .titleDivider {
+    width: 5rem;
+    height: 0.125rem;
+    background-color: #b91c1c;
+    margin: 0 auto 1.5rem;
+  }
+  
+  .sectionDescription {
+    color: #6b7280;
+    max-width: 36rem;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+  
+  /* Tabs */
+  .tabsContainer {
+    width: 100%;
+  }
+  
+  .tabsList {
+    width: 100%;
+    max-width: 42rem;
+    margin: 0 auto 3rem;
+    background-color: white;
+    padding: 0.25rem;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    position: relative;
+  }
+  
+  .tabButton {
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    background: none;
+    border: none;
+    color: #6b7280;
+    font-weight: 400;
+    transition: color 0.2s ease;
+  }
+  
+  .activeTab {
+    color: #b91c1c;
+    border-bottom: 2px solid #b91c1c;
+    background-color: transparent;
+  }
+  
+  @media (min-width: 640px) {
+    .tabButton {
+      padding: 0.5rem 1.5rem;
+    }
+  }
+  
+  .menuGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  @media (min-width: 768px) {
+    .menuGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .menuGrid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .menuFooter {
+    text-align: center;
+    margin-top: 4rem;
+  }
+  
+  .orderNowButton {
+    display: inline-flex;
+    align-items: center;
+    background-color: #b91c1c;
+    color: white;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    border: none;
+  }
+  
+  .orderNowButton:hover {
+    background-color: #881337;
+  }
+  
+  /* Food Item */
+  .foodItem {
+    background-color: white;
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.3s ease;
+    border: 1px solid #f3f4f6;
+  }
+  
+  .foodItem:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .pizzaItem {
+    border-color: #fee2e2;
+  }
+  
+  .foodImageContainer {
+    position: relative;
+    height: 12rem;
+    overflow: hidden;
+  }
+  
+  .foodImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .pizzaImage:hover {
+    transform: scale(1.1);
+  }
+  
+  .badgeContainer {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .popularBadge {
+    background-color: #b91c1c;
+    color: white;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .vegetarianBadge,
+  .veganBadge {
+    background-color: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .foodDetails {
+    padding: 1rem;
+  }
+  
+  .foodHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .foodTitle {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+  }
+  
+  .pizzaTitle {
+    color: #991b1b;
+  }
+  
+  .foodPrice {
+    font-family: var(--font-serif);
+    color: #b91c1c;
+  }
+  
+  .foodDescription {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    line-height: 1.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-weight: 300;
+  }
+  
+  .addToCartButton {
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    border: none;
+  }
+  
+  .defaultButton {
+    background-color: #374151;
+    color: white;
+  }
+  
+  .defaultButton:hover {
+    background-color: #1f2937;
+  }
+  
+  .pizzaButton {
+    background-color: #b91c1c;
+    color: white;
+  }
+  
+  .pizzaButton:hover {
+    background-color: #991b1b;
+  }
+  
+  .addedButton {
+    background-color: #059669;
+    color: white;
+  }
+  
+  .addedButton:hover {
+    background-color: #047857;
+  }
+  
+  .bounceIcon {
+    animation: bounce 0.5s infinite;
+  }
+  
+  /* About Section */
+  .aboutSection {
+    padding: 5rem 0;
+    background-color: #f9fafb;
+  }
+  
+  .aboutContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .aboutGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  
+  @media (min-width: 768px) {
+    .aboutGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  .aboutContent {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .aboutTitle {
+    font-size: 1.875rem;
+    font-family: var(--font-serif);
+    margin-bottom: 1.5rem;
+    color: #1f2937;
+  }
+  
+  .aboutText {
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+    color: #4b5563;
+    line-height: 1.625;
+  }
+  
+  .statsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  
+  .statItem {
+    text-align: center;
+  }
+  
+  .statItem:first-child {
+    border-right: 1px solid #e5e7eb;
+  }
+  
+  .statNumber {
+    font-size: 2.25rem;
+    font-family: var(--font-serif);
+    color: #b91c1c;
+    margin-bottom: 0.5rem;
+  }
+  
+  .statLabel {
+    color: #6b7280;
+    font-weight: 300;
+  }
+  
+  .aboutImageContainer {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+  }
+  
+  .aboutImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .aboutImageOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+  }
+  
+  .aboutImageCaption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+  }
+  
+  .captionTitle {
+    font-size: 1.25rem;
+    font-family: var(--font-serif);
+    margin-bottom: 0.5rem;
+    color: white;
+  }
+  
+  .captionText {
+    color: #e5e7eb;
+    font-weight: 300;
+  }
+  
+  /* Testimonials Section */
+  .testimonialsSection {
+    padding: 5rem 0;
+    background-color: white;
+  }
+  
+  .testimonialsContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .testimonialsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 64rem;
+    margin: 0 auto;
+  }
+  
+  @media (min-width: 768px) {
+    .testimonialsGrid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .testimonialCard {
+    background-color: #f9fafb;
+    padding: 2rem;
+    border: 1px solid #e5e7eb;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .testimonialCard:hover {
+    transform: translateY(-0.25rem);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  }
+  
+  .testimonialHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .testimonialAvatar {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 9999px;
+    overflow: hidden;
+  }
+  
+  .avatarImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .testimonialName {
+    font-family: var(--font-serif);
+  }
+  
+  .ratingStars {
+    display: flex;
+    align-items: center;
+  }
+  
+  .starFilled {
+    color: #b91c1c;
+    fill: #b91c1c;
+  }
+  
+  .starEmpty {
+    color: #d1d5db;
+  }
+  
+  .testimonialText {
+    color: #4b5563;
+    font-style: italic;
+    font-weight: 300;
+  }
+  
+  /* Gallery Section */
+  .gallerySection {
+    padding: 5rem 0;
+    background-color: #f9fafb;
+  }
+  
+  .galleryContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .galleryGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  @media (min-width: 640px) {
+    .galleryGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .galleryGrid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .galleryItem {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+  
+  .galleryImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .galleryItem:hover .galleryImage {
+    transform: scale(1.1);
+  }
+  
+  .galleryOverlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.3s ease;
+  }
+  
+  .galleryItem:hover .galleryOverlay {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Contact Section */
+  .contactSection {
+    padding: 5rem 0;
+    background-color: white;
+  }
+  
+  .contactContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .contactGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+  
+  @media (min-width: 768px) {
+    .contactGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  .contactInfo {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .contactInfoTitle {
+    font-size: 1.25rem;
+    font-family: var(--font-serif);
+    margin-bottom: 2rem;
+    color: #1f2937;
+  }
+  
+  .contactDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .contactItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .contactIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #b91c1c;
+    margin-top: 0.25rem;
+    flex-shrink: 0;
+  }
+  
+  .contactItemTitle {
+    font-family: var(--font-serif);
+    color: #1f2937;
+  }
+  
+  .contactItemText {
+    color: #6b7280;
+    font-weight: 300;
+  }
+  
+  .socialLinks {
+    margin-top: 3rem;
+  }
+  
+  .socialTitle {
+    font-family: var(--font-serif);
+    margin-bottom: 1rem;
+    color: #1f2937;
+  }
+  
+  .socialIcons {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .socialIcon {
+    background-color: #b91c1c;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: background-color 0.2s ease;
+  }
+  
+  .socialIcon:hover {
+    background-color: #991b1b;
+  }
+  
+  .contactForm {
+    background-color: #f9fafb;
+    padding: 2rem;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .formTitle {
+    font-size: 1.25rem;
+    font-family: var(--font-serif);
+    margin-bottom: 1.5rem;
+    color: #1f2937;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .formRow {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  @media (min-width: 640px) {
+    .formRow {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .formLabel {
+    font-weight: 300;
+  }
+  
+  .formInput,
+  .formSelect,
+  .formTextarea {
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+  }
+  
+  .formTextarea {
+    resize: vertical;
+  }
+  
+  .submitButton {
+    width: 100%;
+    background-color: #d1d5db;
+    color: #1f2937;
+    padding: 0.75rem;
+    border: none;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  .submitButton:hover {
+    background-color: #9ca3af;
+  }
+  
+  .submitButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  /* Dialog */
+  .dialogOverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  
+  .dialogContent {
+    background-color: white;
+    max-width: 32rem;
+    width: 100%;
+    max-height: 90vh;
+    overflow: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .dialogHeader {
+    margin-bottom: 1.5rem;
+  }
+  
+  .dialogTitle {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .dialogDescription {
+    color: #6b7280;
+    font-weight: 300;
+    font-size: 0.875rem;
+  }
+  
+  /* Reservation Form */
+  .reservationForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .formFooter {
+    margin-top: 1rem;
+  }
+  
+  /* Success Message */
+  .successMessage {
+    padding: 1.5rem;
+    text-align: center;
+  }
+  
+  .successIcon {
+    width: 4rem;
+    height: 4rem;
+    background-color: #ecfdf5;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+  }
+  
+  .checkIcon {
+    width: 2rem;
+    height: 2rem;
+    color: #10b981;
+  }
+  
+  .successTitle {
+    font-size: 1.25rem;
+    font-family: var(--font-serif);
+    margin-bottom: 0.5rem;
+  }
+  
+  .successText {
+    color: #6b7280;
+    font-weight: 300;
+  }
+  
+  /* Order Form */
+  .orderForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    height: 100%;
+  }
+  
+  .cartItems {
+    flex-grow: 1;
+    overflow-y: auto;
+    max-height: 50vh;
+    padding-right: 0.5rem;
+  }
+  
+  .cartItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e5e7eb;
+    width: 100%;
+  }
+  
+  @media (min-width: 640px) {
+    .cartItem {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+  
+  .cartItemDetails {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  
+  .cartItemImage {
+    height: 4rem;
+    width: 4rem;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  
+  .itemImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .cartItemInfo {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .cartItemName {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .cartItemPrice {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 300;
+  }
+  
+  .cartItemActions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  
+  @media (min-width: 640px) {
+    .cartItemActions {
+      width: auto;
+      margin-top: 0;
+    }
+  }
+  
+  .quantityControls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .quantityButton {
+    height: 2rem;
+    width: 2rem;
+    border: 1px solid #d1d5db;
+    background: none;
+  }
+  
+  .quantityValue {
+    width: 1.5rem;
+    text-align: center;
+  }
+  
+  .cartItemTotal {
+    text-align: right;
+    margin-left: auto;
+  }
+  
+  .totalPrice {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+  }
+  
+  .removeButton {
+    background: none;
+    border: none;
+    font-size: 0.875rem;
+    color: #b91c1c;
+    padding: 0.5rem;
+  }
+  
+  .removeButton:hover {
+    color: #991b1b;
+    background-color: #fee2e2;
+  }
+  
+  .orderSummary {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1rem;
+    margin-top: auto;
+    flex-shrink: 0;
+  }
+  
+  .summaryRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  
+  .summaryLabel {
+    font-weight: 300;
+  }
+  
+  .summaryValue {
+    font-family: var(--font-serif);
+  }
+  
+  .totalRow {
+    font-weight: bold;
+    font-size: 1.125rem;
+  }
+  
+  .totalLabel {
+    font-family: var(--font-serif);
+  }
+  
+  .totalValue {
+    font-family: var(--font-serif);
+  }
+  
+  .orderOptions {
+    flex-shrink: 0;
+  }
+  
+  .optionGroup {
+    margin-bottom: 1rem;
+  }
+  
+  .optionLabel {
+    font-size: 1rem;
+    font-family: var(--font-serif);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .radioGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .radioOption {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .radioLabel {
+    font-weight: 300;
+  }
+  
+  /* Empty Cart */
+  .emptyCart {
+    text-align: center;
+    padding: 2rem 0;
+  }
+  
+  .emptyCartIcon {
+    width: 3rem;
+    height: 3rem;
+    color: #d1d5db;
+    margin: 0 auto 1rem;
+  }
+  
+  .emptyCartTitle {
+    font-size: 1.125rem;
+    font-family: var(--font-serif);
+    margin-bottom: 0.5rem;
+  }
+  
+  .emptyCartText {
+    color: #6b7280;
+    margin-bottom: 1rem;
+    font-weight: 300;
+  }
+  
+  .browseMenuButton {
+    background-color: #d1d5db;
+    color: #1f2937;
+    padding: 0.5rem 1rem;
+    border: none;
+  }
+  
+  /* Rotating Pizza */
+  .rotatingPizza {
+    position: fixed;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    z-index: 50;
+    display: none;
+  }
+  
+  @media (min-width: 768px) {
+    .rotatingPizza {
+      display: block;
+    }
+  }
+  
+  .pizzaContainer {
+    position: relative;
+    width: 6rem;
+    height: 6rem;
+  }
+  
+  .pizzaImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 9999px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Animations */
+  .spinIcon {
+    animation: spin 1s linear infinite;
+  }
+  
+  

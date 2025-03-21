@@ -1127,9 +1127,9 @@ export default function DarkRestaurant() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <h2 className="text-4xl md:text-6xl font-serif mb-4">Gehobene Gastronomie</h2>
+              <h2 className="text-5xl md:text-7xl font-serif mb-4">Gehobene Gastronomie</h2>
               <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-xl mx-auto">
-             
+                Erheben Sie Ihre Sinne mit unserer exquisiten Küche und anspruchsvollem Ambiente
               </p>
 
               <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -1239,7 +1239,7 @@ export default function DarkRestaurant() {
 
                 <div className="text-center">
                   <div className="text-4xl font-serif text-amber-400 mb-2">
-                    <AnimatedNumber value={2500} suffix="+" />
+                    <AnimatedNumber value={25000} suffix="+" />
                   </div>
                   <p className="text-gray-400 text-sm">Zufriedene Gäste</p>
                 </div>

@@ -632,12 +632,7 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
         ))}
       </div>
 
-      <button
-        className="absolute bottom-4 right-4 bg-black/50 p-2 rounded-full text-white hover:bg-black/70"
-        onClick={() => setIsPlaying(!isPlaying)}
-      >
-        {isPlaying ? <Pause size={16} /> : <Play size={16} />}
-      </button>
+ 
     </div>
   )
 }

@@ -29,6 +29,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
+        {/* Cambiamos el theme color a negro */}
+        <meta name="theme-color" content="#000000" />
         <Links />
       </head>
       <body>

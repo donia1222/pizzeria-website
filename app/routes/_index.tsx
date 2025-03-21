@@ -63,7 +63,7 @@ const menuItems: MenuItem[] = [
     name: "Diavola Piccante",
     description: "Scharfe Salami, Jalapenos, Tomatensoße und Mozzarella",
     price: 13.95,
-    image: "https://images.unsplash.com/photo-1594007654729-407eedc4fe0f?q=80&w=200&auto=format&fit=crop",
+    image: "/baking-delicious-pizza-with-wood-fired-oven_23-2150134263.jpg",
     spicy: true,
     category: "pizzas",
   },
@@ -90,7 +90,7 @@ const menuItems: MenuItem[] = [
     name: "Vegetariana",
     description: "Buntes Gemüse der Saison, Mozzarella und Tomatensoße",
     price: 12.95,
-    image: "https://images.unsplash.com/photo-1604917877934-07d8d408d494?q=80&w=200&auto=format&fit=crop",
+    image: "/mix-pizza-with-tomato-slices-mushroom-olive_140725-185-1.jpg",
     vegetarian: true,
     vegan: true,
     category: "pizzas",
@@ -1045,7 +1045,7 @@ export default function PizzeriaWebsite() {
             >
               <div className="relative z-10 overflow-hidden rounded-lg">
                 <img
-                  src="https://images.unsplash.com/photo-1616645513146-50b29dfde627?q=80&w=600&auto=format&fit=crop"
+                  src="/baking-delicious-pizza-with-wood-fired-oven_23-2150134263.jpg"
                   alt="Pizza im Holzofen"
                   className="object-cover h-[500px] w-full"
                 />

@@ -1036,48 +1036,53 @@ export default function PizzeriaWebsite() {
 
       {/* Hero Section */}
       <section id="home" className="relative h-screen" ref={heroRef}>
-        <ImageCarousel images={heroImages} />
+        <div className="relative">
+          <ImageCarousel images={heroImages} />
 
-        <div className="flex items-center justify-center mt-20 ">
-          <motion.div className="text-center max-w-3xl px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <div className="mb-4 relative ">
-                <div className="inline-block relative">
-                  <span className="absolute -top-6 -left-2 bg-[#8c9a56] text-black font-bold text-sm px-4 py-1 rounded-full transform -rotate-6 shadow-lg">
-                    Neu in Sevelen
-                  </span>
-                  <h2 className="text-4xl md:text-6xl font-bold">Authentische italienische Pizza</h2>
+          <div className="absolute inset-0 flex items-center justify-center z-10">
+            <div className="flex flex-col sm:flex-row justify-center gap-4 z-50">
+              <Button
+                onClick={() => setReservationOpen(true)}
+                className="bg-green-800 text-white hover:bg-green-900"
+                size="lg"
+              >
+                <Calendar className="h-4 w-4 mr-2" />
+                Tisch reservieren
+              </Button>
+              <Button
+                onClick={() => document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" })}
+                variant="outline"
+                className="border-white text-white hover:bg-white/10"
+                size="lg"
+              >
+                <Pizza className="h-4 w-4 mr-2" />
+                Speisekarte entdecken
+              </Button>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-center mt-20">
+            <motion.div className="text-center max-w-3xl px-8">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                <div className="mb-4 relative ">
+                  <div className="inline-block relative">
+                    <span className="absolute -top-6 -left-2 bg-[#8c9a56] text-black font-bold text-sm px-4 py-1 rounded-full transform -rotate-6 shadow-lg">
+                      Neu in Sevelen
+                    </span>
+                    <h2 className="text-4xl md:text-6xl font-bold">Authentische italienische Pizza</h2>
+                  </div>
                 </div>
-              </div>
-              <p className="text-xl md:text-2xl text-gray-300  max-w-xl mx-auto">
-                Frisch eröffnet! Erleben Sie unsere handgemachten Pizzen mit traditionellen Rezepten und besten Zutaten
-              </p>
-
-              <div className="flex flex-col sm:flex-row justify-center gap-4 mt-20 z-50">
-                <Button
-                  onClick={() => setReservationOpen(true)}
-                  className="bg-green-800 text-white hover:bg-green-900"
-                  size="lg"
-                >
-                  <Calendar className="h-4 w-4 mr-2" />
-                  Tisch reservieren
-                </Button>
-                <Button
-                  onClick={() => document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" })}
-                  variant="outline"
-                  className="border-white text-white hover:bg-white/10"
-                  size="lg"
-                >
-                  <Pizza className="h-4 w-4 mr-2 " />
-                  Speisekarte entdecken
-                </Button>
-              </div>
+                <p className="text-xl md:text-2xl text-gray-300 max-w-xl mx-auto">
+                  Frisch eröffnet! Erleben Sie unsere handgemachten Pizzen mit traditionellen Rezepten und besten
+                  Zutaten
+                </p>
+              </motion.div>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -1092,7 +1097,7 @@ export default function PizzeriaWebsite() {
               transition={{ duration: 0.6 }}
               className="relative"
             >
-              <div className="relative z-10 overflow-hidden rounded-lg mt-20">
+              <div className="relative z-10 overflow-hidden rounded-lg ">
                 <img
                   src="/baking-delicious-pizza-with-wood-fired-oven_23-2150134263.jpg"
                   alt="Pizza im Holzofen"

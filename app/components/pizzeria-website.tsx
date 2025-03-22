@@ -1057,7 +1057,7 @@ export default function PizzeriaWebsite() {
                 Frisch eröffnet! Erleben Sie unsere handgemachten Pizzen mit traditionellen Rezepten und besten Zutaten
               </p>
 
-              <div className="flex flex-col sm:flex-row justify-center gap-4 mt-20">
+              <div className="flex flex-col sm:flex-row justify-center gap-4 mt-20 z-50">
                 <Button
                   onClick={() => setReservationOpen(true)}
                   className="bg-green-800 text-white hover:bg-green-900"

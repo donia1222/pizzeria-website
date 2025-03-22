@@ -18,9 +18,6 @@ import {
   Mail,
   Check,
   Loader2,
-  ChefHat,
-  Wine,
-  Utensils,
   ArrowRight,
   Pizza,
   Users,
@@ -193,8 +190,8 @@ const testimonials = [
 const galleryImages = [
   "/penne-pasta-tomato-sauce-with-chicken-tomatoes-wooden-table_2829-19739.jpg",
   "/table-arrangement-luxury-restaurant_23-2150598334.jpg",
+  "video",
   "https://images.unsplash.com/photo-1590947132387-155cc02f3212?q=80&w=300&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1593504049359-74330189a345?q=80&w=300&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=300&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?q=80&w=300&auto=format&fit=crop",
 ]
@@ -706,6 +703,29 @@ export default function PizzeriaWebsite() {
   // Ref para el contenedor de testimonios
   const testimonialsContainerRef = useRef<HTMLDivElement>(null)
 
+  // Auto-scroll testimonials
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (testimonialsContainerRef.current) {
+        testimonialsContainerRef.current.scrollBy({
+          left: 370, // Width of one testimonial card + margin
+          behavior: "smooth",
+        })
+
+        // Check if we've reached the end, if so, scroll back to start
+        const container = testimonialsContainerRef.current
+        if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 100) {
+          container.scrollTo({
+            left: 0,
+            behavior: "smooth",
+          })
+        }
+      }
+    }, 5000) // Auto-scroll every 5 seconds
+
+    return () => clearInterval(interval)
+  }, [])
+
   // Form state for reservation
   const [reservationDate, setReservationDate] = useState("")
   const [reservationTime, setReservationTime] = useState("")
@@ -1059,8 +1079,6 @@ export default function PizzeriaWebsite() {
             </motion.div>
           </motion.div>
         </div>
-
-
       </section>
 
       {/* About Section */}
@@ -1253,7 +1271,6 @@ export default function PizzeriaWebsite() {
                   <p className="text-gray-300 mt-4">
                     Wau diese Pizza der wahnsinn, vielen lieben Dank für das Geschmackserlebnis.
                   </p>
-          
                 </motion.div>
 
                 {/* Mauro Musarra */}
@@ -1276,7 +1293,6 @@ export default function PizzeriaWebsite() {
                       </div>
                       <div>
                         <h4 className="text-white font-medium">Mauro Musarra</h4>
-         
                       </div>
                     </div>
                     <div className="flex flex-col items-end">
@@ -1309,7 +1325,6 @@ export default function PizzeriaWebsite() {
                       </div>
                       <div>
                         <h4 className="text-white font-medium">Stefano Calati</h4>
-        
                       </div>
                     </div>
                     <div className="flex flex-col items-end">
@@ -1391,9 +1406,8 @@ export default function PizzeriaWebsite() {
                   </p>
                 </motion.div>
 
-
-                              {/* Ana Busuioc */}
-                              <motion.div
+                {/* Ana Busuioc */}
+                <motion.div
                   className="bg-gray-900 p-8 border border-gray-800 rounded-lg flex-none w-[350px]"
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -1420,16 +1434,10 @@ export default function PizzeriaWebsite() {
                       <span className="text-gray-400 text-xs mt-1">Vor Ort · Abendessen</span>
                     </div>
                   </div>
-                  <p className="text-gray-300 mt-4">
-
-                  </p>
+                  <p className="text-gray-300 mt-4"></p>
                 </motion.div>
-
-
               </div>
             </div>
-
-
 
             {/* Scroll indicators */}
             <button
@@ -1475,14 +1483,25 @@ export default function PizzeriaWebsite() {
                 transition={{ duration: 0.5, delay: index * 0.05 }}
                 whileHover={{ scale: 1.02 }}
               >
-                <img
-                  src={image || "/placeholder.svg"}
-                  alt="Galeriebild"
-                  className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                  <ArrowRight className="text-white h-8 w-8" />
-                </div>
+                {image === "video" ? (
+                  <div className="w-full h-full">
+                    <video src="/1280x720.mp4" className="object-cover w-full h-full" autoPlay muted loop playsInline />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                      <ArrowRight className="text-white h-8 w-8" />
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <img
+                      src={image || "/placeholder.svg"}
+                      alt="Galeriebild"
+                      className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                      <ArrowRight className="text-white h-8 w-8" />
+                    </div>
+                  </>
+                )}
               </motion.div>
             ))}
           </div>

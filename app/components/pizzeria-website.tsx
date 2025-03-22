@@ -21,17 +21,13 @@ import {
   ChefHat,
   Wine,
   Utensils,
+  ArrowRight,
   Pizza,
   Users,
   PhoneCall,
-  Minus,
-  Plus,
-  ArrowDown,
-  Sparkles,
-  Flame,
-  Leaf,
 } from "lucide-react"
-import OliveBackground from "./olive-background"
+
+import { MediterraneanBackground } from "./mediterranean-background"
 
 // Interfaces
 interface MenuItem {
@@ -227,20 +223,20 @@ const Button = ({
   [key: string]: any
 }) => {
   const baseStyles =
-    "inline-flex items-center justify-center rounded-full font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6b7841] disabled:pointer-events-none disabled:opacity-50"
+    "inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 disabled:pointer-events-none disabled:opacity-50"
 
   const variants = {
-    default: "bg-[#4c5830] text-white hover:bg-[#3c4527] shadow-md hover:shadow-lg",
-    outline: "border-2 border-[#6b7841] text-[#8c9a56] hover:bg-[#6b7841]/10",
-    ghost: "text-white hover:bg-white/10",
+    default: "bg-green-800 text-white hover:bg-green-900",
+    outline: "border border-white text-white hover:bg-white/10",
+    ghost: "text-white hover:bg-gray-800",
     link: "text-[#8c9a56] underline-offset-4 hover:underline",
     icon: "p-0",
   }
 
   const sizes = {
-    default: "h-11 px-5 py-2",
-    sm: "h-9 px-4 text-sm",
-    lg: "h-12 px-8 text-lg",
+    default: "h-10 px-4 py-2",
+    sm: "h-8 px-3 text-sm",
+    lg: "h-12 px-6 text-lg",
     icon: "h-10 w-10",
   }
 
@@ -280,7 +276,7 @@ const Input = ({
       placeholder={placeholder}
       required={required}
       className={cn(
-        "flex h-11 w-full rounded-full border-2 border-[#6b7841]/30 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-gray-400 focus:border-[#6b7841] focus:outline-none focus:ring-1 focus:ring-[#6b7841] disabled:cursor-not-allowed disabled:opacity-50",
+        "flex h-10 w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-700 disabled:cursor-not-allowed disabled:opacity-50",
         className,
       )}
       {...props}
@@ -311,7 +307,7 @@ const Textarea = ({
       rows={rows}
       required={required}
       className={cn(
-        "flex w-full rounded-2xl border-2 border-[#6b7841]/30 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-gray-400 focus:border-[#6b7841] focus:outline-none focus:ring-1 focus:ring-[#6b7841] disabled:cursor-not-allowed disabled:opacity-50",
+        "flex w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-700 disabled:cursor-not-allowed disabled:opacity-50",
         className,
       )}
       {...props}
@@ -346,15 +342,13 @@ const Badge = ({
   ...props
 }: {
   children: React.ReactNode
-  variant?: "default" | "outline" | "secondary" | "destructive"
+  variant?: "default" | "outline"
   className?: string
   [key: string]: any
 }) => {
   const variants = {
-    default: "bg-[#4c5830] text-white",
-    outline: "bg-transparent border-2 border-current",
-    secondary: "bg-amber-600 text-white",
-    destructive: "bg-red-600 text-white",
+    default: "bg-green-800 text-white",
+    outline: "bg-transparent border border-current",
   }
 
   return (
@@ -405,7 +399,7 @@ const DialogContent = ({
   return (
     <div
       className={cn(
-        "relative z-50 max-w-lg w-full bg-[#1a1a1a] border-2 border-[#6b7841]/30 p-6 shadow-xl rounded-3xl max-h-[90vh] overflow-auto",
+        "relative z-50 max-w-lg w-full bg-gray-900 border border-gray-800 p-6 shadow-lg rounded-lg max-h-[90vh] overflow-auto",
         className,
       )}
       {...props}
@@ -434,7 +428,7 @@ const DialogHeader = ({
   [key: string]: any
 }) => {
   return (
-    <div className={cn("mb-6", className)} {...props}>
+    <div className={cn("mb-4", className)} {...props}>
       {children}
     </div>
   )
@@ -450,7 +444,7 @@ const DialogTitle = ({
   [key: string]: any
 }) => {
   return (
-    <h2 className={cn("text-xl font-bold text-white", className)} {...props}>
+    <h2 className={cn("text-xl font-semibold text-white", className)} {...props}>
       {children}
     </h2>
   )
@@ -496,7 +490,7 @@ const RatingStars = ({ rating }: { rating: number }) => {
         <Star
           key={i}
           size={16}
-          className={cn("mr-0.5", i < rating ? "text-amber-500 fill-amber-500" : "text-gray-600")}
+          className={cn("mr-0.5", i < rating ? "text-[#8c9a56] fill-[#8c9a56]" : "text-gray-300")}
         />
       ))}
     </div>
@@ -519,7 +513,7 @@ const MenuItem = ({ item, onAddToCart }: { item: MenuItem; onAddToCart: (item: M
 
   return (
     <motion.div
-      className="group relative overflow-hidden rounded-3xl olive-shadow"
+      className="group relative overflow-hidden bg-gray-900 border border-gray-800 rounded-lg"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -527,73 +521,65 @@ const MenuItem = ({ item, onAddToCart }: { item: MenuItem; onAddToCart: (item: M
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-[#4c5830]/80 to-black/90 opacity-80 z-0"></div>
-
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="relative h-48 overflow-hidden">
         <img
           src={item.image || "/placeholder.svg"}
           alt={item.name}
           className={cn(
-            "object-cover w-full h-full opacity-40 transition-transform duration-700",
+            "object-cover w-full h-full transition-transform duration-700",
             isHovered ? "scale-110" : "scale-100",
           )}
         />
-      </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-70"></div>
 
-      <div className="relative z-10 p-6">
-        <div className="flex justify-between items-start mb-3">
-          <h3 className="text-xl font-bold text-white">{item.name}</h3>
-          <span className="text-[#8c9a56] font-bold text-lg">${item.price.toFixed(2)}</span>
-        </div>
-
-        <p className="text-gray-300 text-sm mb-6">{item.description}</p>
-
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className="absolute top-2 right-2 flex flex-col gap-1">
           {item.popular && (
-            <Badge variant="secondary" className="flex items-center gap-1">
-              <Sparkles size={12} />
+            <Badge variant="default" className="bg-green-800 text-white border-none">
               Beliebt
             </Badge>
           )}
           {item.vegetarian && (
-            <Badge variant="outline" className="text-[#8c9a56] border-[#8c9a56] flex items-center gap-1">
-              <Leaf size={12} />
+            <Badge variant="outline" className="bg-green-900/50 text-green-400 border-green-700">
               Vegetarisch
             </Badge>
           )}
           {item.vegan && (
-            <Badge variant="outline" className="text-green-400 border-green-400 flex items-center gap-1">
-              <Leaf size={12} />
+            <Badge variant="outline" className="bg-green-900/50 text-green-400 border-green-700">
               Vegan
             </Badge>
           )}
           {item.spicy && (
-            <Badge variant="destructive" className="flex items-center gap-1">
-              <Flame size={12} />
+            <Badge variant="outline" className="bg-red-900/50 text-red-400 border-red-700">
               Scharf
             </Badge>
           )}
         </div>
+      </div>
+
+      <div className="p-4">
+        <div className="flex justify-between items-start mb-2">
+          <h3 className="text-lg font-medium text-white">{item.name}</h3>
+          <span className="text-[#8c9a56] font-semibold">${item.price.toFixed(2)}</span>
+        </div>
+        <p className="text-gray-400 text-sm mb-4 line-clamp-2">{item.description}</p>
 
         <motion.button
           onClick={handleAddToCart}
           className={cn(
-            "w-full py-3 px-4 flex items-center justify-center transition-all rounded-full font-medium",
-            isAdded
-              ? "bg-green-600 text-white"
-              : "bg-[#4c5830] text-white hover:bg-[#3c4527] shadow-md hover:shadow-lg",
+            "w-full py-2 px-4 flex items-center justify-center transition-colors rounded-md",
+            isAdded ? "bg-green-700 text-white" : "bg-green-800 text-white hover:bg-green-900",
           )}
           whileTap={{ scale: 0.95 }}
           disabled={isAdded}
         >
           {isAdded ? (
             <>
-              <Check className="h-5 w-5 mr-2" />
+              <Check className="h-4 w-4 mr-2" />
               Hinzugefügt
             </>
           ) : (
             <>
-              <ShoppingBag className="h-5 w-5 mr-2" />
+              <ShoppingBag className="h-4 w-4 mr-2" />
               In den Warenkorb
             </>
           )}
@@ -603,47 +589,53 @@ const MenuItem = ({ item, onAddToCart }: { item: MenuItem; onAddToCart: (item: M
   )
 }
 
-// Image carousel component with parallax effect
-const ParallaxCarousel = ({ images }: { images: string[] }) => {
+// Image carousel component
+const ImageCarousel = ({ images }: { images: string[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  })
-
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"])
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.3])
+  const [isPlaying, setIsPlaying] = useState(true)
 
   useEffect(() => {
+    if (!isPlaying) return
+
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length)
-    }, 5000)
+    }, 3000)
 
     return () => clearInterval(interval)
-  }, [images.length])
+  }, [images.length, isPlaying])
 
   return (
-    <div ref={containerRef} className="relative h-screen overflow-hidden">
-      <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
-        <AnimatePresence initial={false}>
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className="absolute inset-0"
-          >
-            <img
-              src={images[currentIndex] || "/placeholder.svg"}
-              alt="Galeriebild"
-              className="object-cover w-full h-full"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black"></div>
-          </motion.div>
-        </AnimatePresence>
-      </motion.div>
+    <div className="relative overflow-hidden h-[500px] md:h-[600px]">
+      <AnimatePresence initial={false}>
+        <motion.div
+          key={currentIndex}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1 }}
+          className="absolute inset-0"
+        >
+          <img
+            src={images[currentIndex] || "/placeholder.svg"}
+            alt="Galeriebild"
+            className="object-cover w-full h-full"
+          />
+          <div className="absolute inset-0 bg-black/40"></div>
+        </motion.div>
+      </AnimatePresence>
+
+      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+        {images.map((_, index) => (
+          <button
+            key={index}
+            className={cn(
+              "w-2 h-2 rounded-full transition-all",
+              currentIndex === index ? "bg-[#8c9a56] w-6" : "bg-white/50",
+            )}
+            onClick={() => setCurrentIndex(index)}
+          />
+        ))}
+      </div>
     </div>
   )
 }
@@ -679,54 +671,10 @@ const AnimatedNumber = ({ value, suffix = "" }: { value: number; suffix?: string
   }, [value, isInView])
 
   return (
-    <span ref={ref} className="font-mono">
+    <span ref={ref}>
       {count}
       {suffix}
     </span>
-  )
-}
-
-// Animated section divider
-const SectionDivider = () => {
-  return (
-    <div className="relative h-32 overflow-hidden">
-      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black to-transparent"></div>
-      <div className="absolute left-1/2 bottom-8 transform -translate-x-1/2">
-        <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Number.POSITIVE_INFINITY, duration: 2 }}>
-          <ArrowDown className="h-8 w-8 text-[#8c9a56]" />
-        </motion.div>
-      </div>
-    </div>
-  )
-}
-
-// Animated gallery component
-const AnimatedGallery = ({ images }: { images: string[] }) => {
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {images.map((image, index) => (
-        <motion.div
-          key={index}
-          className="relative aspect-square overflow-hidden rounded-3xl"
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{
-            duration: 0.5,
-            delay: index * 0.1,
-            type: "spring",
-            stiffness: 100,
-          }}
-          whileHover={{
-            scale: 1.05,
-            boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.2)",
-          }}
-        >
-          <img src={image || "/placeholder.svg"} alt="Galeriebild" className="object-cover w-full h-full" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </motion.div>
-      ))}
-    </div>
   )
 }
 
@@ -877,18 +825,16 @@ export default function PizzeriaWebsite() {
   ]
 
   return (
-    <div className="min-h-screen text-white font-sans overflow-x-hidden bg-black">
-      {/* Fondo animado con colores verde oliva */}
-      <OliveBackground />
-
+    <div className="min-h-screen bg-black text-white font-sans overflow-x-hidden">
+      <MediterraneanBackground />
       {/* Header */}
       <header
         className={cn(
-          "fixed left-0 right-0 z-50 transition-all duration-500",
-          scrolled ? "bg-black/80 backdrop-blur-md py-3 border-b border-[#4c5830]/30" : "bg-transparent py-6",
+          "fixed left-0 right-0 z-50 transition-all duration-300",
+          scrolled ? "bg-black/90 backdrop-blur-md py-3" : "bg-transparent py-6",
         )}
       >
-        <div className="container mx-auto px-4 md:px-6 max-w-7xl flex justify-between items-center">
+        <div className="container mx-auto px-4 md:px-6 max-w-full overflow-hidden flex justify-between items-center">
           {/* Logo */}
           <a href="#home" className="text-2xl md:text-3xl font-bold text-white">
             <span className="text-[#8c9a56]">Bouquet </span>Mediterraneo
@@ -906,7 +852,7 @@ export default function PizzeriaWebsite() {
               <motion.a
                 key={id}
                 href={`#${id}`}
-                className="text-gray-300 hover:text-[#8c9a56] transition-all text-sm uppercase tracking-widest"
+                className="text-gray-300 hover:text-[#8c9a56] transition-colors text-sm uppercase tracking-widest"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -918,7 +864,7 @@ export default function PizzeriaWebsite() {
           <div className="flex items-center space-x-4">
             <motion.button
               onClick={() => setReservationOpen(true)}
-              className="hidden md:flex items-center space-x-2 bg-transparent border-2 border-[#6b7841] text-[#8c9a56] px-4 py-2 text-sm uppercase tracking-wider hover:bg-[#6b7841] hover:text-white transition-all rounded-full"
+              className="hidden md:flex items-center space-x-2 bg-transparent border border-[#8c9a56] text-[#8c9a56] px-4 py-2 text-sm uppercase tracking-wider hover:bg-[#8c9a56] hover:text-black transition-colors rounded-md"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, x: 20 }}
@@ -940,7 +886,7 @@ export default function PizzeriaWebsite() {
             >
               <ShoppingBag className="h-6 w-6 text-white" />
               {cartItems.length > 0 && (
-                <span className="absolute -top-1 -right-2 bg-[#6b7841] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                <span className="absolute -top-1 -right-2 bg-[#8c9a56] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
                   {cartItems.reduce((total, item) => total + item.quantity, 0)}
                 </span>
               )}
@@ -966,7 +912,7 @@ export default function PizzeriaWebsite() {
               onClick={toggleMobileMenu}
             />
             <motion.div
-              className="fixed top-0 right-0 h-full w-64 bg-[#1a1a1a] z-50 flex flex-col p-6 md:hidden"
+              className="fixed top-0 right-0 h-full w-64 bg-gray-900 z-50 flex flex-col p-6 md:hidden"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
@@ -1004,7 +950,7 @@ export default function PizzeriaWebsite() {
                     setReservationOpen(true)
                     toggleMobileMenu()
                   }}
-                  className="w-full bg-transparent border-2 border-[#6b7841] text-[#8c9a56] hover:bg-[#6b7841] hover:text-white"
+                  className="w-full bg-transparent border border-[#8c9a56] text-[#8c9a56] hover:bg-[#8c9a56] hover:text-black"
                 >
                   <Calendar className="h-4 w-4 mr-2" />
                   Tisch reservieren
@@ -1016,7 +962,7 @@ export default function PizzeriaWebsite() {
                     toggleMobileMenu()
                   }}
                   variant="default"
-                  className="w-full bg-[#4c5830] text-white hover:bg-[#3c4527]"
+                  className="w-full bg-green-800 text-white hover:bg-green-900"
                 >
                   <ShoppingBag className="h-4 w-4 mr-2" />
                   Jetzt bestellen
@@ -1034,28 +980,15 @@ export default function PizzeriaWebsite() {
 
       {/* Hero Section */}
       <section id="home" className="relative h-screen" ref={heroRef}>
-        <ParallaxCarousel images={heroImages} />
+        <ImageCarousel images={heroImages} />
 
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div className="flex items-center justify-center mt-20">
           <motion.div className="text-center max-w-3xl px-4" style={{ y: heroTextY, opacity: heroOpacity }}>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-6"
             >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="mx-auto w-24 h-24 mb-4 relative"
-              >
-                <div className="absolute inset-0 bg-[#8c9a56] rounded-full opacity-20 animate-pulse"></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Pizza className="h-12 w-12 text-[#8c9a56]" />
-                </div>
-              </motion.div>
-
               <h2 className="text-4xl md:text-6xl font-bold mb-4">Authentische italienische Pizza</h2>
               <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-xl mx-auto">
                 Handgemacht mit traditionellen Rezepten und besten Zutaten - Erleben Sie ein Stück Italien
@@ -1064,7 +997,7 @@ export default function PizzeriaWebsite() {
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <Button
                   onClick={() => setReservationOpen(true)}
-                  className="bg-[#4c5830] text-white hover:bg-[#3c4527]"
+                  className="bg-green-800 text-white hover:bg-green-900"
                   size="lg"
                 >
                   <Calendar className="h-4 w-4 mr-2" />
@@ -1073,7 +1006,7 @@ export default function PizzeriaWebsite() {
                 <Button
                   onClick={() => document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" })}
                   variant="outline"
-                  className="border-2 border-[#6b7841] text-[#8c9a56] hover:bg-[#6b7841]/10"
+                  className="border-white text-white hover:bg-white/10"
                   size="lg"
                 >
                   <Pizza className="h-4 w-4 mr-2" />
@@ -1089,7 +1022,7 @@ export default function PizzeriaWebsite() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 1 }}
-            className="flex flex-wrap md:flex-nowrap items-center justify-center gap-4 md:gap-8 bg-black/40 backdrop-blur-sm px-6 md:px-10 py-6 rounded-3xl border border-[#4c5830]/30"
+            className="flex flex-wrap md:flex-nowrap items-center justify-center gap-4 md:gap-8 bg-black/70 backdrop-blur-sm px-4 md:px-8 py-4 rounded-xl"
           >
             <div className="text-center w-full sm:w-auto mb-2 sm:mb-0">
               <ChefHat className="h-6 w-6 text-[#8c9a56] mx-auto mb-2" />
@@ -1107,13 +1040,11 @@ export default function PizzeriaWebsite() {
             </div>
           </motion.div>
         </div>
-
-        <SectionDivider />
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-24">
-        <div className="container mx-auto px-4 max-w-7xl">
+      <section id="about" className="py-24 bg-gray-950">
+        <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -1122,16 +1053,14 @@ export default function PizzeriaWebsite() {
               transition={{ duration: 0.6 }}
               className="relative"
             >
-              <div className="relative z-10 overflow-hidden rounded-3xl">
+              <div className="relative z-10 overflow-hidden rounded-lg">
                 <img
                   src="/baking-delicious-pizza-with-wood-fired-oven_23-2150134263.jpg"
                   alt="Pizza im Holzofen"
                   className="object-cover h-[500px] w-full"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-40"></div>
               </div>
-              <div className="absolute -bottom-6 -right-6 w-64 h-64 border-2 border-[#6b7841] z-0 rounded-3xl"></div>
-              <div className="absolute -top-6 -left-6 w-32 h-32 border-2 border-[#6b7841] z-0 rounded-3xl"></div>
+              <div className="absolute -bottom-6 -right-6 w-64 h-64 border-2 border-[#8c9a56] z-0"></div>
             </motion.div>
 
             <motion.div
@@ -1139,10 +1068,7 @@ export default function PizzeriaWebsite() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="relative"
             >
-              <div className="absolute -top-20 -left-20 w-40 h-40 bg-[#8c9a56]/10 rounded-full blur-3xl"></div>
-
               <h2 className="text-3xl font-bold mb-2 text-[#8c9a56]">Unsere Geschichte</h2>
               <h3 className="text-4xl font-bold mb-8 text-white">Familientradition</h3>
 
@@ -1159,21 +1085,21 @@ export default function PizzeriaWebsite() {
               </p>
 
               <div className="grid grid-cols-3 gap-8 mt-12">
-                <div className="text-center bg-black/30 backdrop-blur-sm p-6 rounded-3xl border border-[#4c5830]/30">
+                <div className="text-center">
                   <div className="text-4xl font-bold text-[#8c9a56] mb-2">
                     <AnimatedNumber value={35} suffix="+" />
                   </div>
                   <p className="text-gray-400 text-sm">Jahre Erfahrung</p>
                 </div>
 
-                <div className="text-center bg-black/30 backdrop-blur-sm p-6 rounded-3xl border border-[#4c5830]/30">
+                <div className="text-center">
                   <div className="text-4xl font-bold text-[#8c9a56] mb-2">
                     <AnimatedNumber value={12} />
                   </div>
                   <p className="text-gray-400 text-sm">Pizzasorten</p>
                 </div>
 
-                <div className="text-center bg-black/30 backdrop-blur-sm p-6 rounded-3xl border border-[#4c5830]/30">
+                <div className="text-center">
                   <div className="text-4xl font-bold text-[#8c9a56] mb-2">
                     <AnimatedNumber value={500} suffix="+" />
                   </div>
@@ -1183,13 +1109,11 @@ export default function PizzeriaWebsite() {
             </motion.div>
           </div>
         </div>
-
-        <SectionDivider />
       </section>
 
       {/* Menu Section */}
-      <section id="menu" className="py-24">
-        <div className="container mx-auto px-4 max-w-7xl">
+      <section id="menu" className="py-24 bg-black">
+        <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
@@ -1217,10 +1141,10 @@ export default function PizzeriaWebsite() {
                   key={category}
                   onClick={() => setActiveCategory(category)}
                   className={cn(
-                    "px-6 py-2 mx-2 text-sm uppercase tracking-wider transition-all rounded-full flex-shrink-0",
+                    "px-6 py-2 mx-2 text-sm uppercase tracking-wider transition-colors rounded-md flex-shrink-0",
                     activeCategory === category
-                      ? "bg-[#4c5830] text-white"
-                      : "bg-black/30 border border-[#4c5830]/30 text-gray-300 hover:bg-black/50",
+                      ? "bg-green-800 text-white"
+                      : "bg-gray-900 text-gray-300 hover:bg-gray-800",
                   )}
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.95 }}
@@ -1252,19 +1176,17 @@ export default function PizzeriaWebsite() {
           </motion.div>
 
           <div className="text-center mt-16">
-            <Button onClick={() => setOrderOpen(true)} className="bg-[#4c5830] text-white hover:bg-[#3c4527]" size="lg">
+            <Button onClick={() => setOrderOpen(true)} className="bg-green-800 text-white hover:bg-green-900" size="lg">
               <ShoppingBag className="h-4 w-4 mr-2" />
               Jetzt bestellen
             </Button>
           </div>
         </div>
-
-        <SectionDivider />
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-24">
-        <div className="container mx-auto px-4 max-w-7xl">
+      <section className="py-24 bg-gray-950">
+        <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
@@ -1281,17 +1203,13 @@ export default function PizzeriaWebsite() {
               {testimonials.map((testimonial, index) => (
                 <motion.div
                   key={testimonial.id}
-                  className="bg-black/30 backdrop-blur-sm p-8 rounded-3xl border border-[#4c5830]/30 relative"
+                  className="bg-gray-900 p-8 border border-gray-800 rounded-lg"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.3)" }}
                 >
-                  <div className="absolute -top-5 -left-5 w-10 h-10 bg-[#4c5830] rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold">"</span>
-                  </div>
-
                   <div className="flex items-center gap-4 mb-6">
                     <div className="h-12 w-12 rounded-full overflow-hidden">
                       <img
@@ -1312,13 +1230,11 @@ export default function PizzeriaWebsite() {
             </div>
           </div>
         </div>
-
-        <SectionDivider />
       </section>
 
       {/* Gallery Section */}
-      <section id="gallery" className="py-24">
-        <div className="container mx-auto px-4 max-w-7xl">
+      <section id="gallery" className="py-24 bg-black">
+        <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
@@ -1330,15 +1246,34 @@ export default function PizzeriaWebsite() {
             <h3 className="text-4xl font-bold mb-8 text-white">Einblicke in unser Restaurant</h3>
           </motion.div>
 
-          <AnimatedGallery images={galleryImages} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {galleryImages.map((image, index) => (
+              <motion.div
+                key={index}
+                className="relative aspect-square overflow-hidden group rounded-lg"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+                whileHover={{ scale: 1.02 }}
+              >
+                <img
+                  src={image || "/placeholder.svg"}
+                  alt="Galeriebild"
+                  className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                  <ArrowRight className="text-white h-8 w-8" />
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
-
-        <SectionDivider />
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-24">
-        <div className="container mx-auto px-4 max-w-7xl">
+      <section id="contact" className="py-24 bg-gray-950">
+        <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
@@ -1356,15 +1291,12 @@ export default function PizzeriaWebsite() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="bg-black/30 backdrop-blur-sm p-8 rounded-3xl border border-[#4c5830]/30"
             >
               <h3 className="text-2xl font-bold mb-8 text-white">Besuchen Sie uns</h3>
 
               <div className="space-y-8">
                 <div className="flex items-start gap-4">
-                  <div className="bg-[#4c5830]/20 p-3 rounded-full">
-                    <MapPin className="h-5 w-5 text-[#8c9a56]" />
-                  </div>
+                  <MapPin className="h-5 w-5 text-[#8c9a56] mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="text-white font-medium">Adresse</h4>
                     <p className="text-gray-300">Bahnhofstrasse 46, 9475 Sevelen</p>
@@ -1372,9 +1304,7 @@ export default function PizzeriaWebsite() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-[#4c5830]/20 p-3 rounded-full">
-                    <Phone className="h-5 w-5 text-[#8c9a56]" />
-                  </div>
+                  <Phone className="h-5 w-5 text-[#8c9a56] mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="text-white font-medium">Telefon</h4>
                     <p className="text-gray-300">081 785 10 00</p>
@@ -1382,9 +1312,7 @@ export default function PizzeriaWebsite() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-[#4c5830]/20 p-3 rounded-full">
-                    <Mail className="h-5 w-5 text-[#8c9a56]" />
-                  </div>
+                  <Mail className="h-5 w-5 text-[#8c9a56] mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="text-white font-medium">E-Mail</h4>
                     <p className="text-gray-300">info@bouquetmediterraneo.ch</p>
@@ -1392,9 +1320,7 @@ export default function PizzeriaWebsite() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-[#4c5830]/20 p-3 rounded-full">
-                    <Clock className="h-5 w-5 text-[#8c9a56]" />
-                  </div>
+                  <Clock className="h-5 w-5 text-[#8c9a56] mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="text-white font-medium">Öffnungszeiten</h4>
                     <p className="text-gray-300">Dienstag - Donnerstag: 11:00–14:00, 17:00–22:00 Uhr</p>
@@ -1410,7 +1336,7 @@ export default function PizzeriaWebsite() {
                 <div className="flex gap-4">
                   <motion.a
                     href="#"
-                    className="bg-[#4c5830]/20 w-10 h-10 rounded-full flex items-center justify-center text-[#8c9a56] hover:bg-[#4c5830] hover:text-white transition-all"
+                    className="bg-gray-900 w-10 h-10 rounded-full flex items-center justify-center text-[#8c9a56] hover:bg-green-800 hover:text-white transition-colors"
                     whileHover={{ y: -5 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -1418,7 +1344,7 @@ export default function PizzeriaWebsite() {
                   </motion.a>
                   <motion.a
                     href="#"
-                    className="bg-[#4c5830]/20 w-10 h-10 rounded-full flex items-center justify-center text-[#8c9a56] hover:bg-[#4c5830] hover:text-white transition-all"
+                    className="bg-gray-900 w-10 h-10 rounded-full flex items-center justify-center text-[#8c9a56] hover:bg-green-800 hover:text-white transition-colors"
                     whileHover={{ y: -5 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -1426,7 +1352,7 @@ export default function PizzeriaWebsite() {
                   </motion.a>
                   <motion.a
                     href="#"
-                    className="bg-[#4c5830]/20 w-10 h-10 rounded-full flex items-center justify-center text-[#8c9a56] hover:bg-[#4c5830] hover:text-white transition-all"
+                    className="bg-gray-900 w-10 h-10 rounded-full flex items-center justify-center text-[#8c9a56] hover:bg-green-800 hover:text-white transition-colors"
                     whileHover={{ y: -5 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -1441,7 +1367,7 @@ export default function PizzeriaWebsite() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="bg-black/30 backdrop-blur-sm p-8 rounded-3xl border border-[#4c5830]/30"
+              className="bg-gray-900 p-8 border border-gray-800 rounded-lg"
             >
               <h3 className="text-2xl font-bold mb-6 text-white">Nachricht senden</h3>
 
@@ -1454,7 +1380,7 @@ export default function PizzeriaWebsite() {
                     <Input
                       id="name"
                       placeholder="Ihr Name"
-                      className="mt-2 bg-white/5 border-[#6b7841]/30 text-white focus:border-[#6b7841] focus:ring-[#6b7841]"
+                      className="mt-2 bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                     />
                   </div>
                   <div>
@@ -1465,7 +1391,7 @@ export default function PizzeriaWebsite() {
                       id="email"
                       type="email"
                       placeholder="Ihre E-Mail"
-                      className="mt-2 bg-white/5 border-[#6b7841]/30 text-white focus:border-[#6b7841] focus:ring-[#6b7841]"
+                      className="mt-2 bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                     />
                   </div>
                 </div>
@@ -1477,7 +1403,7 @@ export default function PizzeriaWebsite() {
                   <Input
                     id="subject"
                     placeholder="Betreff"
-                    className="mt-2 bg-white/5 border-[#6b7841]/30 text-white focus:border-[#6b7841] focus:ring-[#6b7841]"
+                    className="mt-2 bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                   />
                 </div>
 
@@ -1489,11 +1415,11 @@ export default function PizzeriaWebsite() {
                     id="message"
                     placeholder="Ihre Nachricht"
                     rows={4}
-                    className="mt-2 bg-white/5 border-[#6b7841]/30 text-white focus:border-[#6b7841] focus:ring-[#6b7841]"
+                    className="mt-2 bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                   />
                 </div>
 
-                <Button className="w-full bg-[#4c5830] text-white hover:bg-[#3c4527]">Nachricht senden</Button>
+                <Button className="w-full bg-green-800 text-white hover:bg-green-900">Nachricht senden</Button>
               </form>
             </motion.div>
           </div>
@@ -1501,8 +1427,8 @@ export default function PizzeriaWebsite() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-black/50 backdrop-blur-sm py-12 border-t border-[#4c5830]/30">
-        <div className="container mx-auto px-4 max-w-7xl">
+      <footer className="bg-black py-12 border-t border-gray-800">
+        <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0">
               <h2 className="text-2xl font-bold text-white mb-2 text-center">
@@ -1543,13 +1469,13 @@ export default function PizzeriaWebsite() {
                 Kontakt
               </a>
 
-              <Button onClick={() => setReservationOpen(true)} className="bg-[#4c5830] text-white hover:bg-[#3c4527]">
+              <Button onClick={() => setReservationOpen(true)} className="bg-green-800 text-white hover:bg-green-900">
                 Jetzt reservieren
               </Button>
             </div>
           </div>
 
-          <div className="border-t border-[#4c5830]/30 mt-8 pt-8 text-center">
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center">
             <p className="text-gray-400 text-sm">
               © {new Date().getFullYear()} Bouquet Mediterraneo. Alle Rechte vorbehalten.
             </p>
@@ -1560,7 +1486,7 @@ export default function PizzeriaWebsite() {
       {/* Reservation Dialog - Improved Version */}
       <Dialog open={reservationOpen} onOpenChange={setReservationOpen}>
         <DialogContent
-          className="sm:max-w-[500px] bg-[#1a1a1a] border-2 border-[#6b7841]/30 text-white rounded-3xl"
+          className="sm:max-w-[500px] bg-gray-900 border-gray-800 text-white"
           onClose={() => setReservationOpen(false)}
         >
           <DialogHeader>
@@ -1594,7 +1520,7 @@ export default function PizzeriaWebsite() {
                     value={reservationDate}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setReservationDate(e.target.value)}
                     min={new Date().toISOString().split("T")[0]}
-                    className="bg-white/5 border-[#6b7841]/30 text-white focus:border-[#6b7841] focus:ring-[#6b7841]"
+                    className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                   />
                 </div>
                 <div className="space-y-2">
@@ -1607,7 +1533,7 @@ export default function PizzeriaWebsite() {
                       value={reservationTime}
                       onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setReservationTime(e.target.value)}
                       required
-                      className="flex h-11 w-full rounded-full border-2 border-[#6b7841]/30 bg-white/5 px-4 py-2 text-sm text-white appearance-none focus:border-[#6b7841] focus:outline-none focus:ring-1 focus:ring-[#6b7841]"
+                      className="flex h-10 w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#8c9a56]"
                     >
                       <option value="" disabled>
                         Uhrzeit wählen
@@ -1635,7 +1561,7 @@ export default function PizzeriaWebsite() {
                     value={reservationGuests}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setReservationGuests(e.target.value)}
                     required
-                    className="flex h-11 w-full rounded-full border-2 border-[#6b7841]/30 bg-white/5 px-4 py-2 text-sm text-white appearance-none focus:border-[#6b7841] focus:outline-none focus:ring-1 focus:ring-[#6b7841]"
+                    className="flex h-10 w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#8c9a56]"
                   >
                     <option value="" disabled>
                       Anzahl wählen
@@ -1662,7 +1588,7 @@ export default function PizzeriaWebsite() {
                   required
                   value={reservationName}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setReservationName(e.target.value)}
-                  className="bg-white/5 border-[#6b7841]/30 text-white focus:border-[#6b7841] focus:ring-[#6b7841]"
+                  className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                 />
               </div>
 
@@ -1677,7 +1603,7 @@ export default function PizzeriaWebsite() {
                   required
                   value={reservationEmail}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setReservationEmail(e.target.value)}
-                  className="bg-white/5 border-[#6b7841]/30 text-white focus:border-[#6b7841] focus:ring-[#6b7841]"
+                  className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                 />
               </div>
 
@@ -1691,7 +1617,7 @@ export default function PizzeriaWebsite() {
                   required
                   value={reservationPhone}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setReservationPhone(e.target.value)}
-                  className="bg-white/5 border-[#6b7841]/30 text-white focus:border-[#6b7841] focus:ring-[#6b7841]"
+                  className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                 />
               </div>
 
@@ -1704,14 +1630,14 @@ export default function PizzeriaWebsite() {
                   placeholder="Besondere Wünsche oder Ernährungsbedürfnisse"
                   value={reservationNotes}
                   onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setReservationNotes(e.target.value)}
-                  className="bg-white/5 border-[#6b7841]/30 text-white focus:border-[#6b7841] focus:ring-[#6b7841]"
+                  className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                 />
               </div>
 
               <DialogFooter>
                 <Button
                   type="submit"
-                  className="w-full bg-[#4c5830] text-white hover:bg-[#3c4527]"
+                  className="w-full bg-green-800 text-white hover:bg-green-900"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
@@ -1732,7 +1658,7 @@ export default function PizzeriaWebsite() {
       {/* Order Dialog */}
       <Dialog open={orderOpen} onOpenChange={setOrderOpen}>
         <DialogContent
-          className="sm:max-w-[500px] max-w-[90vw] bg-[#1a1a1a] border-2 border-[#6b7841]/30 text-white max-h-[90vh] overflow-auto flex flex-col rounded-3xl"
+          className="sm:max-w-[500px] max-w-[90vw] bg-gray-900 border-gray-800 text-white max-h-[90vh] overflow-auto flex flex-col"
           onClose={() => setOrderOpen(false)}
         >
           <DialogHeader>
@@ -1762,7 +1688,7 @@ export default function PizzeriaWebsite() {
                   <p className="text-gray-400 mb-4">
                     Fügen Sie einige köstliche Gerichte aus unserer Speisekarte hinzu!
                   </p>
-                  <Button onClick={() => setOrderOpen(false)} className="bg-[#4c5830] text-white hover:bg-[#3c4527]">
+                  <Button onClick={() => setOrderOpen(false)} className="bg-green-800 text-white hover:bg-green-900">
                     Speisekarte durchsuchen
                   </Button>
                 </div>
@@ -1772,9 +1698,9 @@ export default function PizzeriaWebsite() {
                     {cartItems.map((item) => (
                       <div
                         key={item.id}
-                        className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-4 py-3 border-b border-[#4c5830]/30"
+                        className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-4 py-3 border-b border-gray-800"
                       >
-                        <div className="h-12 w-12 sm:h-16 sm:w-16 overflow-hidden flex-shrink-0 rounded-xl">
+                        <div className="h-12 w-12 sm:h-16 sm:w-16 overflow-hidden flex-shrink-0 rounded-md">
                           <img
                             src={item.image || "/placeholder.svg"}
                             alt={item.name}
@@ -1789,19 +1715,19 @@ export default function PizzeriaWebsite() {
                           <Button
                             variant="outline"
                             size="icon"
-                            className="h-6 w-6 sm:h-8 sm:w-8 border-[#6b7841]/30 text-white hover:bg-[#6b7841]/10 rounded-full"
+                            className="h-6 w-6 sm:h-8 sm:w-8 border-gray-700 text-white hover:bg-gray-800"
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
                           >
-                            <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
+                            -
                           </Button>
                           <span className="w-4 sm:w-6 text-center text-white text-sm">{item.quantity}</span>
                           <Button
                             variant="outline"
                             size="icon"
-                            className="h-6 w-6 sm:h-8 sm:w-8 border-[#6b7841]/30 text-white hover:bg-[#6b7841]/10 rounded-full"
+                            className="h-6 w-6 sm:h-8 sm:w-8 border-gray-700 text-white hover:bg-gray-800"
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
                           >
-                            <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
+                            +
                           </Button>
                         </div>
                         <div className="text-right w-16 sm:w-20 ml-auto">
@@ -1811,7 +1737,7 @@ export default function PizzeriaWebsite() {
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="h-6 sm:h-8 px-1 sm:px-2 text-xs sm:text-sm text-[#8c9a56] hover:text-[#6b7841] hover:bg-[#6b7841]/10"
+                            className="h-6 sm:h-8 px-1 sm:px-2 text-xs sm:text-sm text-[#8c9a56] hover:text-[#8c9a56] hover:bg-gray-800"
                             onClick={() => removeFromCart(item.id)}
                           >
                             Entfernen
@@ -1821,7 +1747,7 @@ export default function PizzeriaWebsite() {
                     ))}
                   </div>
 
-                  <div className="border-t border-[#4c5830]/30 pt-4">
+                  <div className="border-t border-gray-800 pt-4">
                     <div className="flex justify-between mb-2">
                       <span className="text-gray-300">Zwischensumme</span>
                       <span className="text-white">${cartTotal.toFixed(2)}</span>
@@ -1836,7 +1762,7 @@ export default function PizzeriaWebsite() {
                     </div>
                   </div>
 
-                  <div className="border-t border-[#4c5830]/30 pt-4"></div>
+                  <div className="border-t border-gray-800 pt-4"></div>
 
                   <div className="space-y-3 sm:space-y-4 overflow-y-auto flex-shrink-0">
                     <div>
@@ -1849,7 +1775,7 @@ export default function PizzeriaWebsite() {
                             name="delivery-type"
                             value="pickup"
                             defaultChecked
-                            className="h-4 w-4 text-[#6b7841] border-[#6b7841]/30 focus:ring-[#6b7841]"
+                            className="h-4 w-4 text-[#8c9a56] border-gray-700 focus:ring-[#8c9a56]"
                           />
                           <Label htmlFor="pickup" className="text-gray-300">
                             Abholung (Fertig in 30 Min.)
@@ -1861,7 +1787,7 @@ export default function PizzeriaWebsite() {
                             id="delivery"
                             name="delivery-type"
                             value="delivery"
-                            className="h-4 w-4 text-[#6b7841] border-[#6b7841]/30 focus:ring-[#6b7841]"
+                            className="h-4 w-4 text-[#8c9a56] border-gray-700 focus:ring-[#8c9a56]"
                           />
                           <Label htmlFor="delivery" className="text-gray-300">
                             Lieferung (45-60 Min.)
@@ -1879,7 +1805,7 @@ export default function PizzeriaWebsite() {
                           id="name"
                           placeholder="Ihr Name"
                           required
-                          className="bg-white/5 border-[#6b7841]/30 text-white focus:border-[#6b7841] focus:ring-[#6b7841]"
+                          className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                         />
                       </div>
                       <div className="space-y-2">
@@ -1890,7 +1816,7 @@ export default function PizzeriaWebsite() {
                           id="phone"
                           placeholder="Ihre Telefonnummer"
                           required
-                          className="bg-white/5 border-[#6b7841]/30 text-white focus:border-[#6b7841] focus:ring-[#6b7841]"
+                          className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                         />
                       </div>
                     </div>
@@ -1904,7 +1830,7 @@ export default function PizzeriaWebsite() {
                         type="email"
                         placeholder="Ihre E-Mail"
                         required
-                        className="bg-white/5 border-[#6b7841]/30 text-white focus:border-[#6b7841] focus:ring-[#6b7841]"
+                        className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                       />
                     </div>
 
@@ -1915,7 +1841,7 @@ export default function PizzeriaWebsite() {
                       <Input
                         id="address"
                         placeholder="Lieferadresse"
-                        className="bg-white/5 border-[#6b7841]/30 text-white focus:border-[#6b7841] focus:ring-[#6b7841]"
+                        className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                       />
                     </div>
 
@@ -1926,7 +1852,7 @@ export default function PizzeriaWebsite() {
                       <Textarea
                         id="notes"
                         placeholder="Besondere Wünsche oder Hinweise"
-                        className="bg-white/5 border-[#6b7841]/30 text-white focus:border-[#6b7841] focus:ring-[#6b7841]"
+                        className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                       />
                     </div>
                   </div>
@@ -1934,7 +1860,7 @@ export default function PizzeriaWebsite() {
                   <DialogFooter>
                     <Button
                       type="submit"
-                      className="w-full bg-[#4c5830] text-white hover:bg-[#3c4527]"
+                      className="w-full bg-green-800 text-white hover:bg-green-900"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? (
@@ -1954,12 +1880,12 @@ export default function PizzeriaWebsite() {
         </DialogContent>
       </Dialog>
 
-      {/* Phone button */}
+      {/* Phone button (removed the scroll up functionality) */}
       <AnimatePresence>
         {showButton && (
           <motion.button
             onClick={callPhone}
-            className="fixed bottom-6 right-6 z-40 flex items-center justify-center w-12 h-12 rounded-full bg-[#4c5830] shadow-lg hover:bg-[#3c4527]"
+            className="fixed bottom-6 right-6 z-40 flex items-center justify-center w-12 h-12 rounded-full bg-black/80 border border-gray-800 shadow-lg hover:bg-black"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
@@ -1968,7 +1894,7 @@ export default function PizzeriaWebsite() {
             whileTap={{ scale: 0.9 }}
             aria-label="Llamar por teléfono"
           >
-            <PhoneCall className="h-5 w-5 text-white" />
+            <PhoneCall className="h-5 w-5 text-[#8c9a56]" />
           </motion.button>
         )}
       </AnimatePresence>

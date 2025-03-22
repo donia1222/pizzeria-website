@@ -569,7 +569,7 @@ const MenuItem = ({ item, onAddToCart }: { item: MenuItem; onAddToCart: (item: M
       <div className="p-4">
         <div className="flex justify-between items-start mb-2">
           <h3 className="text-lg font-medium text-white">{item.name}</h3>
-          <span className="text-[#8c9a56] font-semibold">${item.price.toFixed(2)}</span>
+          <span className="text-[#8c9a56] font-semibold">CHF {item.price.toFixed(2)}</span>
         </div>
         <p className="text-gray-400 text-sm mb-4 line-clamp-2">{item.description}</p>
 
@@ -1947,7 +1947,7 @@ export default function PizzeriaWebsite() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <h4 className="text-white text-sm sm:text-base truncate">{item.name}</h4>
-                          <p className="text-xs sm:text-sm text-gray-400">${item.price.toFixed(2)}</p>
+                          <p className="text-xs sm:text-sm text-gray-400">CHF {item.price.toFixed(2)}</p>
                         </div>
                         <div className="flex items-center gap-1 sm:gap-2">
                           <Button
@@ -1970,7 +1970,7 @@ export default function PizzeriaWebsite() {
                         </div>
                         <div className="text-right w-16 sm:w-20 ml-auto">
                           <div className="text-white text-sm sm:text-base">
-                            ${(item.price * item.quantity).toFixed(2)}
+                            CHF {(item.price * item.quantity).toFixed(2)}
                           </div>
                           <Button
                             variant="ghost"

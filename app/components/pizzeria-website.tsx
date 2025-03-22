@@ -25,6 +25,8 @@ import {
   Pizza,
   Users,
   PhoneCall,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react"
 
 import { MediterraneanBackground } from "./mediterranean-background"
@@ -201,6 +203,17 @@ const galleryImages = [
 const cn = (...classes: (string | boolean | undefined)[]) => {
   return classes.filter(Boolean).join(" ")
 }
+
+// Add scrollbar utility class
+const scrollbarHideClass = `
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+`
 
 // Custom Button Component
 const Button = ({
@@ -690,6 +703,9 @@ export default function PizzeriaWebsite() {
   const [activeCategory, setActiveCategory] = useState("pizzas")
   const [showButton, setShowButton] = useState(true)
 
+  // Ref para el contenedor de testimonios
+  const testimonialsContainerRef = useRef<HTMLDivElement>(null)
+
   // Form state for reservation
   const [reservationDate, setReservationDate] = useState("")
   const [reservationTime, setReservationTime] = useState("")
@@ -818,15 +834,35 @@ export default function PizzeriaWebsite() {
 
   // Hero images for carousel
   const heroImages = [
+    "/pasta-with-tomato-sauce-served-pan_1220-7546.jpg",
     "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1590947132387-155cc02f3212?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?q=80&w=1200&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=1200&auto=format&fit=crop",
   ]
+
+  // Funciones para controlar el scroll de testimonios
+  const scrollTestimonialsLeft = () => {
+    if (testimonialsContainerRef.current) {
+      testimonialsContainerRef.current.scrollBy({
+        left: -370, // Ancho aproximado de una tarjeta + margen
+        behavior: "smooth",
+      })
+    }
+  }
+
+  const scrollTestimonialsRight = () => {
+    if (testimonialsContainerRef.current) {
+      testimonialsContainerRef.current.scrollBy({
+        left: 370, // Ancho aproximado de una tarjeta + margen
+        behavior: "smooth",
+      })
+    }
+  }
 
   return (
     <div className="min-h-screen bg-black text-white font-sans overflow-x-hidden">
       <MediterraneanBackground />
+
       {/* Header */}
       <header
         className={cn(
@@ -982,19 +1018,26 @@ export default function PizzeriaWebsite() {
       <section id="home" className="relative h-screen" ref={heroRef}>
         <ImageCarousel images={heroImages} />
 
-        <div className="flex items-center justify-center mt-20">
-          <motion.div className="text-center max-w-3xl px-4" style={{ y: heroTextY, opacity: heroOpacity }}>
+        <div className="flex items-center justify-center mt-20 ">
+          <motion.div className="text-center max-w-3xl px-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <h2 className="text-4xl md:text-6xl font-bold mb-4">Authentische italienische Pizza</h2>
-              <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-xl mx-auto">
-                Handgemacht mit traditionellen Rezepten und besten Zutaten - Erleben Sie ein Stück Italien
+              <div className="mb-4 relative ">
+                <div className="inline-block relative">
+                  <span className="absolute -top-6 -left-2 bg-[#8c9a56] text-black font-bold text-sm px-4 py-1 rounded-full transform -rotate-6 shadow-lg">
+                    Neu in Sevelen
+                  </span>
+                  <h2 className="text-4xl md:text-6xl font-bold">Authentische italienische Pizza</h2>
+                </div>
+              </div>
+              <p className="text-xl md:text-2xl text-gray-300  max-w-xl mx-auto">
+                Frisch eröffnet! Erleben Sie unsere handgemachten Pizzen mit traditionellen Rezepten und besten Zutaten
               </p>
 
-              <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <div className="flex flex-col sm:flex-row justify-center gap-4 mt-20">
                 <Button
                   onClick={() => setReservationOpen(true)}
                   className="bg-green-800 text-white hover:bg-green-900"
@@ -1009,7 +1052,7 @@ export default function PizzeriaWebsite() {
                   className="border-white text-white hover:bg-white/10"
                   size="lg"
                 >
-                  <Pizza className="h-4 w-4 mr-2" />
+                  <Pizza className="h-4 w-4 mr-2 " />
                   Speisekarte entdecken
                 </Button>
               </div>
@@ -1017,29 +1060,7 @@ export default function PizzeriaWebsite() {
           </motion.div>
         </div>
 
-        <div className="absolute bottom-10 left-0 right-0 flex justify-center px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 1 }}
-            className="flex flex-wrap md:flex-nowrap items-center justify-center gap-4 md:gap-8 bg-black/70 backdrop-blur-sm px-4 md:px-8 py-4 rounded-xl"
-          >
-            <div className="text-center w-full sm:w-auto mb-2 sm:mb-0">
-              <ChefHat className="h-6 w-6 text-[#8c9a56] mx-auto mb-2" />
-              <p className="text-sm text-gray-300">Meisterlicher Pizzabäcker</p>
-            </div>
 
-            <div className="text-center w-full sm:w-auto mb-2 sm:mb-0">
-              <Utensils className="h-6 w-6 text-[#8c9a56] mx-auto mb-2" />
-              <p className="text-sm text-gray-300">Frische Qualitätszutaten</p>
-            </div>
-
-            <div className="text-center w-full sm:w-auto">
-              <Wine className="h-6 w-6 text-[#8c9a56] mx-auto mb-2" />
-              <p className="text-sm text-gray-300">Ausgewählte Weine</p>
-            </div>
-          </motion.div>
-        </div>
       </section>
 
       {/* About Section */}
@@ -1053,7 +1074,7 @@ export default function PizzeriaWebsite() {
               transition={{ duration: 0.6 }}
               className="relative"
             >
-              <div className="relative z-10 overflow-hidden rounded-lg">
+              <div className="relative z-10 overflow-hidden rounded-lg mt-20">
                 <img
                   src="/baking-delicious-pizza-with-wood-fired-oven_23-2150134263.jpg"
                   alt="Pizza im Holzofen"
@@ -1069,27 +1090,27 @@ export default function PizzeriaWebsite() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-3xl font-bold mb-2 text-[#8c9a56]">Unsere Geschichte</h2>
-              <h3 className="text-4xl font-bold mb-8 text-white">Familientradition</h3>
+              <h2 className="text-3xl font-bold mb-2 text-[#8c9a56]">Über uns</h2>
+              <h3 className="text-4xl font-bold mb-8 text-white">Neue Tradition</h3>
 
               <p className="text-gray-300 mb-6 leading-relaxed">
-                Was mit einem kleinen Familienrestaurant in Neapel begann, ist heute eine leidenschaftliche Reise, um
-                die authentischen Aromen Italiens nach Deutschland zu bringen. Seit über 35 Jahren backen wir unsere
-                Pizzen nach traditionellen Rezepten.
+                Bouquet Mediterraneo ist neu in Sevelen, aber unsere Leidenschaft für authentische italienische Küche
+                reicht weit zurück. Unser Küchenchef Dari, ein ausgezeichneter Sommelier und gebürtiger Italiener,
+                bringt ein Stück seines Heimatlandes zu Ihnen.
               </p>
 
               <p className="text-gray-300 mb-8 leading-relaxed">
-                Unser Geheimnis? Langsam gereifter Teig, handverlesene Zutaten aus Italien und die Leidenschaft unserer
-                Pizzaioli, die jede Pizza mit Liebe zum Detail zubereiten. Besuchen Sie uns und erleben Sie ein Stück
-                italienischer Kultur.
+                Unser Geheimnis? Langsam gereifter Teig, handverlesene Zutaten aus Italien und die Leidenschaft für
+                echte neapolitanische Pizza. Besuchen Sie uns und erleben Sie ein authentisches italienisches
+                Geschmackserlebnis in unserem neu eröffneten Restaurant.
               </p>
 
               <div className="grid grid-cols-3 gap-8 mt-12">
                 <div className="text-center">
                   <div className="text-4xl font-bold text-[#8c9a56] mb-2">
-                    <AnimatedNumber value={35} suffix="+" />
+                    <AnimatedNumber value={100} suffix="%" />
                   </div>
-                  <p className="text-gray-400 text-sm">Jahre Erfahrung</p>
+                  <p className="text-gray-400 text-sm">Authentisch</p>
                 </div>
 
                 <div className="text-center">
@@ -1101,9 +1122,9 @@ export default function PizzeriaWebsite() {
 
                 <div className="text-center">
                   <div className="text-4xl font-bold text-[#8c9a56] mb-2">
-                    <AnimatedNumber value={500} suffix="+" />
+                    <AnimatedNumber value={2023} />
                   </div>
-                  <p className="text-gray-400 text-sm">Zufriedene Gäste</p>
+                  <p className="text-gray-400 text-sm">Eröffnet</p>
                 </div>
               </div>
             </motion.div>
@@ -1198,36 +1219,233 @@ export default function PizzeriaWebsite() {
             <h3 className="text-4xl font-bold mb-8 text-white">Was unsere Gäste sagen</h3>
           </motion.div>
 
-          <div className="max-w-5xl mx-auto px-2 sm:px-0">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {testimonials.map((testimonial, index) => (
+          <div className="relative max-w-7xl mx-auto px-2 sm:px-0">
+            <div className="overflow-x-auto pb-4 scrollbar-hide" ref={testimonialsContainerRef}>
+              <div className="flex space-x-6 min-w-max p-2">
+                {/* Rico Turnell */}
                 <motion.div
-                  key={testimonial.id}
-                  className="bg-gray-900 p-8 border border-gray-800 rounded-lg"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  className="bg-gray-900 p-8 border border-gray-800 rounded-lg flex-none w-[350px]"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  transition={{ duration: 0.5, delay: 0 }}
                   whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.3)" }}
                 >
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="h-12 w-12 rounded-full overflow-hidden">
-                      <img
-                        src={testimonial.image || "/placeholder.svg"}
-                        alt={testimonial.name}
-                        className="object-cover w-full h-full"
-                      />
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="flex items-center gap-4">
+                      <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-700 flex-shrink-0">
+                        <img
+                          src="/unnamed.png"
+                          alt="Rico Turnell"
+                          className="object-cover w-full h-full rounded-full"
+                        />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-medium">Rico Turnell</h4>
+                        <p className="text-red-400 text-xs"> NEU</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="text-white font-medium">{testimonial.name}</h4>
-                      <p className="text-gray-400 text-sm">{testimonial.position}</p>
+                    <div className="flex flex-col items-end">
+                      <RatingStars rating={5} />
+                      <span className="text-gray-400 text-xs mt-1">Lieferung · Abendessen · 10-20 CHF</span>
                     </div>
                   </div>
-                  <RatingStars rating={testimonial.rating} />
-                  <p className="text-gray-300 mt-4 italic">&quot;{testimonial.text}&quot;</p>
+                  <p className="text-gray-300 mt-4">
+                    Wau diese Pizza der wahnsinn, vielen lieben Dank für das Geschmackserlebnis.
+                  </p>
+          
                 </motion.div>
-              ))}
+
+                {/* Mauro Musarra */}
+                <motion.div
+                  className="bg-gray-900 p-8 border border-gray-800 rounded-lg flex-none w-[350px]"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                  whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.3)" }}
+                >
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="flex items-center gap-4">
+                      <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-700 flex-shrink-0">
+                        <img
+                          src="/unnamed-1.png"
+                          alt="Mauro Musarra"
+                          className="object-cover w-full h-full rounded-full"
+                        />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-medium">Mauro Musarra</h4>
+         
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <RatingStars rating={5} />
+                    </div>
+                  </div>
+                  <p className="text-gray-300 mt-4 italic">
+                    "5 stelle sono poche! Locale accogliente, personale gentile e preparato e le pizze buonissime! La
+                    mia nuova pizzeria preferita. Da provare ✌️"
+                  </p>
+                </motion.div>
+
+                {/* Stefano Calati */}
+                <motion.div
+                  className="bg-gray-900 p-8 border border-gray-800 rounded-lg flex-none w-[350px]"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.3)" }}
+                >
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="flex items-center gap-4">
+                      <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-700 flex-shrink-0">
+                        <img
+                          src="/unnamed-2.png"
+                          alt="Stefano Calati"
+                          className="object-cover w-full h-full rounded-full"
+                        />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-medium">Stefano Calati</h4>
+        
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <RatingStars rating={5} />
+                      <span className="text-gray-400 text-xs mt-1">Abholung</span>
+                    </div>
+                  </div>
+                  <p className="text-gray-300 mt-4">
+                    Absolutely Best pizza in the Valley. Perfect Napoli style pizza and according to Italian standards.
+                  </p>
+                </motion.div>
+
+                {/* Agam Unterreiner */}
+                <motion.div
+                  className="bg-gray-900 p-8 border border-gray-800 rounded-lg flex-none w-[350px]"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.3)" }}
+                >
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="flex items-center gap-4">
+                      <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-700 flex-shrink-0">
+                        <img
+                          src="unnamed-3.png"
+                          alt="Agam Unterreiner"
+                          className="object-cover w-full h-full rounded-full"
+                        />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-medium">Agam Unterreiner</h4>
+                        <p className="text-gray-400 text-xs"></p>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <RatingStars rating={5} />
+                      <span className="text-gray-400 text-xs mt-1">Vor Ort · Abendessen</span>
+                    </div>
+                  </div>
+                  <p className="text-gray-300 mt-4">
+                    Das Essen war ein absoluter Genuss! Dari, der Besitzer, ist ein ausgezeichneter Sommelier und ein
+                    wahrer Meister seines Fachs. Als Vorspeise hatten wir die Tagliere, die ein wahrer Genuss war.
+                  </p>
+                </motion.div>
+
+                {/* Karin Bless */}
+                <motion.div
+                  className="bg-gray-900 p-8 border border-gray-800 rounded-lg flex-none w-[350px]"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                  whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.3)" }}
+                >
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="flex items-center gap-4">
+                      <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-700 flex-shrink-0">
+                        <img
+                          src="/unnamed-4.png"
+                          alt="Karin Bless"
+                          className="object-cover w-full h-full rounded-full"
+                        />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-medium">Karin Bless</h4>
+                        <p className="text-red-400 text-xs"> NEU</p>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <RatingStars rating={5} />
+                      <span className="text-gray-400 text-xs mt-1">Vor Ort</span>
+                    </div>
+                  </div>
+                  <p className="text-gray-300 mt-4">
+                    Pizza war sensationell, mit frischen Zutaten. Da der Inhaber ein Sommelier ist haben wir einen
+                    ausgezeichneten Wein dazu getrunken. Man wird persönlich vom Chef bedient und dadurch dass er
+                    gebürtiger Italiener ist, fühlt man sich grad wie in Italien.
+                  </p>
+                </motion.div>
+
+
+                              {/* Ana Busuioc */}
+                              <motion.div
+                  className="bg-gray-900 p-8 border border-gray-800 rounded-lg flex-none w-[350px]"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.3)" }}
+                >
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="flex items-center gap-4">
+                      <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-700 flex-shrink-0">
+                        <img
+                          src="/unnamed-5.png"
+                          alt="Ana Busuioc"
+                          className="object-cover w-full h-full rounded-full"
+                        />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-medium">Ana Busuioc</h4>
+                        <p className="text-red-400 text-xs"> NEU</p>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <RatingStars rating={5} />
+                      <span className="text-gray-400 text-xs mt-1">Vor Ort · Abendessen</span>
+                    </div>
+                  </div>
+                  <p className="text-gray-300 mt-4">
+
+                  </p>
+                </motion.div>
+
+
+              </div>
             </div>
+
+
+
+            {/* Scroll indicators */}
+            <button
+              onClick={scrollTestimonialsLeft}
+              className="absolute left-0 top-1/2 -translate-y-1/2 h-10 w-10 flex items-center justify-center bg-black/50 backdrop-blur-sm rounded-full cursor-pointer z-10 hover:bg-[#8c9a56]/70 transition-colors"
+              aria-label="Vorherige Bewertungen"
+            >
+              <ChevronLeft className="h-6 w-6 text-white" />
+            </button>
+            <button
+              onClick={scrollTestimonialsRight}
+              className="absolute right-0 top-1/2 -translate-y-1/2 h-10 w-10 flex items-center justify-center bg-black/50 backdrop-blur-sm rounded-full cursor-pointer z-10 hover:bg-[#8c9a56]/70 transition-colors"
+              aria-label="Nächste Bewertungen"
+            >
+              <ChevronRight className="h-6 w-6 text-white" />
+            </button>
           </div>
         </div>
       </section>
@@ -1333,6 +1551,7 @@ export default function PizzeriaWebsite() {
 
               <div className="mt-12">
                 <h4 className="text-white font-medium mb-4">Folgen Sie uns</h4>
+
                 <div className="flex gap-4">
                   <motion.a
                     href="#"
@@ -1477,7 +1696,7 @@ export default function PizzeriaWebsite() {
 
           <div className="border-t border-gray-800 mt-8 pt-8 text-center">
             <p className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} Bouquet Mediterraneo. Alle Rechte vorbehalten.
+              © {new Date().getFullYear()} Bouquet Mediterraneo. Neu eröffnet in Sevelen.
             </p>
           </div>
         </div>
@@ -1892,7 +2111,7 @@ export default function PizzeriaWebsite() {
             transition={{ duration: 0.3 }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            aria-label="Llamar por teléfono"
+            aria-label="Telefon anrufen"
           >
             <PhoneCall className="h-5 w-5 text-[#8c9a56]" />
           </motion.button>

@@ -1,218 +1,383 @@
-import type { MenuItem } from "~/types/restaurant";
+// Interfaces
+export interface MenuItem {
+  id: number
+  name: string
+  description: string
+  price: number
+  image: string
+  popular?: boolean
+  vegan?: boolean
+  vegetarian?: boolean
+  spicy?: boolean
+  category: string
+}
 
-// Food menu items
-export const menuItems: { category: string; items: MenuItem[] }[] = [
-  {
-    category: "Vorspeisen",
-    items: [
-      {
-        id: 1,
-        name: "Bruschetta",
-        description: "Geröstetes Brot mit Knoblauch, Olivenöl, Salz, Tomaten und Basilikum",
-        price: 8.95,
-        image: "https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?q=80&w=200&auto=format&fit=crop",
-        popular: true,
-        vegan: true,
-      },
-      {
-        id: 2,
-        name: "Arancini",
-        description: "Gefüllte Reisbällchen mit Paniermehl und frittiert",
-        price: 10.95,
-        image: "https://images.unsplash.com/photo-1595295333158-4742f28fbd85?q=80&w=200&auto=format&fit=crop",
-        vegetarian: true,
-      },
-      {
-        id: 3,
-        name: "Caprese Salat",
-        description: "Frischer Mozzarella, Tomaten und Basilikum mit Salz und Olivenöl gewürzt",
-        price: 12.95,
-        image: "https://images.unsplash.com/photo-1608897013039-887f21d8c804?q=80&w=200&auto=format&fit=crop",
-        vegetarian: true,
-      },
-    ],
-  },
-  {
-    category: "Hauptgerichte",
-    items: [
-      {
-        id: 4,
-        name: "Pizza Margherita",
-        description: "Klassische Pizza mit Tomatensauce, Mozzarella und Basilikum",
-        price: 14.95,
-        image: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?q=80&w=200&auto=format&fit=crop",
-        popular: true,
-        vegetarian: true,
-      },
-      {
-        id: 5,
-        name: "Spaghetti Carbonara",
-        description: "Spaghetti mit einer cremigen Sauce aus Eiern, Käse, Pancetta und schwarzem Pfeffer",
-        price: 16.95,
-        image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?q=80&w=200&auto=format&fit=crop",
-      },
-      {
-        id: 6,
-        name: "Risotto ai Funghi",
-        description: "Cremiges Risotto mit Waldpilzen und Parmesan",
-        price: 18.95,
-        image: "https://images.unsplash.com/photo-1633964913849-96bb09add3f5?q=80&w=200&auto=format&fit=crop",
-        vegetarian: true,
-      },
-      {
-        id: 7,
-        name: "Osso Buco",
-        description: "Kalbshaxe geschmort mit Gemüse, Weißwein und Brühe",
-        price: 24.95,
-        image: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=200&auto=format&fit=crop",
-      },
-    ],
-  },
-  {
-    category: "Desserts",
-    items: [
-      {
-        id: 8,
-        name: "Tiramisu",
-        description: "Kaffeegetränktes italienisches Dessert aus Löffelbiskuits und Mascarpone-Creme",
-        price: 8.95,
-        image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?q=80&w=200&auto=format&fit=crop",
-        popular: true,
-        vegetarian: true,
-      },
-      {
-        id: 9,
-        name: "Panna Cotta",
-        description: "Italienisches Dessert aus gesüßter Sahne mit Gelatine",
-        price: 7.95,
-        image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=200&auto=format&fit=crop",
-        vegetarian: true,
-      },
-      {
-        id: 10,
-        name: "Cannoli",
-        description: "Röhrenförmige Schalen aus frittiertem Teig gefüllt mit süßer, cremiger Füllung",
-        price: 6.95,
-        image: "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?q=80&w=200&auto=format&fit=crop",
-        vegetarian: true,
-      },
-    ],
-  },
-  {
-    category: "Getränke",
-    items: [
-      {
-        id: 11,
-        name: "Italienische Weinauswahl",
-        description: "Auswahl an feinen italienischen Weinen - rot, weiß und prickelnd",
-        price: 9.95,
-        image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=200&auto=format&fit=crop",
-        byGlass: true,
-      },
-      {
-        id: 12,
-        name: "Aperol Spritz",
-        description: "Prosecco, Aperol und Sodawasser",
-        price: 8.95,
-        image: "https://images.unsplash.com/photo-1527761939622-933c972ea2fb?q=80&w=200&auto=format&fit=crop",
-        popular: true,
-      },
-      {
-        id: 13,
-        name: "Espresso",
-        description: "Starker italienischer Kaffee",
-        price: 3.95,
-        image: "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?q=80&w=200&auto=format&fit=crop",
-        vegan: true,
-      },
-    ],
-  },
-  {
-    category: "Pizzas",
-    items: [
-      {
-        id: 14,
-        name: "Pizza Margherita",
-        description: "Klassische Pizza mit Tomatensauce, Mozzarella und Basilikum",
-        price: 14.95,
-        image: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?q=80&w=200&auto=format&fit=crop",
-        popular: true,
-        vegetarian: true,
-      },
-      {
-        id: 15,
-        name: "Pizza Pepperoni",
-        description: "Pizza mit Tomatensauce, Mozzarella und würziger Pepperoni",
-        price: 16.95,
-        image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=200&auto=format&fit=crop",
-        popular: true,
-      },
-      {
-        id: 16,
-        name: "Pizza Quattro Formaggi",
-        description: "Pizza mit vier verschiedenen Käsesorten: Mozzarella, Gorgonzola, Parmesan und Ricotta",
-        price: 18.95,
-        image: "https://images.unsplash.com/photo-1620374645498-af6bd681a0bd?q=80&w=200&auto=format&fit=crop",
-        vegetarian: true,
-      },
-      {
-        id: 17,
-        name: "Pizza Prosciutto e Funghi",
-        description: "Pizza mit Tomatensauce, Mozzarella, Schinken und Pilzen",
-        price: 17.95,
-        image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=200&auto=format&fit=crop",
-      },
-      {
-        id: 18,
-        name: "Pizza Vegetariana",
-        description: "Pizza mit Tomatensauce, Mozzarella und frischem Gemüse der Saison",
-        price: 16.95,
-        image: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?q=80&w=200&auto=format&fit=crop",
-        vegetarian: true,
-        vegan: true,
-      },
-      {
-        id: 19,
-        name: "Pizza Diavola",
-        description: "Scharfe Pizza mit Tomatensauce, Mozzarella, scharfer Salami und Chilischoten",
-        price: 17.95,
-        image: "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?q=80&w=200&auto=format&fit=crop",
-      },
-    ],
-  },
-];
+export interface Testimonial {
+  id: number
+  name: string
+  text: string
+  rating: number
+  image: string
+  position?: string
+}
 
-// Testimonials data
-export const testimonials = [
+// Menu data
+export const menuItems: MenuItem[] = [
+  // Antipasti e Primi
   {
     id: 1,
-    name: "Marco Rossi",
-    text: "Das beste italienische Essen außerhalb Italiens! Die Atmosphäre ist authentisch und der Service tadellos.",
-    rating: 5,
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=100&auto=format&fit=crop",
+    name: "Tagliere di salumi e formaggi all'italiana",
+    description: "Selezione di salumi e formaggi italiani serviti con pane",
+    price: 26.5,
+    image: "https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?q=80&w=200&auto=format&fit=crop",
+    popular: true,
+    category: "starters",
   },
   {
     id: 2,
-    name: "Sophie Laurent",
-    text: "Ihre hausgemachte Pasta ist zum Sterben. Ich komme seit Jahren hierher und die Qualität enttäuscht nie.",
-    rating: 5,
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&auto=format&fit=crop",
+    name: "Lasagna",
+    description: "Lasagna tradizionale italiana con ragù e besciamella",
+    price: 24.5,
+    image: "/penne-pasta-tomato-sauce-with-chicken-tomatoes-wooden-table_2829-19739.jpg",
+    category: "starters",
   },
   {
     id: 3,
-    name: "James Wilson",
-    text: "Das Reservierungssystem ist so bequem und ihr Takeaway-Service ist prompt. Tolles Essen, toller Service!",
-    rating: 4,
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop",
+    name: "Parmigiana di Melanzane",
+    description: "Melanzane al forno con pomodoro, mozzarella e parmigiano",
+    price: 22,
+    image: "https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?q=80&w=200&auto=format&fit=crop",
+    vegetarian: true,
+    category: "starters",
   },
-];
+
+  // Insalate
+  {
+    id: 4,
+    name: "Insalata Verde",
+    description: "Insalata mista di verdure verdi fresche",
+    price: 11,
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=200&auto=format&fit=crop",
+    vegetarian: true,
+    vegan: true,
+    category: "starters",
+  },
+  {
+    id: 5,
+    name: "Insalata Mista",
+    description: "Insalata mista con pomodori, cetrioli, olive e cipolla",
+    price: 14,
+    image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=200&auto=format&fit=crop",
+    vegetarian: true,
+    vegan: true,
+    category: "starters",
+  },
+
+  // Pizze
+  {
+    id: 6,
+    name: "Marinara",
+    description: "Pomodoro, aglio, origano, basilico, olio evo",
+    price: 17.5,
+    image: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?q=80&w=200&auto=format&fit=crop",
+    vegan: true,
+    category: "pizzas",
+  },
+  {
+    id: 7,
+    name: "Margherita",
+    description: "Pomodoro, mozzarella, basilico, olio evo",
+    price: 19,
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=200&auto=format&fit=crop",
+    popular: true,
+    vegetarian: true,
+    category: "pizzas",
+  },
+  {
+    id: 8,
+    name: "Bufalina",
+    description: "Pomodoro, mozzarella di bufala, parmigiano, basilico, olio evo",
+    price: 20,
+    image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=200&auto=format&fit=crop",
+    vegetarian: true,
+    category: "pizzas",
+  },
+  {
+    id: 9,
+    name: "L'autentica",
+    description: "Pomodoro, mozzarella, prosciutto cotto, funghi, basilico, olio evo",
+    price: 22.5,
+    image: "https://images.unsplash.com/photo-1595708684082-a173bb3a06c5?q=80&w=200&auto=format&fit=crop",
+    category: "pizzas",
+  },
+  {
+    id: 10,
+    name: "Tonno e Cipolla",
+    description: "Pomodoro, filetti di tonno sott'olio, cipolla, basilico, olio evo",
+    price: 27,
+    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=200&auto=format&fit=crop",
+    category: "pizzas",
+  },
+  {
+    id: 11,
+    name: "Salsiccia e Friarielli",
+    description: "Fiordilatte, salsiccia, friarielli, basilico, olio evo",
+    price: 28,
+    image: "https://images.unsplash.com/photo-1593560708920-61b98ae52d42?q=80&w=200&auto=format&fit=crop",
+    category: "pizzas",
+  },
+  {
+    id: 12,
+    name: "4 Sapori",
+    description: "Pomodoro, mozzarella, carciofi, prosciutto cotto, funghi, olive, basilico, olio evo",
+    price: 23.9,
+    image: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?q=80&w=200&auto=format&fit=crop",
+    category: "pizzas",
+  },
+  {
+    id: 13,
+    name: "Burrata e Crudo",
+    description: "Pomodoro, mozzarella, prosciutto crudo, burrata, basilico, olio evo",
+    price: 27,
+    image: "https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?q=80&w=200&auto=format&fit=crop",
+    popular: true,
+    category: "pizzas",
+  },
+  {
+    id: 14,
+    name: "Crudo, Rucola e Grana",
+    description: "Pomodoro, mozzarella, prosciutto crudo, rucola, grana, olio evo",
+    price: 27,
+    image: "https://images.unsplash.com/photo-1593504049359-74330189a345?q=80&w=200&auto=format&fit=crop",
+    category: "pizzas",
+  },
+  {
+    id: 15,
+    name: "Diavola",
+    description: "Pomodoro, mozzarella, salame piccante, basilico, olio evo",
+    price: 22.5,
+    image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=200&auto=format&fit=crop",
+    spicy: true,
+    category: "pizzas",
+  },
+  {
+    id: 16,
+    name: "Provola e Pepe",
+    description: "Pomodoro, provola, pepe, basilico, olio evo",
+    price: 23.5,
+    image: "https://images.unsplash.com/photo-1571066811602-716837d681de?q=80&w=200&auto=format&fit=crop",
+    vegetarian: true,
+    category: "pizzas",
+  },
+  {
+    id: 17,
+    name: "Napoli",
+    description: "Pomodoro, mozzarella, alici, capperi, olive, origano, basilico, olio evo",
+    price: 23.5,
+    image: "https://images.unsplash.com/photo-1585238342024-78d387f4a707?q=80&w=200&auto=format&fit=crop",
+    category: "pizzas",
+  },
+  {
+    id: 18,
+    name: "Vegetariana",
+    description: "Mozzarella, melanzane, zucchine, datterini, olio evo",
+    price: 22,
+    image: "/mix-pizza-with-tomato-slices-mushroom-olive_140725-185-1.jpg",
+    vegetarian: true,
+    category: "pizzas",
+  },
+  {
+    id: 19,
+    name: "4 Formaggi",
+    description: "Fiordilatte, provola affumicata, gorgonzola, parmigiano, olio evo",
+    price: 22,
+    image: "https://images.unsplash.com/photo-1573821663912-569905455b1c?q=80&w=200&auto=format&fit=crop",
+    vegetarian: true,
+    category: "pizzas",
+  },
+  {
+    id: 20,
+    name: "Mortadella e Pistacchio",
+    description: "Mozzarella, mortadella al pistacchio, pistacchio, basilico, olio evo",
+    price: 28.5,
+    image: "https://images.unsplash.com/photo-1617343267017-e344bdc7ec94?q=80&w=200&auto=format&fit=crop",
+    popular: true,
+    category: "pizzas",
+  },
+  {
+    id: 21,
+    name: "Calzone Ripieno",
+    description: "Pomodoro, fiordilatte, provola affumicata, prosciutto cotto, salame",
+    price: 28,
+    image: "https://images.unsplash.com/photo-1536964549204-cce9eab227bd?q=80&w=200&auto=format&fit=crop",
+    category: "pizzas",
+  },
+  // Dolci (Desserts)
+  {
+    id: 22,
+    name: "Tiramisù della casa",
+    description: "Klassisches hausgemachtes Tiramisu mit Mascarpone und Espresso",
+    price: 11,
+    image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?q=80&w=200&auto=format&fit=crop",
+    popular: true,
+    vegetarian: true,
+    category: "desserts",
+  },
+  {
+    id: 23,
+    name: "Pizza alla Nutella",
+    description: "Süße Pizza mit Nutella, serviert mit Puderzucker",
+    price: 16,
+    image: "https://images.unsplash.com/photo-1559622214-f8a9850965bb?q=80&w=200&auto=format&fit=crop",
+    vegetarian: true,
+    category: "desserts",
+  },
+  {
+    id: 24,
+    name: "Mini Cannoli Siciliani",
+    description: "Traditionelle sizilianische Cannoli gefüllt mit süßer Ricotta-Creme",
+    price: 14,
+    image: "https://images.unsplash.com/photo-1623246123320-0d6636755796?q=80&w=200&auto=format&fit=crop",
+    vegetarian: true,
+    category: "desserts",
+  },
+
+  // Aperitivi & birre
+  {
+    id: 25,
+    name: "Birra Moretti 0,33cl",
+    description: "Klassisches italienisches Lagerbier",
+    price: 5.5,
+    image: "https://images.unsplash.com/photo-1608270586620-248524c67de9?q=80&w=200&auto=format&fit=crop",
+    category: "drinks",
+  },
+  {
+    id: 26,
+    name: "Birra Moretti Zero 0.0% 0,33cl",
+    description: "Alkoholfreies italienisches Lagerbier",
+    price: 5.7,
+    image: "https://images.unsplash.com/photo-1613208602577-50fd21015f58?q=80&w=200&auto=format&fit=crop",
+    category: "drinks",
+  },
+  {
+    id: 27,
+    name: "Aperol Spritz",
+    description: "Erfrischender Aperitif mit Aperol, Prosecco und Soda",
+    price: 14,
+    image: "https://images.unsplash.com/photo-1560512823-829485b8bf16?q=80&w=200&auto=format&fit=crop",
+    popular: true,
+    category: "drinks",
+  },
+  {
+    id: 28,
+    name: "Campari Spritz",
+    description: "Klassischer Aperitif mit Campari, Prosecco und Soda",
+    price: 14,
+    image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=200&auto=format&fit=crop",
+    category: "drinks",
+  },
+  {
+    id: 29,
+    name: "Limoncello Spritz",
+    description: "Erfrischender Aperitif mit Limoncello, Prosecco und Soda",
+    price: 14,
+    image: "https://images.unsplash.com/photo-1536935338788-846bb9981813?q=80&w=200&auto=format&fit=crop",
+    category: "drinks",
+  },
+  {
+    id: 30,
+    name: "San Bitter Spritz - Alkoholfrei",
+    description: "Alkoholfreier Aperitif mit San Bitter und Soda",
+    price: 8.5,
+    image: "https://images.unsplash.com/photo-1536599424071-0b215a388ba7?q=80&w=200&auto=format&fit=crop",
+    category: "drinks",
+  },
+  {
+    id: 31,
+    name: "Crodino Spritz - Alkoholfrei",
+    description: "Alkoholfreier Aperitif mit Crodino und Soda",
+    price: 8.5,
+    image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=200&auto=format&fit=crop",
+    category: "drinks",
+  },
+
+  // Cocktail & Aperitivi
+  {
+    id: 32,
+    name: "Portofino Gin Tonic",
+    description: "Premium Gin mit Tonic Water und mediterranen Kräutern",
+    price: 18.5,
+    image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=200&auto=format&fit=crop",
+    category: "drinks",
+  },
+  {
+    id: 33,
+    name: "Negroni",
+    description: "Klassischer italienischer Cocktail mit Gin, Campari und Vermouth",
+    price: 16.5,
+    image: "https://images.unsplash.com/photo-1551751299-1b51cab2694c?q=80&w=200&auto=format&fit=crop",
+    category: "drinks",
+  },
+  {
+    id: 34,
+    name: "Negroni Sbagliato",
+    description: "Variation des klassischen Negroni mit Prosecco statt Gin",
+    price: 16,
+    image: "https://images.unsplash.com/photo-1527761939622-933c1e30526a?q=80&w=200&auto=format&fit=crop",
+    category: "drinks",
+  },
+  {
+    id: 35,
+    name: "Americano",
+    description: "Erfrischender Cocktail mit Campari, Vermouth und Soda",
+    price: 15,
+    image: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?q=80&w=200&auto=format&fit=crop",
+    category: "drinks",
+  },
+]
+
+// Testimonials
+export const testimonials: Testimonial[] = [
+  {
+    id: 1,
+    name: "Marco Rossi",
+    text: "Die beste Pizza außerhalb Italiens! Der knusprige Teig und die frischen Zutaten erinnern mich an meine Heimat.",
+    rating: 5,
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=100&auto=format&fit=crop",
+    position: "Italienischer Chef",
+  },
+  {
+    id: 2,
+    name: "Laura Schmidt",
+    text: "Die gemütliche Atmosphäre und der freundliche Service machen jeden Besuch zu einem besonderen Erlebnis. Die Pizza Diavola ist unglaublich!",
+    rating: 5,
+    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&auto=format&fit=crop",
+    position: "Food Bloggerin",
+  },
+  {
+    id: 3,
+    name: "Thomas Meyer",
+    text: "Wir bestellen jede Woche zum Filmabend und die Pizza kommt immer heiß und perfekt an. Ein absolutes Muss für Pizzaliebhaber!",
+    rating: 5,
+    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=100&auto=format&fit=crop",
+    position: "Stammkunde",
+  },
+]
 
 // Gallery images
-export const galleryImages = [
-  "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=300&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=300&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=300&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=300&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1544148103-0773bf10d330?q=80&w=300&auto=format&fit=crop",
-  "https://img.freepik.com/free-photo/cheesy-tokbokki-korean-traditional-food-black-board-background-lunch-dish_1150-42995.jpg?t=st=1742167767~exp=1742171367~hmac=0e3c8579cf6fccd007ec40d0ced99ba4c64f8d70c569f0f194cc341923402eee&w=996",
-];
+export const galleryImages: string[] = [
+  "/penne-pasta-tomato-sauce-with-chicken-tomatoes-wooden-table_2829-19739.jpg",
+  "/table-arrangement-luxury-restaurant_23-2150598334.jpg",
+  "video",
+  "https://images.unsplash.com/photo-1590947132387-155cc02f3212?q=80&w=300&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=300&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?q=80&w=300&auto=format&fit=crop",
+]
+
+// Hero images for carousel
+export const heroImages: string[] = [
+  "/pasta-with-tomato-sauce-served-pan_1220-7546.jpg",
+  "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1590947132387-155cc02f3212?q=80&w=1200&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=1200&auto=format&fit=crop",
+]

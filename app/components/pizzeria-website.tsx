@@ -627,7 +627,7 @@ export default function PizzeriaWebsite() {
                   <div className="w-full h-full">
                     <video src="/1280x720.mp4" className="object-cover w-full h-full" autoPlay muted loop playsInline />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                      <ArrowRight className="text-white h-8 w-8" />
+          
                     </div>
                   </div>
                 ) : (
@@ -638,7 +638,7 @@ export default function PizzeriaWebsite() {
                       className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                      <ArrowRight className="text-white h-8 w-8" />
+        
                     </div>
                   </>
                 )}

@@ -194,38 +194,6 @@ const AnimatedNumber = ({ value, suffix = "" }: { value: number; suffix?: string
   )
 }
 
-// Componente de menú sin auto-scroll
-const MenuRow = ({
-  items,
-  title,
-  onAddToCart,
-}: {
-  items: any[]
-  title: string
-  onAddToCart: (item: any) => void
-}) => {
-  return (
-    <div>
-      <h4 className="text-xl font-medium text-[#8c9a56] mb-4">{title}</h4>
-      <div className="overflow-x-auto pb-4 touch-pan-x" style={{ WebkitOverflowScrolling: "touch" }}>
-        <div className="flex gap-4 px-0">
-          {items.map((item, index) => (
-            <motion.div
-              key={`${item.id}-${index}`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-              className="w-[280px] flex-shrink-0"
-            >
-              <MenuItemType item={item} onAddToCart={onAddToCart} />
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
-}
-
 export default function PizzeriaWebsite() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -300,15 +268,6 @@ export default function PizzeriaWebsite() {
 
   // Filter menu items by category
   const filteredMenuItems = menuItems.filter((item) => item.category === activeCategory)
-
-  // Filtrar pizzas vegetarianas (incluyendo marinera) y no vegetarianas
-  const vegetarianPizzas = filteredMenuItems.filter(
-    (item) => item.vegetarian || item.name.toLowerCase().includes("marinera"),
-  )
-
-  const classicPizzas = filteredMenuItems.filter(
-    (item) => !item.vegetarian && !item.name.toLowerCase().includes("marinera"),
-  )
 
   return (
     <div className="min-h-screen bg-black text-white font-sans overflow-x-hidden">
@@ -581,8 +540,8 @@ export default function PizzeriaWebsite() {
             </p>
           </motion.div>
 
-          <div className="mb-12 w-full">
-            <div className="flex justify-start md:justify-center overflow-x-auto scrollbar-hide pb-4 px-2 whitespace-nowrap">
+          <div className="mb-12">
+            <div className="flex justify-start md:justify-center overflow-x-auto pb-4 px-2">
               {[
                 ["pizzas", "Pizza"],
                 ["starters", "Antipasti e Primi"],
@@ -613,33 +572,18 @@ export default function PizzeriaWebsite() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="w-full"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
-            {activeCategory === "pizzas" ? (
-              <div className="space-y-8">
-                {/* Vegetarische Pizzen */}
-                <MenuRow items={vegetarianPizzas} title="Vegetarische Pizzen" onAddToCart={addToCart} />
-
-                {/* Klassische Pizzen */}
-                <MenuRow items={classicPizzas} title="Klassische Pizzen" onAddToCart={addToCart} />
-              </div>
-            ) : (
-              <div className="overflow-x-auto pb-4">
-                <div className="flex gap-4 px-0">
-                  {filteredMenuItems.map((item, index) => (
-                    <motion.div
-                      key={item.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.1 }}
-                      className="w-[280px] flex-shrink-0"
-                    >
-                      <MenuItemType item={item} onAddToCart={addToCart} />
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            )}
+            {filteredMenuItems.map((item, index) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+              >
+                <MenuItemType item={item} onAddToCart={addToCart} />
+              </motion.div>
+            ))}
           </motion.div>
 
           <div className="text-center mt-16">

@@ -291,6 +291,30 @@ export default function PizzeriaWebsite() {
                 {label}
               </motion.a>
             ))}
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault()
+                window.scrollTo({ top: 0, behavior: "smooth" })
+              }}
+              className="text-gray-300 hover:text-[#8c9a56] transition-colors text-sm uppercase tracking-widest flex items-center ml-4"
+            >
+              <span>Nach oben</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="ml-1"
+              >
+                <path d="m18 15-6-6-6 6" />
+              </svg>
+            </a>
           </nav>
 
           <div className="flex items-center space-x-4">
@@ -772,6 +796,30 @@ export default function PizzeriaWebsite() {
                 className="text-gray-300 hover:text-[#8c9a56] transition-colors text-sm uppercase tracking-widest"
               >
                 Kontakt
+              </a>
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault()
+                  window.scrollTo({ top: 0, behavior: "smooth" })
+                }}
+                className="text-gray-300 hover:text-[#8c9a56] transition-colors text-sm uppercase tracking-widest flex items-center ml-4"
+              >
+                <span>Nach oben</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="ml-1"
+                >
+                  <path d="m18 15-6-6-6 6" />
+                </svg>
               </a>
 
               <Button onClick={() => setReservationOpen(true)} className="bg-green-800 text-white hover:bg-green-900">

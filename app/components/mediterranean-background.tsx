@@ -14,10 +14,42 @@ export const MediterraneanBackground: React.FC = () => {
         <path d="M30,40 Q40,30 50,40" stroke="currentColor" strokeWidth="1.5" fill="none" />
         <path d="M40,45 Q50,35 60,45" stroke="currentColor" strokeWidth="1.5" fill="none" />
         <path d="M50,50 Q60,40 70,50" stroke="currentColor" strokeWidth="1.5" fill="none" />
-        <ellipse cx="35" cy="38" rx="3" ry="5" transform="rotate(-30 35 38)" fill="currentColor" />
-        <ellipse cx="45" cy="43" rx="3" ry="5" transform="rotate(-30 45 43)" fill="currentColor" />
-        <ellipse cx="55" cy="48" rx="3" ry="5" transform="rotate(-30 55 48)" fill="currentColor" />
-        <ellipse cx="65" cy="53" rx="3" ry="5" transform="rotate(-30 65 53)" fill="currentColor" />
+        <ellipse
+          cx="35"
+          cy="38"
+          rx="3"
+          ry="5"
+          transform="rotate(-30 35 38)"
+          fill="currentColor"
+          className="text-green-300"
+        />
+        <ellipse
+          cx="45"
+          cy="43"
+          rx="3"
+          ry="5"
+          transform="rotate(-30 45 43)"
+          fill="currentColor"
+          className="text-green-300"
+        />
+        <ellipse
+          cx="55"
+          cy="48"
+          rx="3"
+          ry="5"
+          transform="rotate(-30 55 48)"
+          fill="currentColor"
+          className="text-green-300"
+        />
+        <ellipse
+          cx="65"
+          cy="53"
+          rx="3"
+          ry="5"
+          transform="rotate(-30 65 53)"
+          fill="currentColor"
+          className="text-green-300"
+        />
       </svg>
 
       {/* Olive Branch 2 - Bottom Right */}
@@ -31,10 +63,42 @@ export const MediterraneanBackground: React.FC = () => {
         <path d="M70,60 Q60,70 50,60" stroke="currentColor" strokeWidth="1.5" fill="none" />
         <path d="M60,55 Q50,65 40,55" stroke="currentColor" strokeWidth="1.5" fill="none" />
         <path d="M50,50 Q40,60 30,50" stroke="currentColor" strokeWidth="1.5" fill="none" />
-        <ellipse cx="65" cy="62" rx="3" ry="5" transform="rotate(30 65 62)" fill="currentColor" />
-        <ellipse cx="55" cy="57" rx="3" ry="5" transform="rotate(30 55 57)" fill="currentColor" />
-        <ellipse cx="45" cy="52" rx="3" ry="5" transform="rotate(30 45 52)" fill="currentColor" />
-        <ellipse cx="35" cy="47" rx="3" ry="5" transform="rotate(30 35 47)" fill="currentColor" />
+        <ellipse
+          cx="65"
+          cy="62"
+          rx="3"
+          ry="5"
+          transform="rotate(30 65 62)"
+          fill="currentColor"
+          className="text-green-300"
+        />
+        <ellipse
+          cx="55"
+          cy="57"
+          rx="3"
+          ry="5"
+          transform="rotate(30 55 57)"
+          fill="currentColor"
+          className="text-green-300"
+        />
+        <ellipse
+          cx="45"
+          cy="52"
+          rx="3"
+          ry="5"
+          transform="rotate(30 45 52)"
+          fill="currentColor"
+          className="text-green-300"
+        />
+        <ellipse
+          cx="35"
+          cy="47"
+          rx="3"
+          ry="5"
+          transform="rotate(30 35 47)"
+          fill="currentColor"
+          className="text-green-300"
+        />
       </svg>
 
       {/* Olive 1 - Center Left */}
@@ -44,7 +108,15 @@ export const MediterraneanBackground: React.FC = () => {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <ellipse cx="50" cy="50" rx="15" ry="25" transform="rotate(-15 50 50)" fill="currentColor" />
+        <ellipse
+          cx="50"
+          cy="50"
+          rx="15"
+          ry="25"
+          transform="rotate(-15 50 50)"
+          fill="currentColor"
+          className="text-green-300"
+        />
         <path d="M50,25 Q55,50 50,75" stroke="currentColor" strokeWidth="1.5" fill="none" />
       </svg>
 
@@ -55,7 +127,15 @@ export const MediterraneanBackground: React.FC = () => {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <ellipse cx="50" cy="50" rx="15" ry="25" transform="rotate(15 50 50)" fill="currentColor" />
+        <ellipse
+          cx="50"
+          cy="50"
+          rx="15"
+          ry="25"
+          transform="rotate(15 50 50)"
+          fill="currentColor"
+          className="text-green-300"
+        />
         <path d="M50,25 Q45,50 50,75" stroke="currentColor" strokeWidth="1.5" fill="none" />
       </svg>
 
@@ -97,4 +177,6 @@ export const MediterraneanBackground: React.FC = () => {
     </div>
   )
 }
+
+
 

@@ -14,7 +14,6 @@ import {
   MapPin,
   Instagram,
   Facebook,
-  Twitter,
   Mail,
   PhoneCall,
   ArrowRight,
@@ -700,12 +699,23 @@ export default function PizzeriaWebsite() {
                 <div className="flex items-start gap-4">
                   <Clock className="h-5 w-5 text-[#8c9a56] mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="text-white font-medium">Öffnungszeiten</h4>
-                    <p className="text-gray-300">Dienstag - Donnerstag:</p>
-                    <p className="text-gray-300">11:00–14:00, 17:00–22:00 Uhr</p>
-                    <p className="text-gray-300">Freitag: 11:00–14:00, 17:00–22:00 Uhr</p>
-                    <p className="text-gray-300">Samstag: 11:00–14:00, 17:00–23:00 Uhr</p>
-                    <p className="text-gray-300">Sonntag, Montag: Geschlossen</p>
+                    <h4 className="text-white font-medium mb-2">Öffnungszeiten</h4>
+                    <p className="text-gray-300">
+                      <span className="font-bold">Dienstag - Donnerstag:</span>
+                    </p>
+                    <p className="text-gray-300">
+                      <span className="font-bold"></span> 11:00–14:00, 17:00–22:00 Uhr
+                    </p>
+                    <p className="text-gray-300">
+                      <span className="font-bold">Freitag:</span> 11:00–14:00, 17:00–22:00 Uhr
+                    </p>
+                    <p className="text-gray-300">
+                      <span className="font-bold">Samstag:</span> 11:00–14:00, 17:00–23:00 Uhr
+                    </p>
+                    <p className="text-gray-300">
+                      <span className="font-bold">Sonntag, Montag:</span>{" "}
+                      <span className="text-red-500 font-medium">Geschlossen</span>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -715,7 +725,7 @@ export default function PizzeriaWebsite() {
 
                 <div className="flex gap-4">
                   <motion.a
-                    href="#"
+                    href="https://www.instagram.com/bouquet.mediterraneo/"
                     className="bg-gray-900 w-10 h-10 rounded-full flex items-center justify-center text-[#8c9a56] hover:bg-green-800 hover:text-white transition-colors"
                     whileHover={{ y: -5 }}
                     whileTap={{ scale: 0.9 }}
@@ -723,20 +733,12 @@ export default function PizzeriaWebsite() {
                     <Facebook size={20} />
                   </motion.a>
                   <motion.a
-                    href="#"
+                    href="https://www.instagram.com/bouquet.mediterraneo/"
                     className="bg-gray-900 w-10 h-10 rounded-full flex items-center justify-center text-[#8c9a56] hover:bg-green-800 hover:text-white transition-colors"
                     whileHover={{ y: -5 }}
                     whileTap={{ scale: 0.9 }}
                   >
                     <Instagram size={20} />
-                  </motion.a>
-                  <motion.a
-                    href="#"
-                    className="bg-gray-900 w-10 h-10 rounded-full flex items-center justify-center text-[#8c9a56] hover:bg-green-800 hover:text-white transition-colors"
-                    whileHover={{ y: -5 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <Twitter size={20} />
                   </motion.a>
                 </div>
               </div>
@@ -820,9 +822,11 @@ export default function PizzeriaWebsite() {
         onOpenChange={setOrderOpen}
         cartItems={cartItems}
         updateQuantity={updateQuantity}
-        removeFromCart={removeFromCart} clearCart={function (): void {
+        removeFromCart={removeFromCart}
+        clearCart={(): void => {
           throw new Error("Function not implemented.")
-        } }      />
+        }}
+      />
 
       {/* Phone button */}
       <AnimatePresence>

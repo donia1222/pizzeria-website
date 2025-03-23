@@ -402,7 +402,7 @@ export default function PizzeriaWebsite() {
       </AnimatePresence>
 
       {/* Hero Section */}
-      <section id="home" className="relative h-screen" ref={heroRef}>
+      <section id="home" className="relative mb-20" ref={heroRef}>
         <div className="relative">
           <ImageCarousel images={heroImages} />
 

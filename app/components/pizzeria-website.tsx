@@ -540,8 +540,8 @@ export default function PizzeriaWebsite() {
             </p>
           </motion.div>
 
-          <div className="mb-12">
-            <div className="flex justify-start md:justify-center overflow-x-auto pb-4 px-2">
+          <div className="mb-12 w-full">
+            <div className="flex justify-start md:justify-center overflow-x-auto scrollbar-hide pb-4 px-2 whitespace-nowrap">
               {[
                 ["pizzas", "Pizza"],
                 ["starters", "Antipasti e Primi"],
@@ -572,18 +572,21 @@ export default function PizzeriaWebsite() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="w-full overflow-x-auto pb-4"
           >
-            {filteredMenuItems.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-              >
-                <MenuItemType item={item} onAddToCart={addToCart} />
-              </motion.div>
-            ))}
+            <div className="flex gap-6 min-w-max px-2">
+              {filteredMenuItems.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  className="w-[280px] flex-shrink-0"
+                >
+                  <MenuItemType item={item} onAddToCart={addToCart} />
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
 
           <div className="text-center mt-16">

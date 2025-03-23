@@ -505,14 +505,14 @@ export default function PizzeriaWebsite() {
 
                 <div className="text-center">
                   <div className="text-4xl font-bold text-[#8c9a56] mb-2">
-                    <AnimatedNumber value={12} />
+                    <AnimatedNumber value={16} />
                   </div>
                   <p className="text-gray-400 text-sm">Pizzasorten</p>
                 </div>
 
                 <div className="text-center">
                   <div className="text-4xl font-bold text-[#8c9a56] mb-2">
-                    <AnimatedNumber value={2023} />
+                    <AnimatedNumber value={2024} />
                   </div>
                   <p className="text-gray-400 text-sm">Eröffnet</p>
                 </div>

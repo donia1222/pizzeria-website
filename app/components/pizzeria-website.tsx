@@ -618,20 +618,8 @@ export default function PizzeriaWebsite() {
                 >
                   Vegetarische
                 </motion.button>
-                <motion.button
-                  onClick={() => setPizzaSubcategory("classic")}
-                  className={cn(
-                    "px-4 py-1 mx-2 text-xs uppercase tracking-wider transition-colors rounded-md flex-shrink-0",
-                    pizzaSubcategory === "classic"
-                      ? "bg-[#8c9a56] text-black"
-                      : "bg-gray-800 text-gray-300 hover:bg-gray-700",
-                  )}
-                  whileHover={{ y: -1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Klassische
-                </motion.button>
-                
+      
+
               </div>
             )}
           </div>

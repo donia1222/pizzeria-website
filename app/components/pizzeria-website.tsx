@@ -194,99 +194,24 @@ const AnimatedNumber = ({ value, suffix = "" }: { value: number; suffix?: string
   )
 }
 
-// Componente de menú con auto-scroll
-const MenuScroll = ({
+// Componente de menú sin auto-scroll
+const MenuRow = ({
   items,
   title,
-  direction = "left",
   onAddToCart,
 }: {
   items: any[]
   title: string
-  direction?: "left" | "right"
   onAddToCart: (item: any) => void
 }) => {
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const [isScrolling, setIsScrolling] = useState(true)
-  const [touchStarted, setTouchStarted] = useState(false)
-
-  // Auto-scroll
-  useEffect(() => {
-    if (!scrollRef.current || !isScrolling) return
-
-    let animationId: number
-    let scrollPos = scrollRef.current.scrollLeft
-    const speed = direction === "left" ? 0.5 : -0.5
-
-    const scroll = () => {
-      if (!scrollRef.current || !isScrolling) return
-
-      scrollPos += speed
-      scrollRef.current.scrollLeft = scrollPos
-
-      // Reiniciar cuando llegue al final o al principio
-      const maxScroll = scrollRef.current.scrollWidth - scrollRef.current.clientWidth
-      if (direction === "left" && scrollPos >= maxScroll) {
-        scrollPos = 0
-      } else if (direction === "right" && scrollPos <= 0) {
-        scrollPos = maxScroll
-      }
-
-      animationId = requestAnimationFrame(scroll)
-    }
-
-    animationId = requestAnimationFrame(scroll)
-
-    return () => {
-      cancelAnimationFrame(animationId)
-    }
-  }, [direction, isScrolling])
-
-  // Manejar eventos táctiles
-  const handleTouchStart = () => {
-    setIsScrolling(false)
-    setTouchStarted(true)
-  }
-
-  const handleTouchEnd = () => {
-    // Reanudar el auto-scroll después de 3 segundos de inactividad
-    setTimeout(() => {
-      if (touchStarted) {
-        setIsScrolling(true)
-        setTouchStarted(false)
-      }
-    }, 3000)
-  }
-
   return (
     <div>
       <h4 className="text-xl font-medium text-[#8c9a56] mb-4">{title}</h4>
-      <div
-        className="overflow-x-auto pb-4 touch-pan-x"
-        ref={scrollRef}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onMouseDown={handleTouchStart}
-        onMouseUp={handleTouchEnd}
-        onMouseLeave={handleTouchEnd}
-        style={{ WebkitOverflowScrolling: "touch" }}
-      >
-        <div className="flex gap-6 min-w-max px-2">
+      <div className="overflow-x-auto pb-4 touch-pan-x" style={{ WebkitOverflowScrolling: "touch" }}>
+        <div className="flex gap-4 px-0">
           {items.map((item, index) => (
             <motion.div
               key={`${item.id}-${index}`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-              className="w-[280px] flex-shrink-0"
-            >
-              <MenuItemType item={item} onAddToCart={onAddToCart} />
-            </motion.div>
-          ))}
-          {/* Duplicar elementos para scroll infinito */}
-          {items.map((item, index) => (
-            <motion.div
-              key={`${item.id}-dup-${index}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -693,19 +618,14 @@ export default function PizzeriaWebsite() {
             {activeCategory === "pizzas" ? (
               <div className="space-y-8">
                 {/* Vegetarische Pizzen */}
-                <MenuScroll
-                  items={vegetarianPizzas}
-                  title="Vegetarische Pizzen"
-                  direction="left"
-                  onAddToCart={addToCart}
-                />
+                <MenuRow items={vegetarianPizzas} title="Vegetarische Pizzen" onAddToCart={addToCart} />
 
                 {/* Klassische Pizzen */}
-                <MenuScroll items={classicPizzas} title="Klassische Pizzen" direction="right" onAddToCart={addToCart} />
+                <MenuRow items={classicPizzas} title="Klassische Pizzen" onAddToCart={addToCart} />
               </div>
             ) : (
               <div className="overflow-x-auto pb-4">
-                <div className="flex gap-6 min-w-max px-2">
+                <div className="flex gap-4 px-0">
                   {filteredMenuItems.map((item, index) => (
                     <motion.div
                       key={item.id}

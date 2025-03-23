@@ -226,6 +226,49 @@ export default function PizzeriaWebsite() {
     setShowButton(true)
   }, [])
 
+  // Añadir estilos de animación con velocidades ajustadas
+  useEffect(() => {
+    const customStyles = `
+      @keyframes scrollLeft {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      
+      @keyframes scrollRight {
+        0% { transform: translateX(-50%); }
+        100% { transform: translateX(0); }
+      }
+      
+      .animate-scroll-left {
+        animation: scrollLeft 60s linear infinite;
+      }
+      
+      .animate-scroll-right {
+        animation: scrollRight 60s linear infinite;
+      }
+      
+      .animate-scroll-left:hover,
+      .animate-scroll-right:hover {
+        animation-play-state: paused;
+      }
+
+      @media (max-width: 640px) {
+        .animate-scroll-left,
+        .animate-scroll-right {
+          animation: none;
+        }
+      }
+    `
+
+    const styleElement = document.createElement("style")
+    styleElement.innerHTML = customStyles
+    document.head.appendChild(styleElement)
+
+    return () => {
+      document.head.removeChild(styleElement)
+    }
+  }, [])
+
   // Toggle mobile menu
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
@@ -268,6 +311,11 @@ export default function PizzeriaWebsite() {
 
   // Filter menu items by category
   const filteredMenuItems = menuItems.filter((item) => item.category === activeCategory)
+
+  // Duplicar los elementos para el scroll infinito
+  const duplicateItems = (items: any[]) => {
+    return [...items, ...items, ...items]
+  }
 
   return (
     <div className="min-h-screen bg-black text-white font-sans overflow-x-hidden">
@@ -572,21 +620,75 @@ export default function PizzeriaWebsite() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="w-full overflow-x-auto pb-4"
+            className="w-full"
           >
-            <div className="flex gap-6 min-w-max px-2">
-              {filteredMenuItems.map((item, index) => (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                  className="w-[280px] flex-shrink-0"
-                >
-                  <MenuItemType item={item} onAddToCart={addToCart} />
-                </motion.div>
-              ))}
-            </div>
+            {activeCategory === "pizzas" ? (
+              <div className="space-y-8">
+                {/* Vegetarische Pizzen */}
+                <div>
+                  <h4 className="text-xl font-medium text-[#8c9a56] mb-4">Vegetarische Pizzen</h4>
+                  <div className="overflow-hidden pb-4">
+                    <div className="flex gap-6 min-w-max px-2 animate-scroll-left">
+                      {duplicateItems(
+                        filteredMenuItems.filter(
+                          (item) => item.vegetarian || item.name.toLowerCase().includes("marinera"),
+                        ),
+                      ).map((item, index) => (
+                        <motion.div
+                          key={`veg-${item.id}-${index}`}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: index * 0.1 }}
+                          className="w-[280px] flex-shrink-0"
+                        >
+                          <MenuItemType item={item} onAddToCart={addToCart} />
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Klassische Pizzen */}
+                <div>
+                  <h4 className="text-xl font-medium text-[#8c9a56] mb-4">Klassische Pizzen</h4>
+                  <div className="overflow-hidden pb-4">
+                    <div className="flex gap-6 min-w-max px-2 animate-scroll-right">
+                      {duplicateItems(
+                        filteredMenuItems.filter(
+                          (item) => !item.vegetarian && !item.name.toLowerCase().includes("marinera"),
+                        ),
+                      ).map((item, index) => (
+                        <motion.div
+                          key={`classic-${item.id}-${index}`}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: index * 0.1 }}
+                          className="w-[280px] flex-shrink-0"
+                        >
+                          <MenuItemType item={item} onAddToCart={addToCart} />
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="overflow-x-auto pb-4">
+                <div className="flex gap-6 min-w-max px-2">
+                  {filteredMenuItems.map((item, index) => (
+                    <motion.div
+                      key={item.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
+                      className="w-[280px] flex-shrink-0"
+                    >
+                      <MenuItemType item={item} onAddToCart={addToCart} />
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            )}
           </motion.div>
 
           <div className="text-center mt-16">

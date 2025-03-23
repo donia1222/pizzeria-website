@@ -187,6 +187,7 @@ export default function PizzeriaWebsite() {
   const [orderOpen, setOrderOpen] = useState(false)
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [activeCategory, setActiveCategory] = useState("pizzas")
+  const [pizzaSubcategory, setPizzaSubcategory] = useState("all")
   const [showButton, setShowButton] = useState(true)
 
   const heroRef = useRef<HTMLDivElement>(null)
@@ -253,7 +254,19 @@ export default function PizzeriaWebsite() {
   }
 
   // Filter menu items by category
-  const filteredMenuItems = menuItems.filter((item) => item.category === activeCategory)
+  const filteredMenuItems = menuItems.filter((item) => {
+    if (item.category === activeCategory) {
+      if (activeCategory === "pizzas" && pizzaSubcategory !== "all") {
+        if (pizzaSubcategory === "vegetarian") {
+          return item.vegetarian === true
+        } else if (pizzaSubcategory === "classic") {
+          return !item.vegetarian
+        }
+      }
+      return true
+    }
+    return false
+  })
 
   return (
     <div className="min-h-screen bg-black text-white font-sans overflow-x-hidden">
@@ -574,6 +587,51 @@ export default function PizzeriaWebsite() {
                 </motion.button>
               ))}
             </div>
+
+            {/* Pizza subcategory filter */}
+            {activeCategory === "pizzas" && (
+              <div className="flex justify-start md:justify-center overflow-x-auto mt-4 pb-4 px-2">
+                <motion.button
+                  onClick={() => setPizzaSubcategory("all")}
+                  className={cn(
+                    "px-4 py-1 mx-2 text-xs uppercase tracking-wider transition-colors rounded-md flex-shrink-0",
+                    pizzaSubcategory === "all"
+                      ? "bg-[#8c9a56] text-black"
+                      : "bg-gray-800 text-gray-300 hover:bg-gray-700",
+                  )}
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Alle Pizzen
+                </motion.button>
+                <motion.button
+                  onClick={() => setPizzaSubcategory("classic")}
+                  className={cn(
+                    "px-4 py-1 mx-2 text-xs uppercase tracking-wider transition-colors rounded-md flex-shrink-0",
+                    pizzaSubcategory === "classic"
+                      ? "bg-[#8c9a56] text-black"
+                      : "bg-gray-800 text-gray-300 hover:bg-gray-700",
+                  )}
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Klassische
+                </motion.button>
+                <motion.button
+                  onClick={() => setPizzaSubcategory("vegetarian")}
+                  className={cn(
+                    "px-4 py-1 mx-2 text-xs uppercase tracking-wider transition-colors rounded-md flex-shrink-0",
+                    pizzaSubcategory === "vegetarian"
+                      ? "bg-[#8c9a56] text-black"
+                      : "bg-gray-800 text-gray-300 hover:bg-gray-700",
+                  )}
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Vegetarische
+                </motion.button>
+              </div>
+            )}
           </div>
 
           <motion.div

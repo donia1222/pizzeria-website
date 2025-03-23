@@ -10,6 +10,7 @@ export interface MenuItem {
     vegetarian?: boolean
     spicy?: boolean
     category: string
+    subcategory?: string
   }
   
   // Menu data

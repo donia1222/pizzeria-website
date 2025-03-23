@@ -10,6 +10,8 @@ export interface MenuItem {
   vegetarian?: boolean
   spicy?: boolean
   category: string
+  subcategory?: string
+
 }
 
 export interface Testimonial {

@@ -21,7 +21,7 @@ export const MediterraneanBackground: React.FC = () => {
           ry="5"
           transform="rotate(-30 35 38)"
           fill="currentColor"
-          className="text-green-300"
+          className="text-green-500"
         />
         <ellipse
           cx="45"
@@ -30,7 +30,7 @@ export const MediterraneanBackground: React.FC = () => {
           ry="5"
           transform="rotate(-30 45 43)"
           fill="currentColor"
-          className="text-green-300"
+          className="text-green-500"
         />
         <ellipse
           cx="55"
@@ -39,7 +39,7 @@ export const MediterraneanBackground: React.FC = () => {
           ry="5"
           transform="rotate(-30 55 48)"
           fill="currentColor"
-          className="text-green-300"
+          className="text-green-500"
         />
         <ellipse
           cx="65"
@@ -48,7 +48,7 @@ export const MediterraneanBackground: React.FC = () => {
           ry="5"
           transform="rotate(-30 65 53)"
           fill="currentColor"
-          className="text-green-300"
+          className="text-green-500"
         />
       </svg>
 
@@ -70,7 +70,7 @@ export const MediterraneanBackground: React.FC = () => {
           ry="5"
           transform="rotate(30 65 62)"
           fill="currentColor"
-          className="text-green-300"
+          className="text-green-500"
         />
         <ellipse
           cx="55"
@@ -79,7 +79,7 @@ export const MediterraneanBackground: React.FC = () => {
           ry="5"
           transform="rotate(30 55 57)"
           fill="currentColor"
-          className="text-green-300"
+          className="text-green-500"
         />
         <ellipse
           cx="45"
@@ -88,7 +88,7 @@ export const MediterraneanBackground: React.FC = () => {
           ry="5"
           transform="rotate(30 45 52)"
           fill="currentColor"
-          className="text-green-300"
+          className="text-green-500"
         />
         <ellipse
           cx="35"
@@ -97,7 +97,7 @@ export const MediterraneanBackground: React.FC = () => {
           ry="5"
           transform="rotate(30 35 47)"
           fill="currentColor"
-          className="text-green-300"
+          className="text-green-500"
         />
       </svg>
 
@@ -115,7 +115,7 @@ export const MediterraneanBackground: React.FC = () => {
           ry="25"
           transform="rotate(-15 50 50)"
           fill="currentColor"
-          className="text-green-300"
+          className="text-green-500"
         />
         <path d="M50,25 Q55,50 50,75" stroke="currentColor" strokeWidth="1.5" fill="none" />
       </svg>
@@ -134,7 +134,7 @@ export const MediterraneanBackground: React.FC = () => {
           ry="25"
           transform="rotate(15 50 50)"
           fill="currentColor"
-          className="text-green-300"
+          className="text-green-500"
         />
         <path d="M50,25 Q45,50 50,75" stroke="currentColor" strokeWidth="1.5" fill="none" />
       </svg>
@@ -177,6 +177,4 @@ export const MediterraneanBackground: React.FC = () => {
     </div>
   )
 }
-
-
 

@@ -701,7 +701,8 @@ export default function PizzeriaWebsite() {
                   <Clock className="h-5 w-5 text-[#8c9a56] mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="text-white font-medium">Öffnungszeiten</h4>
-                    <p className="text-gray-300">Dienstag - Donnerstag: 11:00–14:00, 17:00–22:00 Uhr</p>
+                    <p className="text-gray-300">Dienstag - Donnerstag:</p>
+                    <p className="text-gray-300">11:00–14:00, 17:00–22:00 Uhr</p>
                     <p className="text-gray-300">Freitag: 11:00–14:00, 17:00–22:00 Uhr</p>
                     <p className="text-gray-300">Samstag: 11:00–14:00, 17:00–23:00 Uhr</p>
                     <p className="text-gray-300">Sonntag, Montag: Geschlossen</p>

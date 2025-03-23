@@ -367,27 +367,29 @@ export const MenuItem = ({ item, onAddToCart }: { item: MenuItem; onAddToCart: (
         </div>
         <p className="text-gray-400 text-sm mb-4 line-clamp-2">{item.description}</p>
 
-        <motion.button
-          onClick={handleAddToCart}
-          className={cn(
-            "w-full py-2 px-4 flex items-center justify-center transition-colors rounded-md",
-            isAdded ? "bg-green-700 text-white" : "bg-green-800 text-white hover:bg-green-900",
-          )}
-          whileTap={{ scale: 0.95 }}
-          disabled={isAdded}
-        >
-          {isAdded ? (
-            <>
-              <Check className="h-4 w-4 mr-2" />
-              Hinzugefügt
-            </>
-          ) : (
-            <>
-              <ShoppingBag className="h-4 w-4 mr-2" />
-              In den Warenkorb
-            </>
-          )}
-        </motion.button>
+        {item.category !== "drinks" ? (
+          <motion.button
+            onClick={handleAddToCart}
+            className={cn(
+              "w-full py-2 px-4 flex items-center justify-center transition-colors rounded-md",
+              isAdded ? "bg-green-700 text-white" : "bg-green-800 text-white hover:bg-green-900",
+            )}
+            whileTap={{ scale: 0.95 }}
+            disabled={isAdded}
+          >
+            {isAdded ? (
+              <>
+                <Check className="h-4 w-4 mr-2" />
+                Hinzugefügt
+              </>
+            ) : (
+              <>
+                <ShoppingBag className="h-4 w-4 mr-2" />
+                In den Warenkorb
+              </>
+            )}
+          </motion.button>
+        ) : null}
       </div>
     </motion.div>
   )
@@ -1031,5 +1033,4 @@ export const OrderDialog = ({
     </Dialog>
   )
 }
-
 

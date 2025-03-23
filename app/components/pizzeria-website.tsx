@@ -4,21 +4,7 @@ import type React from "react"
 
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
-import {
-  Menu,
-  X,
-  Phone,
-  Clock,
-  Calendar,
-  Pizza,
-  MapPin,
-  Instagram,
-  Facebook,
-  Mail,
-  PhoneCall,
-  ArrowRight,
-  ShoppingBag,
-} from "lucide-react"
+import { Menu, X, Phone, Clock, Calendar, Pizza, MapPin, Instagram, Mail, PhoneCall, ShoppingBag } from "lucide-react"
 
 import { MediterraneanBackground } from "./mediterranean-background"
 import { ReservationButton, ReservationDialog } from "./reservation-system"
@@ -626,9 +612,7 @@ export default function PizzeriaWebsite() {
                 {image === "video" ? (
                   <div className="w-full h-full">
                     <video src="/1280x720.mp4" className="object-cover w-full h-full" autoPlay muted loop playsInline />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-          
-                    </div>
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"></div>
                   </div>
                 ) : (
                   <>
@@ -637,9 +621,7 @@ export default function PizzeriaWebsite() {
                       alt="Galeriebild"
                       className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-        
-                    </div>
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"></div>
                   </>
                 )}
               </motion.div>
@@ -726,19 +708,12 @@ export default function PizzeriaWebsite() {
                 <div className="flex gap-4">
                   <motion.a
                     href="https://www.instagram.com/bouquet.mediterraneo/"
-                    className="bg-gray-900 w-10 h-10 rounded-full flex items-center justify-center text-[#8c9a56] hover:bg-green-800 hover:text-white transition-colors"
+                    className="bg-gray-900 px-4 h-10 rounded-full flex items-center justify-center text-[#8c9a56] hover:bg-green-800 hover:text-white transition-colors"
                     whileHover={{ y: -5 }}
                     whileTap={{ scale: 0.9 }}
                   >
-                    <Facebook size={20} />
-                  </motion.a>
-                  <motion.a
-                    href="https://www.instagram.com/bouquet.mediterraneo/"
-                    className="bg-gray-900 w-10 h-10 rounded-full flex items-center justify-center text-[#8c9a56] hover:bg-green-800 hover:text-white transition-colors"
-                    whileHover={{ y: -5 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <Instagram size={20} />
+                    <Instagram size={20} className="mr-2" />
+                    <span>Instagram</span>
                   </motion.a>
                 </div>
               </div>

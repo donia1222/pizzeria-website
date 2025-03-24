@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Calendar, Clock, Users, Check, Loader2, X } from "lucide-react"
@@ -335,6 +334,7 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
   const [reservationSuccess, setReservationSuccess] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [mealType, setMealType] = useState<"Mittagessen" | "Abendessen">("Mittagessen")
+  const [saveToDatabase, setSaveToDatabase] = useState(true)
 
   // Horarios disponibles según el tipo de comida
   const lunchTimes = ["11:30", "12:00", "12:30", "13:30"]
@@ -370,8 +370,41 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
     setReservationTime("")
   }, [mealType])
 
+  // Función para guardar la reserva en la base de datos
+  const saveReservationToDatabase = async (data: {
+    date: string
+    time: string
+    guests: string
+    name: string
+    email: string
+    phone: string
+    notes: string
+    mealType: string
+  }) => {
+    try {
+      const formData = new FormData()
+      Object.entries(data).forEach(([key, value]) => {
+        formData.append(key, value)
+      })
+
+      const response = await fetch("/api/reservations", {
+        method: "POST",
+        body: formData,
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to save reservation")
+      }
+
+      return await response.json()
+    } catch (error) {
+      console.error("Error saving reservation:", error)
+      throw error
+    }
+  }
+
   // Manejar envío de reserva
-  const handleReservationSubmit = (e: React.FormEvent) => {
+  const handleReservationSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     // Verificar que la fecha sea válida
@@ -383,8 +416,7 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
     setIsSubmitting(true)
 
     try {
-      // Crear y abrir el enlace mailto
-      const mailtoLink = createReservationMailtoLink({
+      const reservationData = {
         date: reservationDate,
         time: reservationTime,
         guests: reservationGuests,
@@ -393,8 +425,15 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
         phone: reservationPhone,
         notes: reservationNotes,
         mealType: mealType,
-      })
+      }
 
+      // Guardar en la base de datos si está activada la opción
+      if (saveToDatabase) {
+        await saveReservationToDatabase(reservationData)
+      }
+
+      // Crear y abrir el enlace mailto
+      const mailtoLink = createReservationMailtoLink(reservationData)
       window.location.href = mailtoLink
 
       // Mostrar mensaje de éxito
@@ -414,10 +453,11 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
         setReservationPhone("")
         setReservationNotes("")
         setMealType("Mittagessen")
+        setSaveToDatabase(true)
       }, 2000)
     } catch (error) {
       setIsSubmitting(false)
-      // Aquí podrías manejar errores si es necesario
+      alert("Es gab ein Problem bei der Speicherung Ihrer Reservierung. Bitte versuchen Sie es später erneut.")
     }
   }
 
@@ -605,6 +645,19 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setReservationNotes(e.target.value)}
                 className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
               />
+            </div>
+
+            <div className="flex items-center space-x-2 mt-4">
+              <input
+                type="checkbox"
+                id="save-to-database"
+                checked={saveToDatabase}
+                onChange={(e) => setSaveToDatabase(e.target.checked)}
+                className="h-4 w-4 rounded border-gray-700 bg-gray-800 text-[#8c9a56] focus:ring-[#8c9a56]"
+              />
+              <Label htmlFor="save-to-database" className="text-gray-300">
+                Reservierung im System speichern
+              </Label>
             </div>
 
             <DialogFooter>

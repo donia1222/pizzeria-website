@@ -1,0 +1,14 @@
+[
+    {
+      "id": "uuid-generado",
+      "date": "2023-08-15",
+      "time": "19:30",
+      "guests": "4",
+      "name": "Nombre Cliente",
+      "email": "cliente@ejemplo.com",
+      "phone": "+123456789",
+      "notes": "Mesa junto a la ventana",
+      "mealType": "Abendessen",
+      "createdAt": "2023-08-10T14:30:00.000Z"
+    }
+  ]

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "c434316a-4572-49e5-b385-4e67b77810e7",
+    "date": "2025-03-26",
+    "time": "12:00",
+    "guests": "3",
+    "name": "Cari Ipad",
+    "email": "info@lweb.ch",
+    "phone": "763875016",
+    "notes": "fbdfdb",
+    "mealType": "Mittagessen",
+    "createdAt": "2025-03-23T23:36:25.971Z",
+    "confirmed": true,
+    "confirmedAt": "2025-03-24T00:28:07.258Z"
+  },
+  {
+    "id": "36548dda-231c-4a93-abcf-b23d9699b9ad",
+    "date": "2025-03-25",
+    "time": "12:00",
+    "guests": "7",
+    "name": "Cari Ipad",
+    "email": "info@lweb.ch",
+    "phone": "763875016",
+    "notes": "vsfvdfvd",
+    "mealType": "Mittagessen",
+    "createdAt": "2025-03-23T23:40:03.641Z",
+    "confirmed": true,
+    "confirmedAt": "2025-03-24T00:28:03.809Z"
+  },
+  {
+    "id": "9c65b754-e51a-4cf5-bbf6-c1359f515251",
+    "date": "2025-03-25",
+    "time": "11:30",
+    "guests": "3",
+    "name": "Cari Ipad",
+    "email": "info@lweb.ch",
+    "phone": "763875016",
+    "notes": "fewfewf",
+    "mealType": "Mittagessen",
+    "createdAt": "2025-03-24T00:29:04.038Z",
+    "confirmed": true,
+    "confirmedAt": "2025-03-24T00:29:12.496Z"
+  },
+  {
+    "id": "d4c88337-d1f0-49e2-9306-315e053d2409",
+    "date": "2025-04-23",
+    "time": "12:00",
+    "guests": "3",
+    "name": "Cari Ipad",
+    "email": "info@lweb.ch",
+    "phone": "763875016",
+    "notes": "dssvd",
+    "mealType": "Mittagessen",
+    "createdAt": "2025-03-24T00:31:45.839Z",
+    "confirmed": true,
+    "confirmedAt": "2025-03-24T00:31:55.951Z"
+  }
+]

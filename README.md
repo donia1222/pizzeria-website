@@ -24,6 +24,10 @@ A modern and attractive website for an authentic Italian pizzeria, with table re
 You can see the website in action here: [PizzaRoma Demo](https://pizzeria-website-red.vercel.app)
 
 
+Admin Panel Resrvations: /admin/reservations
+
+
+
 
 
 ## Installation and Usage

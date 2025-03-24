@@ -1,8 +1,8 @@
 import { json } from "@remix-run/node"
 import { readFile, writeFile } from "fs/promises"
 import path from "path"
-// @ts-ignore
-import { v4 as uuidv4 } from "uuid"
+// Cambiamos la importación de uuid para evitar problemas de resolución
+import { randomUUID } from "crypto"
 
 // Define the reservation type
 interface Reservation {
@@ -16,6 +16,8 @@ interface Reservation {
   notes: string
   mealType: string
   createdAt: string
+  confirmed?: boolean
+  confirmedAt?: string
 }
 
 // Path to the JSON file
@@ -37,6 +39,14 @@ async function saveReservations(reservations: Reservation[]): Promise<void> {
   // Ensure the data directory exists
   const dataDir = path.join(process.cwd(), "data")
   try {
+    // Asegurarse de que el directorio existe antes de escribir
+    const fs = await import("fs/promises")
+    try {
+      await fs.mkdir(dataDir, { recursive: true })
+    } catch (dirError) {
+      console.error("Error creating directory:", dirError)
+    }
+
     await writeFile(dataFilePath, JSON.stringify(reservations, null, 2), "utf8")
   } catch (error) {
     console.error("Error saving reservations:", error)
@@ -74,7 +84,8 @@ export async function action({ request }: { request: Request }) {
 
     // Create new reservation with ID and timestamp
     const newReservation: Reservation = {
-      id: uuidv4(),
+      // Usamos randomUUID de Node.js crypto en lugar de uuid
+      id: randomUUID(),
       date: reservationData.date as string,
       time: reservationData.time as string,
       guests: reservationData.guests as string,
@@ -84,6 +95,7 @@ export async function action({ request }: { request: Request }) {
       notes: (reservationData.notes as string) || "",
       mealType: reservationData.mealType as string,
       createdAt: new Date().toISOString(),
+      confirmed: false,
     }
 
     // Get existing reservations and add the new one

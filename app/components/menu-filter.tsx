@@ -186,8 +186,8 @@ export function MenuItemComponent({ item, onAddToCart }: { item: MenuItem; onAdd
             onClick={handleOrderClick}
             variant="outline"
             className={cn(
-              "text-white border-white hover:bg-white hover:text-black text-sm transition-all duration-300",
-              isOrdering && "bg-[#8c9a56] border-[#8c9a56] text-black scale-110",
+              "text-white border-white hover:bg-white hover:text-white text-sm transition-all duration-300",
+              isOrdering && "bg-[#8c9a56] border-[#8c9a56] text-white scale-110",
             )}
             size="sm"
             disabled={isOrdering}

@@ -625,9 +625,6 @@ export default function PizzeriaWebsite() {
 
           <MenuFilter items={filteredMenuItems} activeCategory={activeCategory} onAddToCart={addToCart} />
 
-          <div className="text-center mt-16">
-  
-          </div>
         </div>
       </section>
 

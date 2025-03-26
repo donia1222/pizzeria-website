@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-
+import ScrollTextImage from "./scroll-text-image"
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { Menu, X, Phone, Clock, Calendar, Pizza, MapPin, Instagram, Mail, PhoneCall, ShoppingBag } from "lucide-react"
@@ -652,6 +652,19 @@ export default function PizzeriaWebsite() {
           </div>
         </div>
       </section>
+
+
+      <ScrollTextImage
+          imageUrl="/professional-chef-preparing-food-kitchen.jpg"
+          textItems={[
+
+            "Authentische italienische Küche in Sevelen",
+            "Frische Zutaten, traditionelle Rezepte",
+            "Jetzt geöffnet - Buchen Sie Ihren Tisch heute",
+          ]}
+        />
+
+
 
       {/* Testimonials Section */}
       <TestimonialsSection testimonials={testimonials} />

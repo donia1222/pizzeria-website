@@ -40,32 +40,5 @@
     "createdAt": "2025-03-24T00:29:04.038Z",
     "confirmed": true,
     "confirmedAt": "2025-03-24T00:29:12.496Z"
-  },
-  {
-    "id": "d4c88337-d1f0-49e2-9306-315e053d2409",
-    "date": "2025-04-23",
-    "time": "12:00",
-    "guests": "3",
-    "name": "Cari Ipad",
-    "email": "info@lweb.ch",
-    "phone": "763875016",
-    "notes": "dssvd",
-    "mealType": "Mittagessen",
-    "createdAt": "2025-03-24T00:31:45.839Z",
-    "confirmed": true,
-    "confirmedAt": "2025-03-24T00:31:55.951Z"
-  },
-  {
-    "id": "5a1112d2-6c48-413d-a74e-70c0d4b25bda",
-    "date": "2025-04-16",
-    "time": "12:00",
-    "guests": "4",
-    "name": "efwf",
-    "email": "info@lweb.ch",
-    "phone": "43434343432",
-    "notes": "cvdfsvfvfv",
-    "mealType": "Mittagessen",
-    "createdAt": "2025-04-05T10:22:25.116Z",
-    "confirmed": false
   }
 ]

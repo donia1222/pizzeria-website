@@ -1,17 +1,16 @@
 "use client"
 
 import type React from "react"
-import ScrollTextImage from "./scroll-text-image"
+
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { Menu, X, Phone, Clock, Calendar, Pizza, MapPin, Instagram, Mail, PhoneCall, ShoppingBag } from "lucide-react"
 
 import { MediterraneanBackground } from "./mediterranean-background"
 import { ReservationButton, ReservationDialog } from "./reservation-system"
-import { type MenuItem as MenuItemType, CartButton, OrderDialog, type CartItem } from "./order-system"
+import { MenuItem as MenuItemType, CartButton, OrderDialog, type CartItem } from "./order-system"
 import { TestimonialsSection } from "./testimonials"
 import { ContactForm } from "./contact-form"
-import { MenuFilter } from "./menu-filter"
 
 // Import data from separate files
 import { menuItems } from "../data/menu-items"
@@ -605,7 +604,7 @@ export default function PizzeriaWebsite() {
                 >
                   Alle Pizzen
                 </motion.button>
-
+        
                 <motion.button
                   onClick={() => setPizzaSubcategory("vegetarian")}
                   className={cn(
@@ -619,23 +618,40 @@ export default function PizzeriaWebsite() {
                 >
                   Vegetarische
                 </motion.button>
+      
+
               </div>
             )}
           </div>
 
-          <MenuFilter items={filteredMenuItems} activeCategory={activeCategory} onAddToCart={addToCart} />
+          <motion.div
+            key={activeCategory}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {filteredMenuItems.map((item, index) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+              >
+                <MenuItemType item={item} onAddToCart={addToCart} />
+              </motion.div>
+            ))}
+          </motion.div>
 
+          <div className="text-center mt-16">
+            <Button onClick={() => setOrderOpen(true)} className="bg-green-800 text-white hover:bg-green-900" size="lg">
+              <ShoppingBag className="h-4 w-4 mr-2" />
+              Jetzt bestellen
+            </Button>
+          </div>
         </div>
       </section>
-
-      <ScrollTextImage
-        imageUrl="/professional-chef-preparing-food-kitchen.jpg"
-        textItems={[
-          "Authentische italienische Küche in Sevelen",
-          "Frische Zutaten, traditionelle Rezepte",
-          "Jetzt geöffnet - Buchen Sie Ihren Tisch heute",
-        ]}
-      />
 
       {/* Testimonials Section */}
       <TestimonialsSection testimonials={testimonials} />
@@ -904,4 +920,3 @@ export default function PizzeriaWebsite() {
     </div>
   )
 }
-

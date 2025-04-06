@@ -489,7 +489,7 @@ function createOrderWhatsAppLink(
   )
 
   // Número de WhatsApp
-  const whatsappNumber = "0041783144209"
+  const whatsappNumber = "+41783144209"
 
   return `https://wa.me/${whatsappNumber}?text=${message}`
 }

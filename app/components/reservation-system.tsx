@@ -6,13 +6,13 @@ import { motion } from "framer-motion"
 import { Calendar, Clock, Users, Check, Loader2, X } from "lucide-react"
 import { cn } from "../lib/utils"
 
-// Tipos
+// Types
 interface ReservationDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
 }
 
-// Componentes auxiliares
+// Helper components
 const Button = ({
   children,
   className = "",
@@ -257,7 +257,7 @@ const DialogFooter = ({
   )
 }
 
-// Función para crear el enlace mailto para la reserva
+// Function to create mailto link for reservation
 function createReservationMailtoLink(data: {
   date: string
   time: string
@@ -268,7 +268,7 @@ function createReservationMailtoLink(data: {
   notes: string
   mealType: string
 }): string {
-  // Formatear la fecha para mostrarla de manera más legible
+  // Format date for better readability
   const formattedDate = new Date(data.date).toLocaleDateString("de-DE", {
     weekday: "long",
     year: "numeric",
@@ -297,14 +297,14 @@ function createReservationMailtoLink(data: {
   return `mailto:info@bouquetmediterraneo.ch?subject=${subject}&body=${body}`
 }
 
-// Función para verificar si una fecha es domingo o lunes
+// Function to check if a date is Sunday or Monday
 function isDisabledDay(date: Date): boolean {
   const day = date.getDay()
-  // 0 es domingo, 1 es lunes
+  // 0 is Sunday, 1 is Monday
   return day === 0 || day === 1
 }
 
-// Componente principal de reservas
+// Main reservation components
 export const ReservationButton = ({ onClick }: { onClick: () => void }) => {
   return (
     <motion.button
@@ -323,7 +323,7 @@ export const ReservationButton = ({ onClick }: { onClick: () => void }) => {
 }
 
 export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps) => {
-  // Estados para el formulario
+  // Form states
   const [reservationDate, setReservationDate] = useState("")
   const [reservationTime, setReservationTime] = useState("")
   const [reservationGuests, setReservationGuests] = useState("")
@@ -336,41 +336,54 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
   const [mealType, setMealType] = useState<"Mittagessen" | "Abendessen">("Mittagessen")
   const [saveToDatabase, setSaveToDatabase] = useState(true)
 
-  // Horarios disponibles según el tipo de comida
+  // Available times based on meal type
   const lunchTimes = ["11:30", "12:00", "12:30", "13:30"]
   const dinnerTimes = ["17:30", "18:30", "19:30", "20:00", "20:30", "21:00"]
 
-  // Obtener los horarios disponibles según el tipo de comida seleccionado
+  // Get available times based on selected meal type
   const availableTimes = mealType === "Mittagessen" ? lunchTimes : dinnerTimes
 
-  // Función para obtener la fecha mínima (hoy)
+  // Function to get minimum date (today)
   const getMinDate = (): string => {
     const today = new Date()
     return today.toISOString().split("T")[0]
   }
 
-  // Función para verificar si una fecha es válida (no domingo ni lunes)
+  // Function to check if a date is valid (not Sunday or Monday)
   const isValidDate = (dateString: string): boolean => {
     if (!dateString) return false
     const date = new Date(dateString)
     return !isDisabledDay(date)
   }
 
-  // Efecto para validar la fecha seleccionada
+  // Function to disable specific dates in the date picker
+  const disableDates = (e: React.FormEvent<HTMLInputElement>) => {
+    const input = e.target as HTMLInputElement
+    const selectedDate = new Date(input.value)
+
+    if (isDisabledDay(selectedDate)) {
+      // Clear the input if a disabled day is selected
+      input.value = ""
+      // Show alert about closed days
+      alert("Wir sind sonntags und montags geschlossen. Bitte wählen Sie einen anderen Tag.")
+    }
+  }
+
+  // Effect to validate selected date
   useEffect(() => {
     if (reservationDate && !isValidDate(reservationDate)) {
-      // Si la fecha seleccionada es domingo o lunes, mostrar alerta
+      // If selected date is Sunday or Monday, show alert
       alert("Wir sind sonntags und montags geschlossen. Bitte wählen Sie einen anderen Tag.")
       setReservationDate("")
     }
   }, [reservationDate])
 
-  // Efecto para resetear la hora cuando cambia el tipo de comida
+  // Effect to reset time when meal type changes
   useEffect(() => {
     setReservationTime("")
   }, [mealType])
 
-  // Función para guardar la reserva en la base de datos
+  // Function to save reservation to database
   const saveReservationToDatabase = async (data: {
     date: string
     time: string
@@ -403,11 +416,11 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
     }
   }
 
-  // Manejar envío de reserva
+  // Handle reservation submission
   const handleReservationSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    // Verificar que la fecha sea válida
+    // Verify date is valid
     if (!isValidDate(reservationDate)) {
       alert("Bitte wählen Sie einen gültigen Tag (Dienstag bis Samstag).")
       return
@@ -427,7 +440,7 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
         mealType: mealType,
       }
 
-      // Formatear la fecha para mostrarla de manera más legible
+      // Format date for better readability
       const formattedDate = new Date(reservationDate).toLocaleDateString("de-DE", {
         weekday: "long",
         year: "numeric",
@@ -435,7 +448,7 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
         day: "numeric",
       })
 
-      // Crear mensaje para WhatsApp
+      // Create WhatsApp message
       const whatsappMessage = encodeURIComponent(
         `*Tischreservierung Details:*\n\n` +
           `Datum: ${formattedDate}\n` +
@@ -450,22 +463,22 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
           `Diese Reservierung wurde über das Reservierungsformular auf der Website gesendet.`,
       )
 
-      // Número de WhatsApp
+      // WhatsApp number
       const whatsappNumber = "+41783144209"
 
-      // Crear y abrir el enlace de WhatsApp
+      // Create and open WhatsApp link
       const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
       window.open(whatsappLink, "_blank")
 
-      // Mostrar mensaje de éxito
+      // Show success message
       setIsSubmitting(false)
       setReservationSuccess(true)
 
-      // Resetear formulario después del éxito
+      // Reset form after success
       setTimeout(() => {
         onOpenChange(false)
         setReservationSuccess(false)
-        // Resetear campos del formulario
+        // Reset form fields
         setReservationDate("")
         setReservationTime("")
         setReservationGuests("")
@@ -492,7 +505,9 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
           <DialogTitle className="font-bold text-xl text-[#8c9a56]">Tisch reservieren</DialogTitle>
           <DialogDescription className="text-gray-300">
             Füllen Sie das Formular aus, um Ihren Tisch bei Bouquet Mediterraneo zu reservieren.
-            <span className="block mt-2 text-amber-400">Hinweis: Wir sind sonntags und montags geschlossen.</span>
+            <span className="block mt-2 text-amber-400 font-semibold">
+              Hinweis: Wir sind sonntags und montags geschlossen.
+            </span>
           </DialogDescription>
         </DialogHeader>
 
@@ -550,10 +565,11 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
                   required
                   value={reservationDate}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setReservationDate(e.target.value)}
+                  onInput={disableDates}
                   min={getMinDate()}
                   className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                 />
-                <p className="text-xs text-amber-400">Dienstag bis Samstag</p>
+                <p className="text-xs text-amber-400 font-medium">Dienstag bis Samstag</p>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="reservation-time" className="text-gray-300">
@@ -566,6 +582,7 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setReservationTime(e.target.value)}
                     required
                     className="flex h-10 w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#8c9a56]"
+                    disabled={!reservationDate || !isValidDate(reservationDate)}
                   >
                     <option value="" disabled>
                       Uhrzeit wählen

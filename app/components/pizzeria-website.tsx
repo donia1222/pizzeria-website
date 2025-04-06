@@ -949,10 +949,6 @@ export default function PizzeriaWebsite() {
                   <path d="m18 15-6-6-6 6" />
                 </svg>
               </a>
-
-              <Button onClick={() => setReservationOpen(true)} className="bg-gray-600 text-white hover:bg-green-900">
-                Jetzt reservieren
-              </Button>
             </div>
           </div>
 

@@ -358,7 +358,7 @@ export default function PizzeriaWebsite() {
           {/* Logo */}
 
           <a href="#home" className="block">
-            <img src="/logpmcopia.png" alt="Bouquet Mediterraneo" className="h-14 md:h-14 object-contain   rounded" />
+            <img src="/logpmcopia.png" alt="Bouquet Mediterraneo" className="h-10 md:h-10 object-contain   rounded" />
           </a>
 
           {/* Desktop Navigation */}

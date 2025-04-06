@@ -4,7 +4,13 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Calendar, Clock, Users, Check, Loader2, X } from "lucide-react"
-import { cn } from "../lib/utils"
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+// Utility function for conditionally joining class names
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
 
 // Types
 interface ReservationDialogProps {
@@ -356,27 +362,18 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
     return !isDisabledDay(date)
   }
 
-  // Function to disable specific dates in the date picker
-  const disableDates = (e: React.FormEvent<HTMLInputElement>) => {
-    const input = e.target as HTMLInputElement
-    const selectedDate = new Date(input.value)
+  // Function to handle date change and silently reset if it's Sunday or Monday
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedDate = e.target.value
+    const date = new Date(selectedDate)
 
-    if (isDisabledDay(selectedDate)) {
-      // Clear the input if a disabled day is selected
-      input.value = ""
-      // Show alert about closed days
-      alert("Wir sind sonntags und montags geschlossen. Bitte wählen Sie einen anderen Tag.")
+    if (isDisabledDay(date)) {
+      // Silently reset the date without showing an alert
+      setReservationDate("")
+    } else {
+      setReservationDate(selectedDate)
     }
   }
-
-  // Effect to validate selected date
-  useEffect(() => {
-    if (reservationDate && !isValidDate(reservationDate)) {
-      // If selected date is Sunday or Monday, show alert
-      alert("Wir sind sonntags und montags geschlossen. Bitte wählen Sie einen anderen Tag.")
-      setReservationDate("")
-    }
-  }, [reservationDate])
 
   // Effect to reset time when meal type changes
   useEffect(() => {
@@ -505,9 +502,7 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
           <DialogTitle className="font-bold text-xl text-[#8c9a56]">Tisch reservieren</DialogTitle>
           <DialogDescription className="text-gray-300">
             Füllen Sie das Formular aus, um Ihren Tisch bei Bouquet Mediterraneo zu reservieren.
-            <span className="block mt-2 text-amber-400 font-semibold">
-              Hinweis: Wir sind sonntags und montags geschlossen.
-            </span>
+            <span className="block mt-2 text-amber-400">Hinweis: Wir sind sonntags und montags geschlossen.</span>
           </DialogDescription>
         </DialogHeader>
 
@@ -564,12 +559,11 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
                   type="date"
                   required
                   value={reservationDate}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setReservationDate(e.target.value)}
-                  onInput={disableDates}
+                  onChange={handleDateChange}
                   min={getMinDate()}
                   className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                 />
-                <p className="text-xs text-amber-400 font-medium">Dienstag bis Samstag</p>
+                <p className="text-xs text-amber-400">Dienstag bis Samstag</p>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="reservation-time" className="text-gray-300">

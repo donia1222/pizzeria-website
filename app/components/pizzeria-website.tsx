@@ -978,6 +978,12 @@ export default function PizzeriaWebsite() {
                   lweb.ch
                 </a>
               </p>
+              <footer className="mt-10 text-sm text-gray-500">
+              Bilder stammen von{" "}
+              <a href="https://www.freepik.com" target="_blank" rel="noopener noreferrer" className="underline">
+                Freepik
+              </a>
+            </footer>
           </div>
         
         </div>

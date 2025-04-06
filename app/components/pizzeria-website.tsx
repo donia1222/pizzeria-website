@@ -1,4 +1,3 @@
-
 "use client"
 
 import type React from "react"
@@ -283,12 +282,12 @@ export default function PizzeriaWebsite() {
       >
         <div className="container mx-auto px-4 md:px-6 max-w-full overflow-hidden flex justify-between items-center">
           {/* Logo */}
- 
+   
   <a href="#home" className="block">
     <img
-      src="/logpmed.png"
+      src="/logpmcopia.png"
       alt="Bouquet Mediterraneo"
-      className="h-14 md:h-18 object-contain border border-white rounded"
+      className="h-14 md:h-14 object-contain   rounded"
     />
   </a>
 
@@ -439,11 +438,18 @@ export default function PizzeriaWebsite() {
 
           <div className="absolute inset-0 flex items-center justify-center z-10">
             <div className="flex flex-col sm:flex-row justify-center gap-4 z-50">
-   
+              <Button
+                onClick={() => setReservationOpen(true)}
+                className="bg-gray-600 text-white hover:bg-green-900"
+                size="lg"
+              >
+                <Calendar className="h-4 w-4 mr-2" />
+                Tisch reservieren
+              </Button>
               <Button
                 onClick={() => document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" })}
                 variant="outline"
-                className="border-white text-white hover:bg-white/10"
+                className="border-white text-white mb-40 hover:bg-white/10"
                 size="lg"
               >
                 <Pizza className="h-4 w-4 mr-2" />
@@ -465,13 +471,30 @@ export default function PizzeriaWebsite() {
                       Neu in Sevelen
                     </span>
                     <h2 className="text-4xl md:text-6xl font-bold">Authentische italienische Pizza</h2>
-       </div>
+                  </div>
+
                 </div>
                 <p className="text-xl md:text-2xl text-gray-300 max-w-xl mx-auto">
                   Frisch eröffnet! Erleben Sie unsere handgemachten Pizzen mit traditionellen Rezepten und besten
                   Zutaten
                 </p>
-                
+                <div className="flex items-center justify-center mt-10   bg-black">
+                <div className="mb-6 md:mb-0">
+            <a href="#home" className="block">
+    <img
+      src="/logpmcopia.png"
+      alt="Bouquet Mediterraneo"
+      className="h-14 md:h-14 object-contain   rounded"
+    />
+  </a>
+              <h2 className="text-2xl font-bold text-white mb-2 text-center">
+                <span className="text-[#8c9a56]">Bouquet </span>Mediterraneo
+              </h2>
+              
+              <p className="text-gray-400 text-sm">Cucina Mediterranea & Pizza</p>
+            </div>
+</div>
+
               </motion.div>
             </motion.div>
           </div>
@@ -792,15 +815,20 @@ export default function PizzeriaWebsite() {
       <footer className="bg-black py-12 border-t border-gray-800">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="flex items-center justify-center mb-10   bg-black">
-  <a href="#home" className="block">
+            <div className="mb-6 md:mb-0">
+            <a href="#home" className="block">
     <img
-      src="/logpmed.png"
+      src="/logpmcopia.png"
       alt="Bouquet Mediterraneo"
-      className="h-16 md:h-18 object-contain border border-white rounded"
+      className="h-14 md:h-14 object-contain   rounded"
     />
   </a>
-</div>
+              <h2 className="text-2xl font-bold text-white mb-2 text-center">
+                <span className="text-[#8c9a56]">Bouquet </span>Mediterraneo
+              </h2>
+              
+              <p className="text-gray-400 text-sm">Cucina Mediterranea & Pizza</p>
+            </div>
 
             <div className="flex flex-col md:flex-row gap-8 items-center">
               <a
@@ -858,7 +886,7 @@ export default function PizzeriaWebsite() {
                 </svg>
               </a>
 
-              <Button onClick={() => setReservationOpen(true)} className="bg-[#788642]  text-white hover:bg-green-900">
+              <Button onClick={() => setReservationOpen(true)} className="bg-gray-600 text-white hover:bg-green-900">
                 Jetzt reservieren
               </Button>
             </div>

@@ -433,14 +433,15 @@ export default function PizzeriaWebsite() {
 
           <div className="absolute inset-0 flex items-center justify-center z-10">
             <div className="flex flex-col sm:flex-row justify-center gap-4 z-50">
-              <Button
-                onClick={() => setReservationOpen(true)}
-                className="bg-green-800 text-white hover:bg-green-900"
-                size="lg"
-              >
-                <Calendar className="h-4 w-4 mr-2" />
-                Tisch reservieren
-              </Button>
+            <Button
+  onClick={() => setReservationOpen(true)}
+  className="bg-[#7e8c49] text-white"
+  size="lg"
+>
+  <Calendar className="h-4 w-4 mr-2" />
+  Tisch reservieren
+</Button>
+
               <Button
                 onClick={() => document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" })}
                 variant="outline"

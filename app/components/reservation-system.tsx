@@ -451,7 +451,7 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
       )
 
       // Número de WhatsApp
-      const whatsappNumber = "0041783144209"
+      const whatsappNumber = "+41783144209"
 
       // Crear y abrir el enlace de WhatsApp
       const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`

@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { ShoppingBag, Check, Loader2, X, AlertTriangle } from "lucide-react"
+import { ShoppingBag, Check, Loader2, X } from "lucide-react"
 import { cn } from "../lib/utils"
 
 // Interfaces
@@ -448,20 +448,16 @@ function isRestaurantOpen(): boolean {
   return getAvailableHours().length > 0
 }
 
-// Función para crear el enlace mailto con los detalles del pedido
-function createOrderMailtoLink(
+// Replace the createOrderMailtoLink function with a function to create WhatsApp link
+function createOrderWhatsAppLink(
   cartItems: CartItem[],
   customerInfo: {
     name: string
     email: string
     phone: string
-    address?: string
-    postalCode?: string
-    city?: string
     notes?: string
-    deliveryType: string
     pickupTime?: string
-    deliveryTime?: string
+    pickupDate?: string
   },
   totals: {
     subtotal: number
@@ -474,75 +470,86 @@ function createOrderMailtoLink(
     .map((item) => `${item.quantity}x ${item.name} - CHF ${(item.price * item.quantity).toFixed(2)}`)
     .join("\n")
 
-  // Crear el asunto del correo
-  const subject = encodeURIComponent(`Neue Bestellung von ${customerInfo.name}`)
-
-  // Format the complete address if delivery is selected
-  const formattedAddress =
-    customerInfo.deliveryType === "delivery" && customerInfo.address
-      ? `Adresse: ${customerInfo.address}, ${customerInfo.postalCode || ""} ${customerInfo.city || ""}\n`
-      : ""
-
-  // Crear el cuerpo del correo
-  const body = encodeURIComponent(
-    `NEUE BESTELLUNG\n\n` +
-      `Kundeninformationen:\n` +
+  // Crear el mensaje para WhatsApp
+  const message = encodeURIComponent(
+    `*NEUE BESTELLUNG*\n\n` +
+      `*Kundeninformationen:*\n` +
       `Name: ${customerInfo.name}\n` +
       `E-Mail: ${customerInfo.email}\n` +
       `Telefon: ${customerInfo.phone}\n` +
-      `Lieferart: ${customerInfo.deliveryType === "pickup" ? "Abholung" : "Lieferung"}\n` +
-      (customerInfo.deliveryType === "pickup" && customerInfo.pickupTime
-        ? `Abholzeit: ${customerInfo.pickupTime} Uhr\n`
-        : "") +
-      (customerInfo.deliveryType === "delivery" && customerInfo.deliveryTime
-        ? `Lieferzeit: ${customerInfo.deliveryTime} Uhr\n`
-        : "") +
-      formattedAddress +
+      `Abholzeit: ${customerInfo.pickupTime} Uhr\n` +
+      `Abholdatum: ${customerInfo.pickupDate}\n` +
       (customerInfo.notes ? `Anmerkungen: ${customerInfo.notes}\n` : "") +
       `\n` +
-      `Bestellte Artikel:\n${itemsList}\n\n` +
+      `*Bestellte Artikel:*\n${itemsList}\n\n` +
       `Zwischensumme: CHF ${totals.subtotal.toFixed(2)}\n` +
       `Steuer (8%): CHF ${totals.tax.toFixed(2)}\n` +
-      `Gesamtsumme: CHF ${totals.total.toFixed(2)}\n\n` +
+      `*Gesamtsumme: CHF ${totals.total.toFixed(2)}*\n\n` +
       `Diese Bestellung wurde über die Website gesendet.`,
   )
 
-  return `mailto:info@bouquetmediterraneo.ch?subject=${subject}&body=${body}`
+  // Número de WhatsApp
+  const whatsappNumber = "0041783144209"
+
+  return `https://wa.me/${whatsappNumber}?text=${message}`
 }
 
-// Componente de diálogo de pedido
+// Modify the function to get available pickup dates (including future dates for Sunday/Monday orders)
+function getAvailablePickupDates(): { date: Date; formatted: string }[] {
+  const dates = []
+  const today = new Date()
+
+  // Add dates for the next 7 days
+  for (let i = 0; i < 7; i++) {
+    const date = new Date()
+    date.setDate(today.getDate() + i)
+
+    const day = date.getDay() // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+
+    // Skip Sunday (0) and Monday (1) as pickup days
+    if (day !== 0 && day !== 1) {
+      const formatted = date.toLocaleDateString("de-DE", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+
+      dates.push({ date, formatted })
+    }
+  }
+
+  return dates
+}
+
+// Modify the OrderDialog component to use WhatsApp and only allow pickup
 export const OrderDialog = ({
   open,
   onOpenChange,
   cartItems,
   updateQuantity,
   removeFromCart,
-  clearCart, // Nueva prop para limpiar el carrito
+  clearCart,
 }: {
   open: boolean
   onOpenChange: (open: boolean) => void
   cartItems: CartItem[]
   updateQuantity: (id: number, quantity: number) => void
   removeFromCart: (id: number) => void
-  clearCart: () => void // Función para vaciar el carrito
+  clearCart: () => void
 }) => {
   const [orderSuccess, setOrderSuccess] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [deliveryType, setDeliveryType] = useState("pickup")
   const [availableHours, setAvailableHours] = useState<string[]>([])
   const [pickupTime, setPickupTime] = useState<string>("")
-  const [deliveryTime, setDeliveryTime] = useState<string>("")
-  const [showClosedAlert, setShowClosedAlert] = useState(false)
-  const restaurantOpen = isRestaurantOpen()
+  const [pickupDate, setPickupDate] = useState<string>("")
+  const [availableDates, setAvailableDates] = useState<{ date: Date; formatted: string }[]>([])
 
   // Estado para los campos del formulario
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    address: "",
-    postalCode: "",
-    city: "",
     notes: "",
   })
 
@@ -560,13 +567,34 @@ export const OrderDialog = ({
   const taxAmount = cartTotal * 0.08
   const totalWithTax = cartTotal + taxAmount
 
-  // Obtener horas disponibles al cargar el componente
+  // Obtener fechas y horas disponibles al cargar el componente
   useEffect(() => {
-    const hours = getAvailableHours()
+    const dates = getAvailablePickupDates()
+    setAvailableDates(dates)
+
+    if (dates.length > 0) {
+      setPickupDate(dates[0].formatted)
+    }
+
+    const hours = [
+      "11:30",
+      "12:00",
+      "12:30",
+      "13:00",
+      "13:30",
+      "17:30",
+      "18:00",
+      "18:30",
+      "19:00",
+      "19:30",
+      "20:00",
+      "20:30",
+      "21:00",
+    ]
     setAvailableHours(hours)
+
     if (hours.length > 0) {
       setPickupTime(hours[0])
-      setDeliveryTime(hours[0])
     }
   }, [])
 
@@ -583,15 +611,9 @@ export const OrderDialog = ({
 
     if (cartItems.length === 0) return
 
-    // Verificar si el restaurante está abierto
-    if (!restaurantOpen) {
-      setShowClosedAlert(true)
-      return
-    }
-
-    // Verificar que se haya seleccionado una hora
-    if ((deliveryType === "pickup" && !pickupTime) || (deliveryType === "delivery" && !deliveryTime)) {
-      alert("Bitte wählen Sie eine Zeit aus.")
+    // Verificar que se haya seleccionado una hora y fecha
+    if (!pickupTime || !pickupDate) {
+      alert("Bitte wählen Sie eine Zeit und ein Datum aus.")
       return
     }
 
@@ -600,13 +622,9 @@ export const OrderDialog = ({
       name: formData.name,
       email: formData.email,
       phone: formData.phone,
-      address: formData.address,
-      postalCode: formData.postalCode,
-      city: formData.city,
       notes: formData.notes,
-      deliveryType: deliveryType,
-      pickupTime: deliveryType === "pickup" ? pickupTime : undefined,
-      deliveryTime: deliveryType === "delivery" ? deliveryTime : undefined,
+      pickupTime: pickupTime,
+      pickupDate: pickupDate,
     }
 
     // Calcular totales
@@ -619,9 +637,9 @@ export const OrderDialog = ({
     try {
       setIsSubmitting(true)
 
-      // Crear y abrir el enlace mailto
-      const mailtoLink = createOrderMailtoLink(cartItems, customerInfo, totals)
-      window.location.href = mailtoLink
+      // Crear y abrir el enlace de WhatsApp
+      const whatsappLink = createOrderWhatsAppLink(cartItems, customerInfo, totals)
+      window.open(whatsappLink, "_blank")
 
       // Mostrar mensaje de éxito
       setTimeout(() => {
@@ -631,7 +649,7 @@ export const OrderDialog = ({
         // Vaciar el carrito
         clearCart()
 
-        // Resetear formulario y cerrar diálogo después del éxito
+        // Cerrar el diálogo automáticamente después de 2 segundos
         setTimeout(() => {
           onOpenChange(false)
           setOrderSuccess(false)
@@ -640,16 +658,14 @@ export const OrderDialog = ({
             name: "",
             email: "",
             phone: "",
-            address: "",
-            postalCode: "",
-            city: "",
             notes: "",
           })
-          // Reset delivery type and times
-          setDeliveryType("pickup")
+          // Reset pickup time and date
           if (availableHours.length > 0) {
             setPickupTime(availableHours[0])
-            setDeliveryTime(availableHours[0])
+          }
+          if (availableDates.length > 0) {
+            setPickupDate(availableDates[0].formatted)
           }
         }, 2000)
       }, 1000)
@@ -661,11 +677,9 @@ export const OrderDialog = ({
 
   // Manejar cierre del diálogo
   const handleDialogClose = () => {
-    if (orderSuccess) {
-      clearCart()
-    }
-    onOpenChange(false)
-  }
+
+    window.location.reload(); // Esto recargará la página
+  };
 
   return (
     <Dialog open={open} onOpenChange={handleDialogClose}>
@@ -685,10 +699,9 @@ export const OrderDialog = ({
             <div className="w-16 h-16 bg-[#8c9a56]/20 rounded-full flex items-center justify-center mx-auto mb-4">
               <Check className="h-8 w-8 text-[#8c9a56]" />
             </div>
-            <h3 className="text-xl font-bold mb-2 text-white">Bestellung bestätigt!</h3>
+            <h3 className="text-xl font-bold mb-2 text-white">Bestellung gesendet!</h3>
             <p className="text-gray-300">
-              Wir haben eine Bestätigung an Ihre E-Mail gesendet. Ihr Essen wird zur gewählten Zeit
-              {deliveryType === "pickup" ? " zur Abholung bereit sein." : " geliefert."}
+              Ihre Bestellung wurde per WhatsApp gesendet. Ihr Essen wird zur gewählten Zeit zur Abholung bereit sein.
             </p>
           </div>
         ) : (
@@ -704,26 +717,6 @@ export const OrderDialog = ({
               </div>
             ) : (
               <>
-                {showClosedAlert && (
-                  <div className="bg-amber-900/30 border border-amber-700 rounded-md p-4 mb-4 flex items-start">
-                    <AlertTriangle className="h-5 w-5 text-amber-500 mr-3 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <h4 className="text-amber-500 font-medium mb-1">Restaurant geschlossen</h4>
-                      <p className="text-amber-300 text-sm">
-                        Unser Restaurant ist heute geschlossen. Bitte besuchen Sie uns zu unseren Öffnungszeiten.
-                      </p>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="mt-2 border-amber-700 text-amber-400 hover:bg-amber-900/50"
-                        onClick={() => setShowClosedAlert(false)}
-                      >
-                        Verstanden
-                      </Button>
-                    </div>
-                  </div>
-                )}
-
                 <div className="max-h-[30vh] md:max-h-[300px] overflow-y-auto pr-2 flex-grow">
                   {cartItems.map((item) => (
                     <div
@@ -795,155 +788,57 @@ export const OrderDialog = ({
                 <div className="border-t border-gray-800 pt-4"></div>
 
                 <div className="space-y-3 sm:space-y-4 overflow-y-auto flex-shrink-0">
-                  <div>
-                    <Label className="text-base font-medium text-white">Abholung oder Lieferung</Label>
-                    <div className="mt-2 space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <input
-                          type="radio"
-                          id="pickup"
-                          name="delivery-type"
-                          value="pickup"
-                          defaultChecked
-                          className="h-4 w-4 text-[#8c9a56] border-gray-700 focus:ring-[#8c9a56]"
-                          onChange={(e) => setDeliveryType(e.target.value)}
-                        />
-                        <Label htmlFor="pickup" className="text-gray-300">
-                          Abholung
-                        </Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <input
-                          type="radio"
-                          id="delivery"
-                          name="delivery-type"
-                          value="delivery"
-                          className="h-4 w-4 text-[#8c9a56] border-gray-700 focus:ring-[#8c9a56]"
-                          onChange={(e) => setDeliveryType(e.target.value)}
-                        />
-                        <Label htmlFor="delivery" className="text-gray-300">
-                          Lieferung (45-60 Min.)
-                        </Label>
-                      </div>
-                    </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="pickup-date" className="text-gray-300">
+                      Abholdatum wählen
+                    </Label>
+                    <select
+                      id="pickup-date"
+                      value={pickupDate}
+                      onChange={(e) => setPickupDate(e.target.value)}
+                      className="flex h-10 w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-green-700"
+                      required
+                    >
+                      {availableDates.length > 0 ? (
+                        availableDates.map((date, index) => (
+                          <option key={index} value={date.formatted}>
+                            {date.formatted}
+                          </option>
+                        ))
+                      ) : (
+                        <option value="">Keine Termine verfügbar</option>
+                      )}
+                    </select>
+                    <p className="text-xs text-amber-400 mt-1">Hinweis: Abholung nur Dienstag bis Samstag möglich</p>
                   </div>
 
-                  {deliveryType === "pickup" && (
-                    <div className="space-y-2">
-                      <Label htmlFor="pickup-time" className="text-gray-300">
-                        Abholzeit wählen
-                      </Label>
-                      <select
-                        id="pickup-time"
-                        value={pickupTime}
-                        onChange={(e) => setPickupTime(e.target.value)}
-                        className="flex h-10 w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-green-700"
-                        required
-                      >
-                        {availableHours.length > 0 ? (
-                          availableHours.map((hour) => (
-                            <option key={hour} value={hour}>
-                              {hour} Uhr
-                            </option>
-                          ))
-                        ) : (
-                          <option value="">Heute geschlossen</option>
-                        )}
-                      </select>
-                      <p className="text-xs text-gray-400 mt-1">
-                        Öffnungszeiten:
-                        <br />
-                        Dienstag - Donnerstag: 11:30–13:30, 17:30–21:00 Uhr
-                        <br />
-                        Freitag - Samstag: 11:30–13:30, 17:30–22:00 Uhr
-                        <br />
-                        Sonntag, Montag: Geschlossen
-                      </p>
-                    </div>
-                  )}
-
-                  {deliveryType === "delivery" && (
-                    <div className="space-y-2">
-                      <Label htmlFor="delivery-time" className="text-gray-300">
-                        Lieferzeit wählen
-                      </Label>
-                      <select
-                        id="delivery-time"
-                        value={deliveryTime}
-                        onChange={(e) => setDeliveryTime(e.target.value)}
-                        className="flex h-10 w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-green-700"
-                        required
-                      >
-                        {availableHours.length > 0 ? (
-                          availableHours.map((hour) => (
-                            <option key={hour} value={hour}>
-                              {hour} Uhr
-                            </option>
-                          ))
-                        ) : (
-                          <option value="">Heute geschlossen</option>
-                        )}
-                      </select>
-                      <p className="text-xs text-gray-400 mt-1">Lieferzeiten entsprechen den Öffnungszeiten.</p>
-                    </div>
-                  )}
-
-                  {deliveryType === "delivery" && (
-                    <>
-                      <div className="space-y-2">
-                        <Label htmlFor="street-address" className="text-gray-300">
-                          Straße und Hausnummer
-                        </Label>
-                        <Input
-                          id="street-address"
-                          name="address"
-                          value={formData.address}
-                          onChange={handleInputChange}
-                          placeholder="Straße und Hausnummer"
-                          required={deliveryType === "delivery"}
-                          className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
-                        />
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="postal-code" className="text-gray-300">
-                            Postleitzahl
-                          </Label>
-                          <Input
-                            id="postal-code"
-                            name="postalCode"
-                            value={formData.postalCode || ""}
-                            onChange={handleInputChange}
-                            placeholder="PLZ"
-                            required={deliveryType === "delivery"}
-                            className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="city" className="text-gray-300">
-                            Ort
-                          </Label>
-                          <select
-                            id="city"
-                            name="city"
-                            value={formData.city || ""}
-                            onChange={handleInputChange}
-                            required={deliveryType === "delivery"}
-                            className="flex h-10 w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-green-700"
-                          >
-                            <option value="" disabled>
-                              Ort auswählen
-                            </option>
-                            <option value="Sevelen">Sevelen</option>
-                            <option value="Buchs">Buchs</option>
-                            <option value="Gams">Gams</option>
-                            <option value="Trüpach">Trüpach</option>
-                            <option value="Liechtenstein">Liechtenstein</option>
-                          </select>
-                        </div>
-                      </div>
-                    </>
-                  )}
+                  <div className="space-y-2">
+                    <Label htmlFor="pickup-time" className="text-gray-300">
+                      Abholzeit wählen
+                    </Label>
+                    <select
+                      id="pickup-time"
+                      value={pickupTime}
+                      onChange={(e) => setPickupTime(e.target.value)}
+                      className="flex h-10 w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-green-700"
+                      required
+                    >
+                      {availableHours.map((hour) => (
+                        <option key={hour} value={hour}>
+                          {hour} Uhr
+                        </option>
+                      ))}
+                    </select>
+                    <p className="text-xs text-gray-400 mt-1">
+                      Öffnungszeiten:
+                      <br />
+                      Dienstag - Donnerstag: 11:30–13:30, 17:30–21:00 Uhr
+                      <br />
+                      Freitag - Samstag: 11:30–13:30, 17:30–22:00 Uhr
+                      <br />
+                      Sonntag, Montag: Geschlossen
+                    </p>
+                  </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div className="space-y-2">
@@ -1005,21 +900,31 @@ export const OrderDialog = ({
                       className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                     />
                   </div>
+
+                  <div className="flex items-center space-x-2 mt-4">
+                    <input
+                      type="checkbox"
+                      id="terms-agreement"
+                      required
+                      className="h-4 w-4 rounded border-gray-700 bg-gray-800 text-[#8c9a56] focus:ring-[#8c9a56]"
+                    />
+                    <Label htmlFor="terms-agreement" className="text-gray-300">
+                      Ich stimme zu, dass meine Daten für die Bestellung verwendet werden
+                    </Label>
+                  </div>
                 </div>
 
                 <DialogFooter>
                   <Button
                     type="submit"
                     className="w-full bg-green-800 text-white hover:bg-green-900"
-                    disabled={isSubmitting || !restaurantOpen}
+                    disabled={isSubmitting}
                   >
                     {isSubmitting ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                         Verarbeitung...
                       </>
-                    ) : !restaurantOpen ? (
-                      "Heute geschlossen"
                     ) : (
                       "Bestellung aufgeben"
                     )}
@@ -1033,4 +938,5 @@ export const OrderDialog = ({
     </Dialog>
   )
 }
+
 

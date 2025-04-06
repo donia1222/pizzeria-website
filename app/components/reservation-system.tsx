@@ -427,14 +427,35 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
         mealType: mealType,
       }
 
-      // Guardar en la base de datos si está activada la opción
-      if (saveToDatabase) {
-        await saveReservationToDatabase(reservationData)
-      }
+      // Formatear la fecha para mostrarla de manera más legible
+      const formattedDate = new Date(reservationDate).toLocaleDateString("de-DE", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
 
-      // Crear y abrir el enlace mailto
-      const mailtoLink = createReservationMailtoLink(reservationData)
-      window.location.href = mailtoLink
+      // Crear mensaje para WhatsApp
+      const whatsappMessage = encodeURIComponent(
+        `*Tischreservierung Details:*\n\n` +
+          `Datum: ${formattedDate}\n` +
+          `Zeit: ${reservationTime} Uhr\n` +
+          `Mahlzeit: ${mealType}\n` +
+          `Anzahl der Gäste: ${reservationGuests}\n\n` +
+          `*Kontaktinformationen:*\n` +
+          `Name: ${reservationName}\n` +
+          `E-Mail: ${reservationEmail}\n` +
+          `Telefon: ${reservationPhone}\n\n` +
+          (reservationNotes ? `*Besondere Wünsche:*\n${reservationNotes}\n\n` : "") +
+          `Diese Reservierung wurde über das Reservierungsformular auf der Website gesendet.`,
+      )
+
+      // Número de WhatsApp
+      const whatsappNumber = "0041783144209"
+
+      // Crear y abrir el enlace de WhatsApp
+      const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
+      window.open(whatsappLink, "_blank")
 
       // Mostrar mensaje de éxito
       setIsSubmitting(false)
@@ -457,7 +478,7 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
       }, 2000)
     } catch (error) {
       setIsSubmitting(false)
-      alert("Es gab ein Problem bei der Speicherung Ihrer Reservierung. Bitte versuchen Sie es später erneut.")
+      alert("Es gab ein Problem bei der Verarbeitung Ihrer Reservierung. Bitte versuchen Sie es später erneut.")
     }
   }
 
@@ -480,9 +501,10 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
             <div className="w-16 h-16 bg-[#8c9a56]/20 rounded-full flex items-center justify-center mx-auto mb-4">
               <Check className="h-8 w-8 text-[#8c9a56]" />
             </div>
-            <h3 className="text-xl font-bold mb-2 text-white">Reservierung bestätigt!</h3>
+            <h3 className="text-xl font-bold mb-2 text-white">Reservierung gesendet!</h3>
             <p className="text-gray-300">
-              Wir haben eine Bestätigung an Ihre E-Mail gesendet. Wir freuen uns darauf, Sie zu bedienen.
+              Ihre Reservierungsanfrage wurde an unser Team per WhatsApp gesendet. Wir werden uns in Kürze bei Ihnen
+              melden.
             </p>
           </div>
         ) : (
@@ -650,13 +672,12 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
             <div className="flex items-center space-x-2 mt-4">
               <input
                 type="checkbox"
-                id="save-to-database"
-                checked={saveToDatabase}
-                onChange={(e) => setSaveToDatabase(e.target.checked)}
+                id="terms-agreement"
+                required
                 className="h-4 w-4 rounded border-gray-700 bg-gray-800 text-[#8c9a56] focus:ring-[#8c9a56]"
               />
-              <Label htmlFor="save-to-database" className="text-gray-300">
-                Reservierung im System speichern
+              <Label htmlFor="terms-agreement" className="text-gray-300">
+                Ich stimme zu, dass meine Daten für die Reservierung verwendet werden
               </Label>
             </div>
 

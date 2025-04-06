@@ -507,26 +507,7 @@ export default function PizzeriaWebsite() {
 
           <div className="absolute inset-0 flex items-center justify-center z-10">
             <div className="flex flex-col sm:flex-row justify-center gap-4 z-50">
-            <Button
-                  onClick={() => {
-                    setReservationOpen(true)
-                    toggleMobileMenu()
-                  }}
-                  className=" bg-transparent border border-white text-[#8c9a56]"
-                  size="lg"
-                >
-                  <Calendar className="h-4 w-4 mr-2" />
-                  Tisch reservieren
-                </Button>
-              <Button
-                onClick={() => document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" })}
-                variant="outline"
-                className="border-white text-white mb-60 hover:bg-white/10"
-                size="lg"
-              >
-                <Pizza className="h-4 w-4 mr-2" />
-                Speisekarte entdecken
-              </Button>
+     
             </div>
           </div>
 

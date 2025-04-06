@@ -894,7 +894,7 @@ export default function PizzeriaWebsite() {
                 <span className="text-[#8c9a56]">Bouquet </span>Mediterraneo
               </h2>
 
-              <p className="text-gray-400 text-sm">Cucina Mediterranea & Pizza</p>
+              <p className="text-gray-400 text-sm text-center">Cucina Mediterranea & Pizza</p>
             </div>
 
             <div className="flex flex-col md:flex-row gap-8 items-center">

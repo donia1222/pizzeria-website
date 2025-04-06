@@ -518,7 +518,7 @@ export default function PizzeriaWebsite() {
               <Button
                 onClick={() => document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" })}
                 variant="outline"
-                className="border-white text-white mb-40 hover:bg-white/10"
+                className="border-white text-white mb-60 hover:bg-white/10"
                 size="lg"
               >
                 <Pizza className="h-4 w-4 mr-2" />

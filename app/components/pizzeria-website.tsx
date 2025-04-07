@@ -568,7 +568,7 @@ export default function PizzeriaWebsite() {
             >
               <div className="relative z-10 overflow-hidden rounded-lg ">
                 <img
-                  src="/forno.png"
+                  src="/pizzas.png"
                   alt="Pizza im Holzofen"
                   className="object-cover h-[500px] w-full"
                 />

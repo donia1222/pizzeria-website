@@ -4,7 +4,7 @@ import type React from "react"
 import ScrollTextImage from "./scroll-text-image"
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
-import { Menu, X, Phone, Clock, Calendar, Pizza, MapPin, Instagram, Mail, PhoneCall, ShoppingBag } from 'lucide-react'
+import { Menu, X, Phone, Clock, Calendar, MapPin, Instagram, Mail, PhoneCall, ShoppingBag, Star } from "lucide-react"
 
 import { MediterraneanBackground } from "./mediterranean-background"
 import { ReservationButton, ReservationDialog } from "./reservation-system"
@@ -21,7 +21,6 @@ import { testimonials } from "../data/testimonials"
 import { heroImages } from "../data/hero-images"
 import { ImpressumModal } from "./impressum-modal"
 import { DatenschutzModal } from "./datenschutz-modal"
-
 
 // Utility function to conditionally join class names
 const cn = (...classes: (string | boolean | undefined)[]) => {
@@ -235,7 +234,6 @@ function CookieConsent({ onAccept }: { onAccept: () => void }) {
           <Button onClick={onAccept} className="bg-[#8c9a56] text-black hover:bg-[#a0b266]">
             Akzeptieren
           </Button>
-     
         </div>
       </div>
     </motion.div>
@@ -254,7 +252,6 @@ export default function PizzeriaWebsite() {
   const [datenschutzOpen, setDatenschutzOpen] = useState(false)
   const [impressumOpen, setImpressumOpen] = useState(false)
   const [showCookieConsent, setShowCookieConsent] = useState(true)
-
 
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -511,9 +508,7 @@ export default function PizzeriaWebsite() {
           <ImageCarousel images={heroImages} />
 
           <div className="absolute inset-0 flex items-center justify-center z-10">
-            <div className="flex flex-col sm:flex-row justify-center gap-4 z-50">
-     
-            </div>
+            <div className="flex flex-col sm:flex-row justify-center gap-4 z-50"></div>
           </div>
 
           <div className="flex items-center justify-center mt-20">
@@ -567,11 +562,7 @@ export default function PizzeriaWebsite() {
               className="relative"
             >
               <div className="relative z-10 overflow-hidden rounded-lg ">
-                <img
-                  src="/pizzas.png"
-                  alt="Pizza im Holzofen"
-                  className="object-cover h-[500px] w-full"
-                />
+                <img src="/pizzas.png" alt="Pizza im Holzofen" className="object-cover h-[500px] w-full" />
               </div>
               <div className="absolute -bottom-6 -right-6 w-64 h-64 border-2 border-[#8c9a56] z-0"></div>
             </motion.div>
@@ -587,8 +578,8 @@ export default function PizzeriaWebsite() {
 
               <p className="text-gray-300 mb-6 leading-relaxed">
                 Bouquet Mediterraneo ist neu in Sevelen, aber unsere Leidenschaft für authentische italienische Küche
-                reicht weit zurück. Ein ausgezeichneter Sommelier und gebürtiger Italiener,
-                bringt ein Stück seines Heimatlandes zu Ihnen.
+                reicht weit zurück. Ein ausgezeichneter Sommelier und gebürtiger Italiener, bringt ein Stück seines
+                Heimatlandes zu Ihnen.
               </p>
 
               <p className="text-gray-300 mb-8 leading-relaxed">
@@ -716,6 +707,19 @@ export default function PizzeriaWebsite() {
 
       {/* Testimonials Section */}
       <TestimonialsSection testimonials={testimonials} />
+
+      {/* Google Reviews Button */}
+      <div className="flex justify-center pb-12 bg-black">
+        <a
+          href="https://www.google.com/search?num=10&client=safari&sca_esv=f63688edbc6800bd&sxsrf=AHTn8zpsGq7OkkwrMTCAWxdSJKhwkoLR4A:1744025906157&si=APYL9bs7Hg2KMLB-4tSoTdxuOx8BdRvHbByC_AuVpNyh0x2KzVmRcI_uqMOZtJMkKKAdOjBqA-gLXs3tsXBNTJCVviOATu1HusB4lu4IFWmdN8b2UmqdUF8vWt7585yX3y4R4lTRHLldTEPg_TuIUR3zyb1iEBIPbA%3D%3D&q=Bouquet+Mediterraneo+Rese%C3%B1as"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-[#8c9a56] text-black hover:bg-[#a0b266] transition-colors px-6 py-3 rounded-md font-medium flex items-center"
+        >
+          <Star className="h-5 w-5 mr-2" />
+          Mehr Bewertungen anzeigen
+        </a>
+      </div>
 
       {/* Gallery Section - Reemplazamos la sección estática por nuestro componente dinámico */}
       <GallerySection />
@@ -917,21 +921,20 @@ export default function PizzeriaWebsite() {
             <p className="text-gray-400 text-sm">
               © {new Date().getFullYear()} Bouquet Mediterraneo. Neu eröffnet in Sevelen.
             </p>
-                       {/* Enlace Clicable a lweb.ch */}
-                       <p className="mt-4">
-                Webseite Design {" "}
-                <a href="https://lweb.ch" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-                  lweb.ch
-                </a>
-              </p>
-              <footer className="mt-10 text-sm text-gray-500">
+            {/* Enlace Clicable a lweb.ch */}
+            <p className="mt-4">
+              Webseite Design{" "}
+              <a href="https://lweb.ch" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+                lweb.ch
+              </a>
+            </p>
+            <footer className="mt-10 text-sm text-gray-500">
               Bilder stammen von{" "}
               <a href="https://www.freepik.com" target="_blank" rel="noopener noreferrer" className="underline">
                 Freepik
               </a>
             </footer>
           </div>
-        
         </div>
       </footer>
 
@@ -968,14 +971,15 @@ export default function PizzeriaWebsite() {
           </motion.button>
         )}
       </AnimatePresence>
-     {/* Impressum Modal */}
-     <ImpressumModal isOpen={impressumOpen} onClose={() => setImpressumOpen(false)} />
+      {/* Impressum Modal */}
+      <ImpressumModal isOpen={impressumOpen} onClose={() => setImpressumOpen(false)} />
 
-{/* Datenschutz Modal */}
-<DatenschutzModal isOpen={datenschutzOpen} onClose={() => setDatenschutzOpen(false)} />
+      {/* Datenschutz Modal */}
+      <DatenschutzModal isOpen={datenschutzOpen} onClose={() => setDatenschutzOpen(false)} />
 
       {/* Cookie Consent Banner */}
       {showCookieConsent && <CookieConsent onAccept={handleCookieAccept} />}
     </div>
   )
 }
+

@@ -587,7 +587,7 @@ export default function PizzeriaWebsite() {
 
               <p className="text-gray-300 mb-6 leading-relaxed">
                 Bouquet Mediterraneo ist neu in Sevelen, aber unsere Leidenschaft für authentische italienische Küche
-                reicht weit zurück. Unser Küchenchef Dari, ein ausgezeichneter Sommelier und gebürtiger Italiener,
+                reicht weit zurück. Ein ausgezeichneter Sommelier und gebürtiger Italiener,
                 bringt ein Stück seines Heimatlandes zu Ihnen.
               </p>
 

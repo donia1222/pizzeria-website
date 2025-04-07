@@ -562,7 +562,7 @@ export default function PizzeriaWebsite() {
               className="relative"
             >
               <div className="relative z-10 overflow-hidden rounded-lg ">
-                <img src="/pizzas.png" alt="Pizza im Holzofen" className="object-cover h-[500px] w-full" />
+                <img src="DSC08346.jpg" alt="Pizza im Holzofen" className="object-cover h-[500px] w-full" />
               </div>
               <div className="absolute -bottom-6 -right-6 w-64 h-64 border-2 border-[#8c9a56] z-0"></div>
             </motion.div>

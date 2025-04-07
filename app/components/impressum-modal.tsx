@@ -21,7 +21,7 @@ export function ImpressumModal({ isOpen, onClose }: ImpressumModalProps) {
         </div>
         <div className="p-6">
           <div className="space-y-4">
-            <h3 className="text-xl font-bold">Bouquet Mediterraneo</h3>
+            <h3 className="text-xl font-bold">Dario Gastro GmnH</h3>
 
             <div className="space-y-2">
               <h4 className="font-semibold">Adresse</h4>
@@ -37,6 +37,12 @@ export function ImpressumModal({ isOpen, onClose }: ImpressumModalProps) {
               <h4 className="font-semibold">E-Mail</h4>
               <p>info@bouquetmediterraneo.ch</p>
             </div>
+            <footer className="mt-10 text-sm text-gray-500">
+              Bilder stammen von{" "}
+              <a href="https://www.freepik.com" target="_blank" rel="noopener noreferrer" className="underline">
+                Freepik
+              </a>
+            </footer>
           </div>
         </div>
       </div>

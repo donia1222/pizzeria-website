@@ -4,7 +4,7 @@ import type React from "react"
 import ScrollTextImage from "./scroll-text-image"
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
-import { Menu, X, Phone, Clock, Calendar, Pizza, MapPin, Instagram, Mail, PhoneCall, ShoppingBag } from "lucide-react"
+import { Menu, X, Phone, Clock, Calendar, Pizza, MapPin, Instagram, Mail, PhoneCall, ShoppingBag } from 'lucide-react'
 
 import { MediterraneanBackground } from "./mediterranean-background"
 import { ReservationButton, ReservationDialog } from "./reservation-system"
@@ -12,12 +12,16 @@ import { type MenuItem as MenuItemType, CartButton, OrderDialog, type CartItem }
 import { TestimonialsSection } from "./testimonials"
 import { ContactForm } from "./contact-form"
 import { MenuFilter } from "./menu-filter"
+import { GallerySection } from "./gallery-section" // Importamos el componente de galería
 
 // Import data from separate files
 import { menuItems } from "../data/menu-items"
 import { testimonials } from "../data/testimonials"
-import { galleryImages } from "../data/gallery-images"
+// Eliminamos la importación de galleryImages ya que ahora usamos el componente GallerySection
 import { heroImages } from "../data/hero-images"
+import { ImpressumModal } from "./impressum-modal"
+import { DatenschutzModal } from "./datenschutz-modal"
+
 
 // Utility function to conditionally join class names
 const cn = (...classes: (string | boolean | undefined)[]) => {
@@ -250,6 +254,7 @@ export default function PizzeriaWebsite() {
   const [datenschutzOpen, setDatenschutzOpen] = useState(false)
   const [impressumOpen, setImpressumOpen] = useState(false)
   const [showCookieConsent, setShowCookieConsent] = useState(true)
+
 
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -563,7 +568,7 @@ export default function PizzeriaWebsite() {
             >
               <div className="relative z-10 overflow-hidden rounded-lg ">
                 <img
-                  src="/baking-delicious-pizza-with-wood-fired-oven_23-2150134263.jpg"
+                  src="/forno.png"
                   alt="Pizza im Holzofen"
                   className="object-cover h-[500px] w-full"
                 />
@@ -712,51 +717,8 @@ export default function PizzeriaWebsite() {
       {/* Testimonials Section */}
       <TestimonialsSection testimonials={testimonials} />
 
-      {/* Gallery Section */}
-      <section id="gallery" className="py-24 bg-black">
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-3xl font-bold mb-2 text-[#8c9a56]">Unsere Galerie</h2>
-            <h3 className="text-4xl font-bold mb-8 text-white">Einblicke in unser Restaurant</h3>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {galleryImages.map((image, index) => (
-              <motion.div
-                key={index}
-                className="relative aspect-square overflow-hidden group rounded-lg"
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.05 }}
-                whileHover={{ scale: 1.02 }}
-              >
-                {image === "video" ? (
-                  <div className="w-full h-full">
-                    <video src="/1280x720.mp4" className="object-cover w-full h-full" autoPlay muted loop playsInline />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"></div>
-                  </div>
-                ) : (
-                  <>
-                    <img
-                      src={image || "/placeholder.svg"}
-                      alt="Galeriebild"
-                      className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"></div>
-                  </>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Gallery Section - Reemplazamos la sección estática por nuestro componente dinámico */}
+      <GallerySection />
 
       {/* Contact Section */}
       <section id="contact" className="py-24 bg-gray-950">
@@ -1006,167 +968,14 @@ export default function PizzeriaWebsite() {
           </motion.button>
         )}
       </AnimatePresence>
+     {/* Impressum Modal */}
+     <ImpressumModal isOpen={impressumOpen} onClose={() => setImpressumOpen(false)} />
 
-      {/* Datenschutz Modal */}
-      <AnimatePresence>
-        {datenschutzOpen && (
-          <Modal
-            isOpen={datenschutzOpen}
-            onClose={() => setDatenschutzOpen(false)}
-            title="DATENSCHUTZ"
-            maxWidth="max-w-4xl"
-          >
-            <div className="text-sm space-y-4">
-              <p>
-                Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre
-                personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie
-                dieser Datenschutzerklärung.
-              </p>
-              <p>
-                Die Nutzung unserer Website ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf
-                unseren Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder E-Mail-Adressen) erhoben
-                werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre
-                ausdrückliche Zustimmung nicht an Dritte weitergegeben.
-              </p>
-              <p>
-                Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail)
-                Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist
-                nicht möglich.
-              </p>
-
-              <h3 className="text-xl font-bold text-[#8c9a56] mt-6">COOKIES</h3>
-              <p>
-                Die Internetseiten verwenden teilweise so genannte Cookies. Cookies richten auf Ihrem Rechner keinen
-                Schaden an und enthalten keine Viren. Cookies dienen dazu, unser Angebot nutzerfreundlicher, effektiver
-                und sicherer zu machen. Cookies sind kleine Textdateien, die auf Ihrem Rechner abgelegt werden und die
-                Ihr Browser speichert.
-              </p>
-              <p>
-                Die meisten der von uns verwendeten Cookies sind so genannte „Session-Cookies". Sie werden nach Ende
-                Ihres Besuchs automatisch gelöscht. Andere Cookies bleiben auf Ihrem Endgerät gespeichert, bis Sie diese
-                löschen. Diese Cookies ermöglichen es uns, Ihren Browser beim nächsten Besuch wiederzuerkennen.
-              </p>
-              <p>
-                Sie können Ihren Browser so einstellen, dass Sie über das Setzen von Cookies informiert werden und
-                Cookies nur im Einzelfall erlauben, die Annahme von Cookies für bestimmte Fälle oder generell
-                ausschließen sowie das automatische Löschen der Cookies beim Schließen des Browser aktivieren. Bei der
-                Deaktivierung von Cookies kann die Funktionalität dieser Website eingeschränkt sein.
-              </p>
-
-              <h3 className="text-xl font-bold text-[#8c9a56] mt-6">SSL-VERSCHLÜSSELUNG</h3>
-              <p>
-                Diese Seite nutzt aus Gründen der Sicherheit und zum Schutz der Übertragung vertraulicher Inhalte, wie
-                zum Beispiel der Anfragen, die Sie an uns als Seitenbetreiber senden, eine SSL-Verschlüsselung. Eine
-                verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von "http://" auf
-                "https://" wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.
-              </p>
-              <p>
-                Wenn die SSL-Verschlüsselung aktiviert ist, können die Daten, die Sie an uns übermitteln, nicht von
-                Dritten mitgelesen werden.
-              </p>
-
-              <h3 className="text-xl font-bold text-[#8c9a56] mt-6">GOOGLE ANALYTICS</h3>
-              <p>
-                Diese Website nutzt Funktionen des Webanalysedienstes Google Analytics. Anbieter ist die Google Inc.,
-                1600 Amphitheatre Parkway, Mountain View, CA 94043, USA. Google Analytics verwendet so genannte
-                „Cookies". Das sind Textdateien, die auf Ihrem Computer gespeichert werden und die eine Analyse der
-                Benutzung der Website durch Sie ermöglichen. Die durch den Cookie erzeugten Informationen über Ihre
-                Benutzung dieser Website werden in der Regel an einen Server von Google in den USA übertragen und dort
-                gespeichert.
-              </p>
-              <p>
-                Die Speicherung von Google-Analytics-Cookies und die Nutzung dieses Analyse-Tools erfolgen auf Grundlage
-                von Art. 6 Abs. 1 lit. f DSGVO. Der Websitebetreiber hat ein berechtigtes Interesse an der Analyse des
-                Nutzerverhaltens, um sowohl sein Webangebot als auch seine Werbung zu optimieren.
-              </p>
-
-              <h3 className="text-xl font-bold text-[#8c9a56] mt-6">IP ANONYMISIERUNG</h3>
-              <p>
-                Wir haben auf dieser Website die Funktion IP-Anonymisierung aktiviert. Dadurch wird Ihre IP-Adresse von
-                Google innerhalb von Mitgliedstaaten der Europäischen Union oder in anderen Vertragsstaaten des
-                Abkommens über den Europäischen Wirtschaftsraum vor der Übermittlung in die USA gekürzt. Nur in
-                Ausnahmefällen wird die volle IP-Adresse an einen Server von Google in den USA übertragen und dort
-                gekürzt. Im Auftrag des Betreibers dieser Website wird Google diese Informationen benutzen, um Ihre
-                Nutzung der Website auszuwerten, um Reports über die Websiteaktivitäten zusammenzustellen und um weitere
-                mit der Websitenutzung und der Internetnutzung verbundene Dienstleistungen gegenüber dem
-                Websitebetreiber zu erbringen. Die im Rahmen von Google Analytics von Ihrem Browser übermittelte
-                IP-Adresse wird nicht mit anderen Daten von Google zusammengeführt.
-              </p>
-
-              <h3 className="text-xl font-bold text-[#8c9a56] mt-6">BROWSER PLUGIN</h3>
-              <p>
-                Sie können die Speicherung der Cookies durch eine entsprechende Einstellung Ihrer Browser-Software
-                verhindern; wir weisen Sie jedoch darauf hin, dass Sie in diesem Fall gegebenenfalls nicht sämtliche
-                Funktionen dieser Website vollumfänglich werden nutzen können. Sie können darüber hinaus die Erfassung
-                der durch den Cookie erzeugten und auf Ihre Nutzung der Website bezogenen Daten (inkl. Ihrer IP-Adresse)
-                an Google sowie die Verarbeitung dieser Daten durch Google verhindern, indem Sie das unter dem folgenden
-                Link verfügbare Browser-Plugin herunterladen und installieren:
-                https://tools.google.com/dlpage/gaoptout?hl=de.
-              </p>
-
-              <h3 className="text-xl font-bold text-[#8c9a56] mt-6">WIDERSCHRUCH GEGEN DATENERFASSUNG</h3>
-              <p>
-                Sie können die Erfassung Ihrer Daten durch Google Analytics verhindern, indem Sie auf folgenden Link
-                klicken. Es wird ein Opt-Out-Cookie gesetzt, der die Erfassung Ihrer Daten bei zukünftigen Besuchen
-                dieser Website verhindert: Google Analytics deaktivieren.
-              </p>
-              <p>
-                Mehr Informationen zum Umgang mit Nutzerdaten bei Google Analytics finden Sie in der
-                Datenschutzerklärung von Google: https://support.google.com/analytics/answer/6004245?hl=de.
-              </p>
-
-              <h3 className="text-xl font-bold text-[#8c9a56] mt-6">GOOGLE WEB FONTS</h3>
-              <p>
-                Diese Seite nutzt zur einheitlichen Darstellung von Schriftarten so genannte Web Fonts, die von Google
-                bereitgestellt werden. Beim Aufruf einer Seite lädt Ihr Browser die benötigten Web Fonts in ihren
-                Browsercache, um Texte und Schriftarten korrekt anzuzeigen.
-              </p>
-              <p>
-                Zu diesem Zweck muss der von Ihnen verwendete Browser Verbindung zu den Servern von Google aufnehmen.
-                Hierdurch erlangt Google Kenntnis darüber, dass über Ihre IP-Adresse unsere Website aufgerufen wurde.
-                Die Nutzung von Google Web Fonts erfolgt im Interesse einer einheitlichen und ansprechenden Darstellung
-                unserer Online-Angebote. Dies stellt ein berechtigtes Interesse im Sinne von Art. 6 Abs. 1 lit. f DSGVO
-                dar.
-              </p>
-              <p>
-                Wenn Ihr Browser Web Fonts nicht unterstützt, wird eine Standardschrift von Ihrem Computer genutzt.
-                Weitere Informationen zu Google Web Fonts finden Sie unter https://developers.google.com/fonts/faq und
-                in der Datenschutzerklärung von Google: https://www.google.com/policies/privacy/.
-              </p>
-            </div>
-          </Modal>
-        )}
-      </AnimatePresence>
-
-      {/* Impressum Modal */}
-      <AnimatePresence>
-        {impressumOpen && (
-          <Modal isOpen={impressumOpen} onClose={() => setImpressumOpen(false)} title="IMPRESSUM" maxWidth="max-w-2xl">
-            <div className="space-y-4">
-              <h3 className="text-xl font-bold">Bouquet Mediterraneo</h3>
-
-              <div className="space-y-2">
-                <h4 className="font-semibold">Adresse</h4>
-                <p>Bahnhofstrasse 46, 9475 Sevelen</p>
-              </div>
-
-              <div className="space-y-2">
-                <h4 className="font-semibold">Telefon</h4>
-                <p>081 785 10 00</p>
-              </div>
-
-              <div className="space-y-2">
-                <h4 className="font-semibold">E-Mail</h4>
-                <p>info@bouquetmediterraneo.ch</p>
-              </div>
-            </div>
-          </Modal>
-        )}
-      </AnimatePresence>
+{/* Datenschutz Modal */}
+<DatenschutzModal isOpen={datenschutzOpen} onClose={() => setDatenschutzOpen(false)} />
 
       {/* Cookie Consent Banner */}
       {showCookieConsent && <CookieConsent onAccept={handleCookieAccept} />}
     </div>
   )
 }
-

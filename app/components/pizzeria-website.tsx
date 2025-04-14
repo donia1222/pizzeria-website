@@ -777,19 +777,17 @@ export default function PizzeriaWebsite() {
                   <div>
                     <h4 className="text-white font-medium mb-2">Öffnungszeiten</h4>
                     <p className="text-gray-300">
-                      <span className="font-bold">Dienstag - Donnerstag:</span>
+                      <span className="font-bold">Dienstag - Samstag:</span>
                     </p>
                     <p className="text-gray-300">
-                      <span className="font-bold"></span> 11:00–14:00, 17:00–22:00 Uhr
+                      <span className="font-bold"></span> 11:00–13:30, 17:30–22:00 Uhr
+                    </p>
+        
+                    <p className="text-gray-300">
+                      <span className="font-bold">Sontag:</span>  17:30–22:00 Uhr
                     </p>
                     <p className="text-gray-300">
-                      <span className="font-bold">Freitag:</span> 11:00–14:00, 17:00–22:00 Uhr
-                    </p>
-                    <p className="text-gray-300">
-                      <span className="font-bold">Samstag:</span> 11:00–14:00, 17:00–23:00 Uhr
-                    </p>
-                    <p className="text-gray-300">
-                      <span className="font-bold">Sonntag, Montag:</span>{" "}
+                      <span className="font-bold">Montag:</span>{" "}
                       <span className="text-red-500 font-medium">Geschlossen</span>
                     </p>
                   </div>

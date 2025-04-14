@@ -417,17 +417,26 @@ export const CartButton = ({ onClick, itemCount }: { onClick: () => void; itemCo
   )
 }
 
+// Find the getAvailableHours function and make sure it's correctly implementing Sunday restrictions
+// Replace the current getAvailableHours function with this:
+
 // Función para obtener las horas disponibles según el día de la semana
 function getAvailableHours(): string[] {
   const date = new Date()
   const day = date.getDay() // 0 = domingo, 1 = lunes, ..., 6 = sábado
 
-  // Domingo (0) y Lunes (1) están cerrados
-  if (day === 0 || day === 1) {
+  // Lunes (1) está cerrado completamente
+  if (day === 1) {
     return []
   }
 
-  // Horarios para cada día
+  // Domingo (0) solo tiene horario de cena
+  if (day === 0) {
+    // Solo horarios de cena para domingo
+    return ["17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00"]
+  }
+
+  // Horarios para el resto de días
   const lunchHours = ["11:30", "12:00", "12:30", "13:00", "13:30"]
 
   // Horarios de cena según el día
@@ -506,8 +515,9 @@ function getAvailablePickupDates(): { date: Date; formatted: string }[] {
 
     const day = date.getDay() // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
-    // Skip Sunday (0) and Monday (1) as pickup days
-    if (day !== 0 && day !== 1) {
+    // Skip Monday (1) as pickup day
+    // Include Sunday (0) as a pickup day
+    if (day !== 1) {
       const formatted = date.toLocaleDateString("de-DE", {
         weekday: "long",
         year: "numeric",
@@ -576,27 +586,123 @@ export const OrderDialog = ({
       setPickupDate(dates[0].formatted)
     }
 
-    const hours = [
-      "11:30",
-      "12:00",
-      "12:30",
-      "13:00",
-      "13:30",
-      "17:30",
-      "18:00",
-      "18:30",
-      "19:00",
-      "19:30",
-      "20:00",
-      "20:30",
-      "21:00",
-    ]
+    // Replace this code for hours:
+    const selectedDate = new Date(dates[0]?.date || new Date())
+    const day = selectedDate.getDay() // 0 = Sunday
+
+    // Set available hours based on the selected date
+    let hours = []
+    if (day === 0) {
+      // Sunday - dinner hours only
+      hours = ["17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00"]
+    } else {
+      // Other days - both lunch and dinner
+      hours = [
+        "11:30",
+        "12:00",
+        "12:30",
+        "13:00",
+        "13:30",
+        "17:30",
+        "18:00",
+        "18:30",
+        "19:00",
+        "19:30",
+        "20:00",
+        "20:30",
+        "21:00",
+      ]
+
+      // Add extended hours for Friday and Saturday
+      if (day === 5 || day === 6) {
+        hours.push("21:30", "22:00")
+      }
+    }
+
     setAvailableHours(hours)
 
     if (hours.length > 0) {
       setPickupTime(hours[0])
     }
   }, [])
+
+  // Also add an effect to update available hours when pickup date changes
+  // Add this new useEffect after the first one:
+
+  // Update available hours when pickup date changes
+  useEffect(() => {
+    if (!pickupDate) return
+
+    // Parse the formatted date string to get the day of week
+    const dateMatch = pickupDate.match(/\b(\w+),/)
+    if (!dateMatch) return
+
+    const dayName = dateMatch[1]
+    let day
+
+    // Map German day names to day numbers
+    switch (dayName) {
+      case "Sonntag":
+        day = 0
+        break
+      case "Montag":
+        day = 1
+        break
+      case "Dienstag":
+        day = 2
+        break
+      case "Mittwoch":
+        day = 3
+        break
+      case "Donnerstag":
+        day = 4
+        break
+      case "Freitag":
+        day = 5
+        break
+      case "Samstag":
+        day = 6
+        break
+      default:
+        return
+    }
+
+    // Set available hours based on day
+    let hours = []
+    if (day === 0) {
+      // Sunday - dinner hours only
+      hours = ["17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00"]
+    } else {
+      // Other days - both lunch and dinner
+      hours = [
+        "11:30",
+        "12:00",
+        "12:30",
+        "13:00",
+        "13:30",
+        "17:30",
+        "18:00",
+        "18:30",
+        "19:00",
+        "19:30",
+        "20:00",
+        "20:30",
+        "21:00",
+      ]
+
+      // Add extended hours for Friday and Saturday
+      if (day === 5 || day === 6) {
+        hours.push("21:30", "22:00")
+      }
+    }
+
+    setAvailableHours(hours)
+
+    // Reset pickup time if current selection is not available
+    if (!hours.includes(pickupTime) && hours.length > 0) {
+      setPickupTime(hours[0])
+    }
+  }, [pickupDate, pickupTime])
 
   // Limpiar el carrito cuando se cierra el diálogo
   useEffect(() => {
@@ -649,7 +755,7 @@ export const OrderDialog = ({
         // Vaciar el carrito
         clearCart()
 
-        // Cerrar el diálogo automáticamente después de 2 segundos
+        // Cerrar el diálogo automáticamente después de 2 Sekunden
         setTimeout(() => {
           onOpenChange(false)
           setOrderSuccess(false)
@@ -677,9 +783,8 @@ export const OrderDialog = ({
 
   // Manejar cierre del diálogo
   const handleDialogClose = () => {
-
-    window.location.reload(); // Esto recargará la página
-  };
+    window.location.reload() // Esto recargará la página
+  }
 
   return (
     <Dialog open={open} onOpenChange={handleDialogClose}>
@@ -809,7 +914,9 @@ export const OrderDialog = ({
                         <option value="">Keine Termine verfügbar</option>
                       )}
                     </select>
-                    <p className="text-xs text-amber-400 mt-1">Hinweis: Abholung nur Dienstag bis Samstag möglich</p>
+                    <p className="text-xs text-amber-400 mt-1">
+                      Hinweis: Abholung nur Dienstag bis Sonntag möglich. Sonntags nur Abendessen.
+                    </p>
                   </div>
 
                   <div className="space-y-2">
@@ -836,7 +943,9 @@ export const OrderDialog = ({
                       <br />
                       Freitag - Samstag: 11:30–13:30, 17:30–22:00 Uhr
                       <br />
-                      Sonntag, Montag: Geschlossen
+                      Sonntag: 17:30–22:00 Uhr (nur Abendessen)
+                      <br />
+                      Montag: Geschlossen
                     </p>
                   </div>
 
@@ -938,5 +1047,3 @@ export const OrderDialog = ({
     </Dialog>
   )
 }
-
-

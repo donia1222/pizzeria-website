@@ -304,10 +304,16 @@ function createReservationMailtoLink(data: {
 }
 
 // Function to check if a date is Sunday or Monday
-function isDisabledDay(date: Date): boolean {
+// Replace the current isDisabledDay function with this:
+function isDisabledDay(date: Date, mealType = "Mittagessen"): boolean {
   const day = date.getDay()
   // 0 is Sunday, 1 is Monday
-  return day === 0 || day === 1
+  // Disable Mondays completely
+  if (day === 1) return true
+  // Disable Sundays only for lunch
+  if (day === 0 && mealType === "Mittagessen") return true
+
+  return false
 }
 
 // Main reservation components
@@ -356,18 +362,20 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
   }
 
   // Function to check if a date is valid (not Sunday or Monday)
+  // Replace the current isValidDate function with this:
   const isValidDate = (dateString: string): boolean => {
     if (!dateString) return false
     const date = new Date(dateString)
-    return !isDisabledDay(date)
+    return !isDisabledDay(date, mealType)
   }
 
   // Function to handle date change and silently reset if it's Sunday or Monday
+  // Replace the current handleDateChange function with this:
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedDate = e.target.value
     const date = new Date(selectedDate)
 
-    if (isDisabledDay(date)) {
+    if (isDisabledDay(date, mealType)) {
       // Silently reset the date without showing an alert
       setReservationDate("")
     } else {
@@ -500,9 +508,12 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
       >
         <DialogHeader>
           <DialogTitle className="font-bold text-xl text-[#8c9a56]">Tisch reservieren</DialogTitle>
+          {/* Find the DialogDescription and replace it with: */}
           <DialogDescription className="text-gray-300">
             Füllen Sie das Formular aus, um Ihren Tisch bei Bouquet Mediterraneo zu reservieren.
-            <span className="block mt-2 text-amber-400">Hinweis: Wir sind sonntags und montags geschlossen.</span>
+            <span className="block mt-2 text-amber-400">
+              Hinweis: Wir sind montags geschlossen. Sonntags bieten wir nur Abendessen an.
+            </span>
           </DialogDescription>
         </DialogHeader>
 
@@ -563,7 +574,10 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
                   min={getMinDate()}
                   className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                 />
-                <p className="text-xs text-amber-400">Dienstag bis Samstag</p>
+                {/* Find the <p className="text-xs text-amber-400">Dienstag bis Samstag</p> and replace with: */}
+                <p className="text-xs text-amber-400">
+                  {mealType === "Mittagessen" ? "Dienstag bis Samstag" : "Dienstag bis Sonntag"}
+                </p>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="reservation-time" className="text-gray-300">
@@ -714,4 +728,3 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
     </Dialog>
   )
 }
-

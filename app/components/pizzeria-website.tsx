@@ -694,6 +694,34 @@ export default function PizzeriaWebsite() {
 
           <MenuFilter items={filteredMenuItems} activeCategory={activeCategory} onAddToCart={addToCart} />
         </div>
+        <motion.div
+          className="mt-16 p-6 bg-gray-900 rounded-lg max-w-3xl mx-auto"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <h4 className="text-[#8c9a56] font-bold text-xl mb-3">Herkunft:</h4>
+          <ul className="text-gray-300 space-y-2">
+            <li>
+              <span className="font-medium">Poulet:</span> Schweiz und Brasilien
+            </li>
+            <li>
+              <span className="font-medium">Rindfleisch:</span> Schweiz und Südamerika
+            </li>
+            <li>
+              <span className="font-medium">Crevetten:</span> Vietnam
+            </li>
+            <li>
+              <span className="font-medium">Schwein:</span> Schweiz und Italia
+            </li>
+  
+          </ul>
+          <p className="text-gray-400 text-sm mt-3 italic">
+            Wir bemühen uns, Zutaten von höchster Qualität zu verwenden und unterstützen lokale Produzenten, wo immer
+            möglich.
+          </p>
+        </motion.div>
       </section>
 
       <ScrollTextImage

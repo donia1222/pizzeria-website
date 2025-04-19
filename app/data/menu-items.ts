@@ -406,22 +406,7 @@ export const menuItems: MenuItem[] = [
   },
 
   // Aperitivi & birre
-  {
-    id: 25,
-    name: "Birra Moretti 0,33cl",
-    description: "Klassisches italienisches Lagerbier",
-    price: 5.5,
-    image: "https://images.unsplash.com/photo-1608270586620-248524c67de9?q=80&w=200&auto=format&fit=crop",
-    category: "drinks",
-  },
-  {
-    id: 26,
-    name: "Birra Moretti Zero 0.0% 0,33cl",
-    description: "Alkoholfreies italienisches Lagerbier",
-    price: 5.7,
-    image: "https://images.unsplash.com/photo-1608270586620-248524c67de9?q=80&w=200&auto=format&fit=crop",
-    category: "drinks",
-  },
+
   {
     id: 27,
     name: "Aperol Spritz",

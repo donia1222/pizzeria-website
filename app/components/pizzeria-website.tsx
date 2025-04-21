@@ -639,7 +639,6 @@ export default function PizzeriaWebsite() {
                 ["pizzas", "Pizza"],
                 ["starters", "Antipasti e Primi"],
                 ["desserts", "Desserts"],
-                ["drinks", "Getränke"],
               ].map(([category, label]) => (
                 <motion.button
                   key={category}
@@ -721,6 +720,12 @@ export default function PizzeriaWebsite() {
             Wir bemühen uns, Zutaten von höchster Qualität zu verwenden und unterstützen lokale Produzenten, wo immer
             möglich.
           </p>
+          <p className="text-gray-400 text-sm mt-6 italic">
+          Lieber Gast, über Zutaten welche allergische
+Reaktionen auslösen können, informieren
+Dich unsere Mitarbeiter gerne.
+          </p>
+          
         </motion.div>
       </section>
 

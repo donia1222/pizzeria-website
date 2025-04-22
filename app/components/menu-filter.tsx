@@ -150,32 +150,17 @@ export function MenuItemComponent({ item, onAddToCart }: { item: MenuItem; onAdd
 
   return (
     <div className="bg-gray-900 rounded-lg overflow-hidden group transition-all duration-300 hover:shadow-lg hover:shadow-[#8c9a56]/20">
-      <div className="relative h-48 overflow-hidden">
-        <img
-          src={item.image || "/placeholder.svg"}
-          alt={item.name}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-        {item.popular && (
-          <div className="absolute top-2 right-2 bg-[#8c9a56] text-black text-xs font-bold px-2 py-1 rounded-full">
-            Beliebt
-          </div>
-        )}
-        {item.vegetarian && (
-          <div className="absolute top-2 left-2 bg-green-600 text-white text-xs font-bold px-2 py-1 rounded-full">
-            Vegetarisch
-          </div>
-        )}
-        {item.vegan && (
-          <div className="absolute top-2 left-2 bg-green-700 text-white text-xs font-bold px-2 py-1 rounded-full">
-            Vegan
-          </div>
-        )}
-        {item.spicy && (
-          <div className="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
-            Scharf
-          </div>
-        )}
+      <div className="p-2">
+        <div className="flex flex-wrap gap-2 mb-2">
+          {item.popular && (
+            <div className="bg-[#8c9a56] text-black text-xs font-bold px-2 py-1 rounded-full">Beliebt</div>
+          )}
+          {item.vegetarian && (
+            <div className="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded-full">Vegetarisch</div>
+          )}
+          {item.vegan && <div className="bg-green-700 text-white text-xs font-bold px-2 py-1 rounded-full">Vegan</div>}
+          {item.spicy && <div className="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">Scharf</div>}
+        </div>
       </div>
       <div className="p-4">
         <h3 className="text-lg font-bold text-white mb-1">{item.name}</h3>
@@ -199,4 +184,3 @@ export function MenuItemComponent({ item, onAddToCart }: { item: MenuItem; onAdd
     </div>
   )
 }
-

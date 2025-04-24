@@ -304,7 +304,6 @@ function createReservationMailtoLink(data: {
 }
 
 // Function to check if a date is Sunday or Monday
-// Replace the current isDisabledDay function with this:
 function isDisabledDay(date: Date, mealType = "Mittagessen"): boolean {
   const day = date.getDay()
   // 0 is Sunday, 1 is Monday
@@ -347,6 +346,8 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [mealType, setMealType] = useState<"Mittagessen" | "Abendessen">("Mittagessen")
   const [saveToDatabase, setSaveToDatabase] = useState(true)
+  // Estado para el modal de confirmación
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false)
 
   // Available times based on meal type
   const lunchTimes = ["11:30", "12:00", "12:30", "13:30"]
@@ -362,7 +363,6 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
   }
 
   // Function to check if a date is valid (not Sunday or Monday)
-  // Replace the current isValidDate function with this:
   const isValidDate = (dateString: string): boolean => {
     if (!dateString) return false
     const date = new Date(dateString)
@@ -370,7 +370,6 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
   }
 
   // Function to handle date change and silently reset if it's Sunday or Monday
-  // Replace the current handleDateChange function with this:
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedDate = e.target.value
     const date = new Date(selectedDate)
@@ -431,73 +430,23 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
       return
     }
 
-    setIsSubmitting(true)
-
-    try {
-      const reservationData = {
-        date: reservationDate,
-        time: reservationTime,
-        guests: reservationGuests,
-        name: reservationName,
-        email: reservationEmail,
-        phone: reservationPhone,
-        notes: reservationNotes,
-        mealType: mealType,
-      }
-
-      // Format date for better readability
-      const formattedDate = new Date(reservationDate).toLocaleDateString("de-DE", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-
-      // Create WhatsApp message
-      const whatsappMessage = encodeURIComponent(
-        `*Tischreservierung Details:*\n\n` +
-          `Datum: ${formattedDate}\n` +
-          `Zeit: ${reservationTime} Uhr\n` +
-          `Mahlzeit: ${mealType}\n` +
-          `Anzahl der Gäste: ${reservationGuests}\n\n` +
-          `*Kontaktinformationen:*\n` +
-          `Name: ${reservationName}\n` +
-          `E-Mail: ${reservationEmail}\n` +
-          `Telefon: ${reservationPhone}\n\n` +
-          (reservationNotes ? `*Besondere Wünsche:*\n${reservationNotes}\n\n` : "") +
-          `Diese Reservierung wurde über das Reservierungsformular auf der Website gesendet.`,
-      )
-
-      // WhatsApp number
-      const whatsappNumber = "+41783144209"
-
-      // Create and open WhatsApp link
-      const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
-      window.open(whatsappLink, "_blank")
-
-      // Show success message
-      setIsSubmitting(false)
-      setReservationSuccess(true)
-
-      // Reset form after success
-      setTimeout(() => {
-        onOpenChange(false)
-        setReservationSuccess(false)
-        // Reset form fields
-        setReservationDate("")
-        setReservationTime("")
-        setReservationGuests("")
-        setReservationName("")
-        setReservationEmail("")
-        setReservationPhone("")
-        setReservationNotes("")
-        setMealType("Mittagessen")
-        setSaveToDatabase(true)
-      }, 2000)
-    } catch (error) {
-      setIsSubmitting(false)
-      alert("Es gab ein Problem bei der Verarbeitung Ihrer Reservierung. Bitte versuchen Sie es später erneut.")
+    // Crear un objeto con los datos de la reserva
+    const reservationData = {
+      date: reservationDate,
+      time: reservationTime,
+      guests: reservationGuests,
+      name: reservationName,
+      email: reservationEmail,
+      phone: reservationPhone,
+      notes: reservationNotes,
+      mealType: mealType,
     }
+
+    // Mostrar el modal de confirmación en lugar de abrir WhatsApp directamente
+    setIsSubmitting(false)
+
+    // Aquí mostramos el modal de confirmación
+    setShowConfirmationModal(true)
   }
 
   return (
@@ -508,7 +457,6 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
       >
         <DialogHeader>
           <DialogTitle className="font-bold text-xl text-[#8c9a56]">Tisch reservieren</DialogTitle>
-          {/* Find the DialogDescription and replace it with: */}
           <DialogDescription className="text-gray-300">
             Füllen Sie das Formular aus, um Ihren Tisch bei Bouquet Mediterraneo zu reservieren.
             <span className="block mt-2 text-amber-400">
@@ -522,10 +470,11 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
             <div className="w-16 h-16 bg-[#8c9a56]/20 rounded-full flex items-center justify-center mx-auto mb-4">
               <Check className="h-8 w-8 text-[#8c9a56]" />
             </div>
-            <h3 className="text-xl font-bold mb-2 text-white">Reservierung gesendet!</h3>
+            <h3 className="text-xl font-bold mb-2 text-white">Reservierung erfolgreich!</h3>
             <p className="text-gray-300">
-              Ihre Reservierungsanfrage wurde an unser Team per WhatsApp gesendet. Wir werden uns in Kürze bei Ihnen
-              melden.
+              Ihre Reservierungsanfrage wurde erfolgreich an das Restaurant per WhatsApp gesendet. Das Restaurant wird
+              Ihre Reservierung bearbeiten und sich bei Bedarf mit Ihnen in Verbindung setzen. Vielen Dank für Ihre
+              Reservierung bei Bouquet Mediterraneo!
             </p>
           </div>
         ) : (
@@ -574,7 +523,6 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
                   min={getMinDate()}
                   className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                 />
-                {/* Find the <p className="text-xs text-amber-400">Dienstag bis Samstag</p> and replace with: */}
                 <p className="text-xs text-amber-400">
                   {mealType === "Mittagessen" ? "Dienstag bis Samstag" : "Dienstag bis Sonntag"}
                 </p>
@@ -723,6 +671,116 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
               </Button>
             </DialogFooter>
           </form>
+        )}
+        {/* Modal de confirmación */}
+        {showConfirmationModal && (
+          <div className="fixed inset-0 z-[60] flex items-center justify-center">
+            <div
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+              onClick={() => setShowConfirmationModal(false)}
+            />
+            <div className="relative z-[70] max-w-md w-full bg-gray-900 border border-gray-800 p-6 shadow-lg rounded-lg">
+              <button
+                onClick={() => setShowConfirmationModal(false)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+                aria-label="Schließen"
+              >
+                <X size={20} />
+              </button>
+
+              <div className="text-center py-6">
+                <div className="w-16 h-16 bg-green-800/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Check className="h-8 w-8 text-green-500" />
+                </div>
+
+                <h3 className="text-xl font-bold mb-4 text-white">Reservierung vorbereitet!</h3>
+
+                <div className="text-left bg-gray-800 rounded-lg p-4 mb-6">
+                  <p className="text-gray-300 mb-2">
+                    <span className="font-medium">Datum:</span>{" "}
+                    {new Date(reservationDate).toLocaleDateString("de-DE", {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </p>
+                  <p className="text-gray-300 mb-2">
+                    <span className="font-medium">Zeit:</span> {reservationTime} Uhr
+                  </p>
+                  <p className="text-gray-300 mb-2">
+                    <span className="font-medium">Mahlzeit:</span> {mealType}
+                  </p>
+                  <p className="text-gray-300">
+                    <span className="font-medium">Gäste:</span> {reservationGuests}
+                  </p>
+                </div>
+
+                <p className="text-gray-300 mb-6">
+                  Ihre Reservierung ist vorbereitet, aber noch nicht abgeschlossen. Um die Reservierung zu bestätigen,
+                  müssen Sie die Details an das Restaurant per WhatsApp senden. Bitte klicken Sie auf die Schaltfläche
+                  unten, um die Reservierung an das Restaurant zu senden und den Vorgang abzuschließen.
+                </p>
+
+                <Button
+                  onClick={() => {
+                    // Format date for better readability
+                    const formattedDate = new Date(reservationDate).toLocaleDateString("de-DE", {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })
+
+                    // Create WhatsApp message
+                    const whatsappMessage = encodeURIComponent(
+                      `*Tischreservierung Details:*\n\n` +
+                        `Datum: ${formattedDate}\n` +
+                        `Zeit: ${reservationTime} Uhr\n` +
+                        `Mahlzeit: ${mealType}\n` +
+                        `Anzahl der Gäste: ${reservationGuests}\n\n` +
+                        `*Kontaktinformationen:*\n` +
+                        `Name: ${reservationName}\n` +
+                        `E-Mail: ${reservationEmail}\n` +
+                        `Telefon: ${reservationPhone}\n\n` +
+                        (reservationNotes ? `*Besondere Wünsche:*\n${reservationNotes}\n\n` : "") +
+                        `Diese Reservierung wurde über das Reservierungsformular auf der Website gesendet.`,
+                    )
+
+                    // WhatsApp number
+                    const whatsappNumber = "+41783144209"
+
+                    // Create and open WhatsApp link
+                    const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
+                    window.open(whatsappLink, "_blank")
+
+                    // Cerrar el modal y mostrar mensaje de éxito
+                    setShowConfirmationModal(false)
+                    setReservationSuccess(true)
+
+                    // Reset form after success
+                    setTimeout(() => {
+                      onOpenChange(false)
+                      setReservationSuccess(false)
+                      // Reset form fields
+                      setReservationDate("")
+                      setReservationTime("")
+                      setReservationGuests("")
+                      setReservationName("")
+                      setReservationEmail("")
+                      setReservationPhone("")
+                      setReservationNotes("")
+                      setMealType("Mittagessen")
+                      setSaveToDatabase(true)
+                    }, 2000)
+                  }}
+                  className="w-full bg-green-800 text-white hover:bg-green-900"
+                >
+                  Reservierung per WhatsApp abschließen
+                </Button>
+              </div>
+            </div>
+          </div>
         )}
       </DialogContent>
     </Dialog>

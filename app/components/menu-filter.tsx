@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 
 import type { MenuItem } from "../data/menu-items"
@@ -70,7 +70,15 @@ interface MenuFilterProps {
 }
 
 export function MenuFilter({ items, activeCategory, onAddToCart }: MenuFilterProps) {
-  const [visibleCount, setVisibleCount] = useState(6)
+  // Show 6 items initially for pizzas, but all items for other categories
+  const initialCount = activeCategory === "pizzas" ? 6 : 20
+  const [visibleCount, setVisibleCount] = useState(initialCount)
+
+  // Reset visible count when category changes
+  useEffect(() => {
+    const newInitialCount = activeCategory === "pizzas" ? 6 : 20
+    setVisibleCount(newInitialCount)
+  }, [activeCategory])
 
   // Filter items by the active category
   const filteredItems = items.filter((item) => item.category === activeCategory)
@@ -78,8 +86,8 @@ export function MenuFilter({ items, activeCategory, onAddToCart }: MenuFilterPro
   // Slice the filtered items to show only the visible count
   const visibleItems = filteredItems.slice(0, visibleCount)
 
-  // Determine if we should show the "Show More" button
-  const showMoreButton = filteredItems.length > 12 && visibleCount < filteredItems.length
+  // Determine if we should show the "Show More" button (only for pizzas with more than 6 items)
+  const showMoreButton = activeCategory === "pizzas" && filteredItems.length > 6 && visibleCount < filteredItems.length
 
   // Function to handle showing more items
   const handleShowMore = () => {

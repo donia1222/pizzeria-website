@@ -810,15 +810,16 @@ Dich unsere Mitarbeiter gerne.
                   <div>
                     <h4 className="text-white font-medium mb-2">Öffnungszeiten</h4>
                     <p className="text-gray-300">
-                      <span className="font-bold">Dienstag - Samstag:</span>
+                      <span className="font-bold">Dienstag - Freitag:</span>
                     </p>
                     <p className="text-gray-300">
                       <span className="font-bold"></span> 11:00–13:30, 17:30–22:00 Uhr
                     </p>
-        
                     <p className="text-gray-300">
-                      <span className="font-bold">Sontag:</span>  17:30–22:00 Uhr
+                      <span className="font-bold">Samstag-Sontag:</span>  17:30–22:00 Uhr
                     </p>
+        
+           
                     <p className="text-gray-300">
                       <span className="font-bold">Montag:</span>{" "}
                       <span className="text-red-500 font-medium">Geschlossen</span>

@@ -303,14 +303,14 @@ function createReservationMailtoLink(data: {
   return `mailto:info@bouquetmediterraneo.ch?subject=${subject}&body=${body}`
 }
 
-// Function to check if a date is Sunday or Monday
+// Function to check if a date is Sunday, Saturday or Monday
 function isDisabledDay(date: Date, mealType = "Mittagessen"): boolean {
   const day = date.getDay()
-  // 0 is Sunday, 1 is Monday
+  // 0 is Sunday, 1 is Monday, 6 is Saturday
   // Disable Mondays completely
   if (day === 1) return true
-  // Disable Sundays only for lunch
-  if (day === 0 && mealType === "Mittagessen") return true
+  // Disable Sundays and Saturdays only for lunch
+  if ((day === 0 || day === 6) && mealType === "Mittagessen") return true
 
   return false
 }
@@ -460,7 +460,7 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
           <DialogDescription className="text-gray-300">
             Füllen Sie das Formular aus, um Ihren Tisch bei Bouquet Mediterraneo zu reservieren.
             <span className="block mt-2 text-amber-400">
-              Hinweis: Wir sind montags geschlossen. Sonntags bieten wir nur Abendessen an.
+              Hinweis: Wir sind montags geschlossen. Samstags und sonntags bieten wir nur Abendessen an.
             </span>
           </DialogDescription>
         </DialogHeader>
@@ -524,7 +524,7 @@ export const ReservationDialog = ({ open, onOpenChange }: ReservationDialogProps
                   className="bg-gray-800 border-gray-700 text-white focus:border-[#8c9a56] focus:ring-[#8c9a56]"
                 />
                 <p className="text-xs text-amber-400">
-                  {mealType === "Mittagessen" ? "Dienstag bis Samstag" : "Dienstag bis Sonntag"}
+                  {mealType === "Mittagessen" ? "Dienstag bis Freitag" : "Dienstag bis Sonntag"}
                 </p>
               </div>
               <div className="space-y-2">

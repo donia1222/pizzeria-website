@@ -602,7 +602,7 @@ export default function PizzeriaWebsite() {
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <div className="text-4xl font-bold text-gradient mb-2">
+                  <div className="text-2xl font-bold text-gradient mb-2">
                     <AnimatedNumber value={100} suffix="%" />
                   </div>
                   <p className="text-gray-400 text-sm">Authentisch</p>
@@ -613,7 +613,7 @@ export default function PizzeriaWebsite() {
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <div className="text-4xl font-bold text-gradient mb-2">
+                  <div className="text-2xl font-bold text-gradient mb-2">
                     <AnimatedNumber value={16} />
                   </div>
                   <p className="text-gray-400 text-sm">Pizzasorten</p>
@@ -624,7 +624,7 @@ export default function PizzeriaWebsite() {
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <div className="text-4xl font-bold text-gradient mb-2">
+                  <div className="text-2xl font-bold text-gradient mb-2">
                     <AnimatedNumber value={2024} />
                   </div>
                   <p className="text-gray-400 text-sm">Eröffnet</p>

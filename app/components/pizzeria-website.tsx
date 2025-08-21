@@ -504,44 +504,47 @@ export default function PizzeriaWebsite() {
       </AnimatePresence>
 
       {/* Hero Section */}
-      <section id="home" className="relative mb-20" ref={heroRef}>
+      <section id="home" className="relative mb-20 overflow-hidden" ref={heroRef}>
         <div className="relative">
           <ImageCarousel images={heroImages} />
+          
+          {/* Modern gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/80 z-5" />
 
           <div className="absolute inset-0 flex items-center justify-center z-10">
             <div className="flex flex-col sm:flex-row justify-center gap-4 z-50"></div>
           </div>
 
           <div className="flex items-center justify-center mt-20">
-            <motion.div className="text-center max-w-3xl px-8">
+            <motion.div className="text-center max-w-3xl px-8 relative z-10">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
-                <div className="mb-4 relative ">
+                <div className="mb-6 relative">
                   <div className="inline-block relative">
-                    <span className="absolute -top-6 -left-2 bg-[#8c9a56] text-black font-bold text-sm px-4 py-1 rounded-full transform -rotate-6 shadow-lg">
+                    <span className="absolute -top-6 -left-2 bg-gradient-to-r from-[#8c9a56] to-[#a0b266] text-black font-bold text-sm px-5 py-2 rounded-full transform -rotate-6 shadow-2xl animate-pulse">
                       Neu in Sevelen
                     </span>
-                    <h2 className="text-4xl md:text-6xl font-bold">Cucina Mediterranea & Pizza</h2>
+                    <h2 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">Cucina Mediterranea & Pizza</h2>
                   </div>
                 </div>
-                <p className="text-xl md:text-2xl text-gray-300 max-w-xl mx-auto">
-                  Frisch eröffnet! Erleben Sie unsere handgemachten Pizzen mit traditionellen Rezepten und besten
+                <p className="text-xl md:text-2xl text-gray-300 max-w-xl mx-auto leading-relaxed">
+                  <span className="text-gradient font-semibold">Frisch eröffnet!</span> Erleben Sie unsere handgemachten Pizzen mit traditionellen Rezepten und besten
                   Zutaten
                 </p>
-                <div className="flex items-center justify-center mt-10   bg-black">
-                  <div className="mb-6 md:mb-0">
+                <div className="flex items-center justify-center mt-10">
+                  <div className="glass rounded-2xl p-6 shadow-glow hover-lift transition-all duration-500">
                     <a href="#home" className="block">
                       <img
                         src="/logpmcopia.png"
                         alt="Bouquet Mediterraneo"
-                        className="h-14 md:h-14 object-contain   rounded"
+                        className="h-14 md:h-16 object-contain rounded animate-float"
                       />
                     </a>
-                    <h2 className="text-2xl font-bold text-white mb-2 text-center">
-                      <span className="text-[#8c9a56]">Bouquet </span>Mediterraneo
+                    <h2 className="text-2xl font-bold text-white mt-4 text-center">
+                      <span className="text-gradient">Bouquet </span>Mediterraneo
                     </h2>
                   </div>
                 </div>
@@ -552,8 +555,11 @@ export default function PizzeriaWebsite() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-24 bg-gray-950">
-        <div className="container mx-auto px-4">
+      <section id="about" className="py-24 bg-gradient-to-b from-black via-gray-950 to-black relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 gradient-radial opacity-30" />
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -562,10 +568,11 @@ export default function PizzeriaWebsite() {
               transition={{ duration: 0.6 }}
               className="relative"
             >
-              <div className="relative z-10 overflow-hidden rounded-lg ">
-                <img src="DSC08346.jpg" alt="Pizza im Holzofen" className="object-cover h-[500px] w-full" />
+              <div className="relative z-10 overflow-hidden rounded-2xl shadow-2xl hover-lift transition-all duration-500 group">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <img src="DSC08346.jpg" alt="Pizza im Holzofen" className="object-cover h-[500px] w-full transform group-hover:scale-105 transition-transform duration-700" />
               </div>
-              <div className="absolute -bottom-6 -right-6 w-64 h-64 border-2 border-[#8c9a56] z-0"></div>
+              <div className="absolute -bottom-6 -right-6 w-64 h-64 bg-gradient-to-br from-[#8c9a56]/20 to-transparent rounded-2xl blur-xl"></div>
             </motion.div>
 
             <motion.div
@@ -574,42 +581,54 @@ export default function PizzeriaWebsite() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-3xl font-bold mb-2 text-[#8c9a56]">Über uns</h2>
-              <h3 className="text-4xl font-bold mb-8 text-white">Neue Tradition</h3>
+              <h2 className="text-3xl font-bold mb-2 text-gradient">Über uns</h2>
+              <h3 className="text-4xl md:text-5xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">Neue Tradition</h3>
 
-              <p className="text-gray-300 mb-6 leading-relaxed">
+              <p className="text-gray-300 mb-6 leading-relaxed text-lg">
                 Bouquet Mediterraneo ist neu in Sevelen, aber unsere Leidenschaft für authentische italienische Küche
                 reicht weit zurück. Ein ausgezeichneter Sommelier und gebürtiger Italiener, bringt ein Stück seines
                 Heimatlandes zu Ihnen.
               </p>
 
-              <p className="text-gray-300 mb-8 leading-relaxed">
+              <p className="text-gray-300 mb-8 leading-relaxed text-lg">
                 Unser Geheimnis? Langsam gereifter Teig, handverlesene Zutaten aus Italien und die Leidenschaft für
                 echte neapolitanische Pizza. Besuchen Sie uns und erleben Sie ein authentisches italienisches
                 Geschmackserlebnis in unserem neu eröffneten Restaurant.
               </p>
 
               <div className="grid grid-cols-3 gap-8 mt-12">
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-[#8c9a56] mb-2">
+                <motion.div 
+                  className="text-center glass rounded-xl p-4 hover-lift"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <div className="text-4xl font-bold text-gradient mb-2">
                     <AnimatedNumber value={100} suffix="%" />
                   </div>
                   <p className="text-gray-400 text-sm">Authentisch</p>
-                </div>
+                </motion.div>
 
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-[#8c9a56] mb-2">
+                <motion.div 
+                  className="text-center glass rounded-xl p-4 hover-lift"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <div className="text-4xl font-bold text-gradient mb-2">
                     <AnimatedNumber value={16} />
                   </div>
                   <p className="text-gray-400 text-sm">Pizzasorten</p>
-                </div>
+                </motion.div>
 
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-[#8c9a56] mb-2">
+                <motion.div 
+                  className="text-center glass rounded-xl p-4 hover-lift"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <div className="text-4xl font-bold text-gradient mb-2">
                     <AnimatedNumber value={2024} />
                   </div>
                   <p className="text-gray-400 text-sm">Eröffnet</p>
-                </div>
+                </motion.div>
               </div>
             </motion.div>
           </div>
@@ -692,6 +711,50 @@ export default function PizzeriaWebsite() {
             )}
           </div>
 
+          {/* Category Header Images */}
+          <motion.div 
+            className="mb-12 relative overflow-hidden rounded-2xl shadow-2xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            key={activeCategory}
+          >
+            <div className="relative h-64 md:h-80">
+              <img 
+                src={
+                  activeCategory === "pizzas" 
+                    ? "/DSC08346.jpg" 
+                    : activeCategory === "starters"
+                    ? "/DSC08427.jpg"
+                    : "/desserts-header.jpg"
+                }
+                alt={
+                  activeCategory === "pizzas" 
+                    ? "Pizza Take Away" 
+                    : activeCategory === "starters"
+                    ? "Antipasti e Primi"
+                    : "Desserts"
+                }
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+              
+              {/* Text Overlay */}
+              <div className="absolute bottom-0 left-0 right-0 p-8">
+                <h3 className="text-3xl md:text-4xl font-bold text-white mb-2">
+                  {activeCategory === "pizzas" && "Pizza Take Away"}
+                  {activeCategory === "starters" && "Antipasti e Primi"}
+                  {activeCategory === "desserts" && "Dolci"}
+                </h3>
+                <p className="text-gray-200 text-lg">
+                  {activeCategory === "pizzas" && "Frisch aus dem Holzofen - Perfekt zum Mitnehmen"}
+                  {activeCategory === "starters" && "Traditionelle italienische Vorspeisen und Pasta"}
+                  {activeCategory === "desserts" && "Süße Verführungen zum Abschluss"}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
           <MenuFilter items={filteredMenuItems} activeCategory={activeCategory} onAddToCart={addToCart} />
         </div>
         <motion.div
@@ -735,7 +798,7 @@ Dich unsere Mitarbeiter gerne.
         textItems={[
           "Authentische italienische Küche in Sevelen",
           "Frische Zutaten, traditionelle Rezepte",
-          "Jetzt geöffnet - Buchen Sie Ihren Tisch heute",
+          "Jetzt geöffnet - Reservieren Sie Ihren Tisch heute",
         ]}
       />
 
@@ -759,8 +822,11 @@ Dich unsere Mitarbeiter gerne.
       <GallerySection />
 
       {/* Contact Section */}
-      <section id="contact" className="py-24 bg-gray-950">
-        <div className="container mx-auto px-4">
+      <section id="contact" className="py-24 bg-gradient-to-b from-black via-gray-950 to-black relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 gradient-radial opacity-20" />
+        
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
@@ -768,8 +834,8 @@ Dich unsere Mitarbeiter gerne.
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl font-bold mb-2 text-[#8c9a56]">Kontakt</h2>
-            <h3 className="text-4xl font-bold mb-8 text-white">Kontaktieren Sie uns</h3>
+            <h2 className="text-3xl font-bold mb-2 text-gradient">Kontakt</h2>
+            <h3 className="text-4xl md:text-5xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">Kontaktieren Sie uns</h3>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
@@ -778,38 +844,59 @@ Dich unsere Mitarbeiter gerne.
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
+              className="glass rounded-3xl p-8 h-full"
             >
-              <h3 className="text-2xl font-bold mb-8 text-white">Besuchen Sie uns</h3>
+              <h3 className="text-2xl font-bold mb-8 text-gradient">Besuchen Sie uns</h3>
 
-              <div className="space-y-8">
-                <div className="flex items-start gap-4">
-                  <MapPin className="h-5 w-5 text-[#8c9a56] mt-1 flex-shrink-0" />
+              <div className="space-y-6">
+                <motion.div 
+                  className="flex items-start gap-4 group hover:translate-x-2 transition-transform duration-300"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#8c9a56] to-[#a0b266] flex items-center justify-center flex-shrink-0 group-hover:shadow-glow transition-shadow duration-300">
+                    <MapPin className="h-5 w-5 text-black" />
+                  </div>
                   <div>
-                    <h4 className="text-white font-medium">Adresse</h4>
+                    <h4 className="text-white font-semibold text-lg mb-1">Adresse</h4>
                     <p className="text-gray-300">Bahnhofstrasse 46, 9475 Sevelen</p>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="flex items-start gap-4">
-                  <Phone className="h-5 w-5 text-[#8c9a56] mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="text-white font-medium">Telefon</h4>
-                    <p className="text-gray-300">081 785 10 00</p>
+                <motion.div 
+                  className="flex items-start gap-4 group hover:translate-x-2 transition-transform duration-300"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#8c9a56] to-[#a0b266] flex items-center justify-center flex-shrink-0 group-hover:shadow-glow transition-shadow duration-300">
+                    <Phone className="h-5 w-5 text-black" />
                   </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <Mail className="h-5 w-5 text-[#8c9a56] mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="text-white font-medium">E-Mail</h4>
-                    <p className="text-gray-300">info@bouquetmediterraneo.ch</p>
+                    <h4 className="text-white font-semibold text-lg mb-1">Telefon</h4>
+                    <p className="text-gray-300 hover:text-[#8c9a56] transition-colors cursor-pointer">081 785 10 00</p>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="flex items-start gap-4">
-                  <Clock className="h-5 w-5 text-[#8c9a56] mt-1 flex-shrink-0" />
+                <motion.div 
+                  className="flex items-start gap-4 group hover:translate-x-2 transition-transform duration-300"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#8c9a56] to-[#a0b266] flex items-center justify-center flex-shrink-0 group-hover:shadow-glow transition-shadow duration-300">
+                    <Mail className="h-5 w-5 text-black" />
+                  </div>
                   <div>
-                    <h4 className="text-white font-medium mb-2">Öffnungszeiten</h4>
+                    <h4 className="text-white font-semibold text-lg mb-1">E-Mail</h4>
+                    <p className="text-gray-300 hover:text-[#8c9a56] transition-colors cursor-pointer">info@bouquetmediterraneo.ch</p>
+                  </div>
+                </motion.div>
+
+                <motion.div 
+                  className="flex items-start gap-4 group hover:translate-x-2 transition-transform duration-300"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#8c9a56] to-[#a0b266] flex items-center justify-center flex-shrink-0 group-hover:shadow-glow transition-shadow duration-300">
+                    <Clock className="h-5 w-5 text-black" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-semibold text-lg mb-3">Öffnungszeiten</h4>
                     <p className="text-gray-300">
                       <span className="font-bold">Dienstag - Freitag:</span>
                     </p>
@@ -826,21 +913,21 @@ Dich unsere Mitarbeiter gerne.
                       <span className="text-red-500 font-medium">Geschlossen</span>
                     </p>
                   </div>
-                </div>
+                </motion.div>
               </div>
 
-              <div className="mt-12">
-                <h4 className="text-white font-medium mb-4">Folgen Sie uns</h4>
+              <div className="mt-12 p-6 glass rounded-2xl">
+                <h4 className="text-white font-semibold text-lg mb-4">Folgen Sie uns</h4>
 
                 <div className="flex gap-4">
                   <motion.a
                     href="https://www.instagram.com/bouquet.mediterraneo/"
-                    className="bg-gray-900 px-4 h-10 rounded-full flex items-center justify-center text-[#8c9a56] hover:bg-green-800 hover:text-white transition-colors"
+                    className="glass px-6 py-3 rounded-full flex items-center justify-center text-[#8c9a56] hover:text-white hover-lift hover:shadow-glow transition-all duration-300 border border-[#8c9a56]/50 hover:border-[#8c9a56]"
                     whileHover={{ y: -5 }}
                     whileTap={{ scale: 0.9 }}
                   >
                     <Instagram size={20} className="mr-2" />
-                    <span>Instagram</span>
+                    <span className="font-medium">Instagram</span>
                   </motion.a>
                 </div>
               </div>
@@ -851,7 +938,9 @@ Dich unsere Mitarbeiter gerne.
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
+              className="glass rounded-3xl p-8"
             >
+              <h3 className="text-2xl font-bold mb-8 text-gradient">Nachricht senden</h3>
               <ContactForm />
             </motion.div>
           </div>
@@ -859,31 +948,35 @@ Dich unsere Mitarbeiter gerne.
       </section>
 
       {/* Footer */}
-      <footer className="bg-black py-12 border-t border-gray-800">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-6 md:mb-0">
-              <a href="#home" className="block">
-                <img
-                  src="/logpmcopia.png"
-                  alt="Bouquet Mediterraneo"
-                  className="h-14 md:h-14 object-contain   rounded"
-                />
-              </a>
-              <h2 className="text-2xl font-bold text-white mb-2 text-center">
-                <span className="text-[#8c9a56]">Bouquet </span>Mediterraneo
-              </h2>
+      <footer className="relative bg-gradient-to-t from-gray-950 to-black py-16 border-t border-gray-800/50 overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 gradient-radial opacity-20" />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="glass rounded-3xl p-8 md:p-12 shadow-soft">
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <div className="mb-8 md:mb-0 text-center md:text-left">
+                <a href="#home" className="inline-block group">
+                  <img
+                    src="/logpmcopia.png"
+                    alt="Bouquet Mediterraneo"
+                    className="h-16 md:h-18 object-contain rounded group-hover:scale-110 transition-transform duration-300 animate-float"
+                  />
+                </a>
+                <h2 className="text-2xl font-bold text-white mt-4 mb-2">
+                  <span className="text-gradient">Bouquet </span>Mediterraneo
+                </h2>
+                <p className="text-gray-400">Cucina Mediterranea & Pizza</p>
+              </div>
 
-              <p className="text-gray-400 text-sm text-center">Cucina Mediterranea & Pizza</p>
-            </div>
-
-            <div className="flex flex-col md:flex-row gap-8 items-center">
-              <a
-                href="#home"
-                className="text-gray-300 hover:text-[#8c9a56] transition-colors text-sm uppercase tracking-widest"
-              >
-                Startseite
-              </a>
+              <div className="flex flex-col md:flex-row gap-6 items-center">
+                <a
+                  href="#home"
+                  className="text-gray-300 hover:text-[#8c9a56] transition-all duration-300 text-sm uppercase tracking-widest relative group"
+                >
+                  Startseite
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8c9a56] to-[#a0b266] transition-all duration-300 group-hover:w-full" />
+                </a>
               <a
                 href="#menu"
                 className="text-gray-300 hover:text-[#8c9a56] transition-colors text-sm uppercase tracking-widest"
@@ -933,35 +1026,35 @@ Dich unsere Mitarbeiter gerne.
                 </svg>
               </a>
             </div>
-          </div>
+            </div>
 
-          <div className="mt-8 flex justify-center space-x-6">
-            <button
-              onClick={() => setDatenschutzOpen(true)}
-              className="text-[#8c9a56] hover:text-white text-base font-medium border border-[#8c9a56] px-4 py-2 rounded transition-colors"
-            >
-              Datenschutz
-            </button>
-            <button
-              onClick={() => setImpressumOpen(true)}
-              className="text-[#8c9a56] hover:text-white text-base font-medium border border-[#8c9a56] px-4 py-2 rounded transition-colors"
-            >
-              Impressum
-            </button>
-          </div>
+            <div className="mt-8 flex justify-center space-x-6">
+              <button
+                onClick={() => setDatenschutzOpen(true)}
+                className="glass px-6 py-3 rounded-full text-[#8c9a56] hover:text-white hover-lift hover:shadow-glow transition-all duration-300 border border-[#8c9a56]/50 hover:border-[#8c9a56]"
+              >
+                Datenschutz
+              </button>
+              <button
+                onClick={() => setImpressumOpen(true)}
+                className="glass px-6 py-3 rounded-full text-[#8c9a56] hover:text-white hover-lift hover:shadow-glow transition-all duration-300 border border-[#8c9a56]/50 hover:border-[#8c9a56]"
+              >
+                Impressum
+              </button>
+            </div>
 
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-            <p className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} Bouquet Mediterraneo. Neu eröffnet in Sevelen.
-            </p>
-            {/* Enlace Clicable a lweb.ch */}
-            <p className="mt-4">
-              Webseite Design{" "}
-              <a href="https://lweb.ch" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-                lweb.ch
-              </a>
-            </p>
-    
+            <div className="border-t border-gray-800/30 mt-8 pt-8 text-center">
+              <p className="text-gray-400 text-sm">
+                © {new Date().getFullYear()} <span className="text-gradient font-semibold">Bouquet Mediterraneo</span>. Neu eröffnet in Sevelen.
+              </p>
+              {/* Enlace Clicable a lweb.ch */}
+              <p className="mt-4 text-gray-400 text-sm">
+                Webseite Design{" "}
+                <a href="https://lweb.ch" target="_blank" rel="noopener noreferrer" className="text-gradient hover:text-[#8c9a56] transition-colors duration-300 font-medium">
+                  lweb.ch
+                </a>
+              </p>
+            </div>
           </div>
         </div>
       </footer>

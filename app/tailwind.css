@@ -40,6 +40,16 @@
     50% { transform: translateY(-10px); }
   }
   
+  .animate-fade-in-delayed {
+    animation: fadeInDelayed 2s ease-out forwards;
+  }
+  
+  @keyframes fadeInDelayed {
+    0% { opacity: 0; transform: translateY(10px); }
+    50% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
   /* Modern shadows */
   .shadow-glow {
     box-shadow: 0 0 40px rgba(140, 154, 86, 0.3);
@@ -61,5 +71,15 @@
   
   .hover-glow {
     @apply transition-all duration-300 hover:shadow-glow;
+  }
+  
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }

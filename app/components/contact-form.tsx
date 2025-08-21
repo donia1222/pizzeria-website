@@ -138,16 +138,17 @@ export function ContactForm() {
   }
 
   return (
-    <div className="bg-gray-900 p-8 border border-gray-800 rounded-lg">
-      <h3 className="text-2xl font-bold mb-6 text-white">Nachricht senden</h3>
+    <div className="relative">
 
       {status === "success" ? (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-green-900/30 border border-green-800 rounded-lg p-6 text-center"
+          className="glass rounded-2xl p-6 text-center border border-green-500/30"
         >
-          <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
+          <div className="w-16 h-16 rounded-full bg-gradient-to-r from-green-500 to-green-400 flex items-center justify-center mx-auto mb-4 animate-pulse">
+            <CheckCircle className="h-8 w-8 text-white" />
+          </div>
           <h4 className="text-xl font-semibold text-white mb-2">Nachricht gesendet!</h4>
           <p className="text-gray-300">
             Vielen Dank für Ihre Kontaktaufnahme. Wir werden Ihre Nachricht so schnell wie möglich beantworten.
@@ -157,7 +158,7 @@ export function ContactForm() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-red-900/30 border border-red-800 rounded-lg p-6 text-center"
+          className="glass rounded-2xl p-6 text-center border border-red-500/30"
         >
           <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
           <h4 className="text-xl font-semibold text-white mb-2">Fehler beim Senden</h4>
@@ -166,7 +167,7 @@ export function ContactForm() {
           </p>
           <button
             onClick={() => setStatus("idle")}
-            className="mt-4 px-4 py-2 bg-red-800 hover:bg-red-700 text-white rounded-md transition-colors"
+            className="mt-4 px-6 py-3 glass rounded-full border border-red-500/50 text-red-400 hover:text-white hover:border-red-500 transition-all duration-300 hover-lift"
           >
             Erneut versuchen
           </button>
@@ -184,9 +185,9 @@ export function ContactForm() {
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Ihr Name"
-                className={`mt-2 flex h-10 w-full rounded-md border ${
-                  errors.name ? "border-red-500" : "border-gray-700"
-                } bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-700`}
+                className={`mt-2 flex h-12 w-full rounded-xl border ${
+                  errors.name ? "border-red-500" : "border-gray-700/50"
+                } glass px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#8c9a56]/50 focus:border-[#8c9a56] transition-all duration-300`}
               />
               {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
             </div>
@@ -201,9 +202,9 @@ export function ContactForm() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Ihre E-Mail-Adresse"
-                className={`mt-2 flex h-10 w-full rounded-md border ${
-                  errors.email ? "border-red-500" : "border-gray-700"
-                } bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-700`}
+                className={`mt-2 flex h-12 w-full rounded-xl border ${
+                  errors.email ? "border-red-500" : "border-gray-700/50"
+                } glass px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#8c9a56]/50 focus:border-[#8c9a56] transition-all duration-300`}
               />
               {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
             </div>
@@ -221,7 +222,7 @@ export function ContactForm() {
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder="Ihre Telefonnummer"
-                className="mt-2 flex h-10 w-full rounded-md border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-700"
+                className="mt-2 flex h-12 w-full rounded-xl border border-gray-700/50 glass px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#8c9a56]/50 focus:border-[#8c9a56] transition-all duration-300"
               />
             </div>
             <div>
@@ -233,9 +234,9 @@ export function ContactForm() {
                 name="subject"
                 value={formData.subject}
                 onChange={handleChange}
-                className={`mt-2 flex h-10 w-full rounded-md border ${
-                  errors.subject ? "border-red-500" : "border-gray-700"
-                } bg-gray-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-green-700`}
+                className={`mt-2 flex h-12 w-full rounded-xl border ${
+                  errors.subject ? "border-red-500" : "border-gray-700/50"
+                } glass px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#8c9a56]/50 focus:border-[#8c9a56] transition-all duration-300 appearance-none cursor-pointer`}
               >
                 <option value="evento">Private Veranstaltung</option>
                 <option value="feedback">Feedback</option>
@@ -256,9 +257,9 @@ export function ContactForm() {
               onChange={handleChange}
               placeholder="Ihre Nachricht"
               rows={4}
-              className={`mt-2 flex w-full rounded-md border ${
-                errors.message ? "border-red-500" : "border-gray-700"
-              } bg-gray-800 px-3 py-2 text-sm text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-700`}
+              className={`mt-2 flex w-full rounded-xl border ${
+                errors.message ? "border-red-500" : "border-gray-700/50"
+              } glass px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#8c9a56]/50 focus:border-[#8c9a56] transition-all duration-300 resize-none`}
             />
             {errors.message && <p className="mt-1 text-sm text-red-500">{errors.message}</p>}
           </div>
@@ -271,7 +272,7 @@ export function ContactForm() {
                 type="checkbox"
                 checked={formData.newsletter}
                 onChange={handleChange}
-                className="h-4 w-4 rounded border-gray-700 bg-gray-800 text-[#8c9a56] focus:ring-[#8c9a56] focus:ring-offset-gray-900"
+                className="h-4 w-4 rounded border-gray-700/50 bg-gray-800/50 text-[#8c9a56] focus:ring-[#8c9a56] focus:ring-offset-0 cursor-pointer"
               />
               <label htmlFor="newsletter" className="ml-2 text-sm text-gray-300">
                 Newsletter abonnieren
@@ -285,13 +286,13 @@ export function ContactForm() {
                 type="checkbox"
                 checked={formData.privacy}
                 onChange={handleChange}
-                className={`h-4 w-4 rounded border-gray-700 bg-gray-800 text-[#8c9a56] focus:ring-[#8c9a56] focus:ring-offset-gray-900 ${
+                className={`h-4 w-4 rounded border-gray-700/50 bg-gray-800/50 text-[#8c9a56] focus:ring-[#8c9a56] focus:ring-offset-0 cursor-pointer ${
                   errors.privacy ? "border-red-500" : ""
                 }`}
               />
               <label htmlFor="privacy" className="ml-2 text-sm text-gray-300">
                 Ich habe die{" "}
-                <a href="#" className="text-[#8c9a56] hover:underline">
+                <a href="#" className="text-gradient hover:text-[#8c9a56] transition-colors duration-300">
                   Datenschutzrichtlinie
                 </a>{" "}
                 gelesen und akzeptiere sie
@@ -301,13 +302,15 @@ export function ContactForm() {
             {errors.privacy && <p className="text-sm text-red-500">{errors.privacy}</p>}
           </div>
 
-          <button
+          <motion.button
             type="submit"
-            className="w-full h-12 bg-green-800 text-white hover:bg-green-900 rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-green-700 disabled:opacity-50 flex items-center justify-center"
+            className="w-full h-14 glass rounded-full font-medium border border-[#8c9a56]/50 text-[#8c9a56] hover:text-white hover:border-[#8c9a56] hover:shadow-glow transition-all duration-300 disabled:opacity-50 flex items-center justify-center group hover-lift"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
-            <Send className="h-5 w-5 mr-2" />
+            <Send className="h-5 w-5 mr-2 group-hover:translate-x-1 transition-transform duration-300" />
             Nachricht senden
-          </button>
+          </motion.button>
 
           <p className="text-xs text-gray-400 text-center mt-4">
             Felder mit <span className="text-red-500">*</span> sind Pflichtfelder

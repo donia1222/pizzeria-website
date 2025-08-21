@@ -70,13 +70,13 @@ interface MenuFilterProps {
 }
 
 export function MenuFilter({ items, activeCategory, onAddToCart }: MenuFilterProps) {
-  // Show 6 items initially for pizzas, but all items for other categories
-  const initialCount = activeCategory === "pizzas" ? 6 : 20
+  // Show 6 items initially for all categories except desserts
+  const initialCount = activeCategory === "desserts" ? 20 : 6
   const [visibleCount, setVisibleCount] = useState(initialCount)
 
   // Reset visible count when category changes
   useEffect(() => {
-    const newInitialCount = activeCategory === "pizzas" ? 6 : 20
+    const newInitialCount = activeCategory === "desserts" ? 20 : 6
     setVisibleCount(newInitialCount)
   }, [activeCategory])
 
@@ -86,8 +86,8 @@ export function MenuFilter({ items, activeCategory, onAddToCart }: MenuFilterPro
   // Slice the filtered items to show only the visible count
   const visibleItems = filteredItems.slice(0, visibleCount)
 
-  // Determine if we should show the "Show More" button (only for pizzas with more than 6 items)
-  const showMoreButton = activeCategory === "pizzas" && filteredItems.length > 6 && visibleCount < filteredItems.length
+  // Determine if we should show the "Show More" button (for categories with more than 6 items)
+  const showMoreButton = filteredItems.length > 6 && visibleCount < filteredItems.length
 
   // Function to handle showing more items
   const handleShowMore = () => {
@@ -157,24 +157,25 @@ export function MenuItemComponent({ item, onAddToCart }: { item: MenuItem; onAdd
   }
 
   return (
-    <div className="bg-gray-900 rounded-lg overflow-hidden group transition-all duration-300 hover:shadow-lg hover:shadow-[#8c9a56]/20">
-      <div className="p-2">
+    <div className="glass rounded-2xl overflow-hidden group hover-lift hover-glow relative">
+      <div className="absolute inset-0 gradient-glow opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="p-3 relative z-10">
         <div className="flex flex-wrap gap-2 mb-2">
           {item.popular && (
-            <div className="bg-[#8c9a56] text-black text-xs font-bold px-2 py-1 rounded-full">Beliebt</div>
+            <div className="bg-gradient-to-r from-[#8c9a56] to-[#a0b266] text-black text-xs font-bold px-3 py-1 rounded-full shadow-lg">Beliebt</div>
           )}
           {item.vegetarian && (
-            <div className="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded-full">Vegetarisch</div>
+            <div className="bg-gradient-to-r from-green-600 to-green-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">Vegetarisch</div>
           )}
-          {item.vegan && <div className="bg-green-700 text-white text-xs font-bold px-2 py-1 rounded-full">Vegan</div>}
-          {item.spicy && <div className="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">Scharf</div>}
+          {item.vegan && <div className="bg-gradient-to-r from-green-700 to-green-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">Vegan</div>}
+          {item.spicy && <div className="bg-gradient-to-r from-red-600 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg animate-pulse">Scharf</div>}
         </div>
       </div>
-      <div className="p-4">
-        <h3 className="text-lg font-bold text-white mb-1">{item.name}</h3>
-        <p className="text-gray-400 text-sm mb-4 h-12 overflow-hidden">{item.description}</p>
+      <div className="p-5 relative z-10">
+        <h3 className="text-lg font-bold text-white mb-2 group-hover:text-[#8c9a56] transition-colors duration-300">{item.name}</h3>
+        <p className="text-gray-400 text-sm mb-4 h-12 overflow-hidden leading-relaxed">{item.description}</p>
         <div className="flex items-center justify-between">
-          <span className="text-[#8c9a56] font-bold">{item.price.toFixed(2)} CHF</span>
+          <span className="text-gradient font-bold text-lg">{item.price.toFixed(2)} CHF</span>
           <Button
             onClick={handleOrderClick}
             variant="outline"

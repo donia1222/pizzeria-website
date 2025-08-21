@@ -352,8 +352,8 @@ export default function PizzeriaWebsite() {
       {/* Header */}
       <header
         className={cn(
-          "fixed left-0 right-0 z-50 transition-all duration-300",
-          scrolled ? "bg-black/90 backdrop-blur-md py-3" : "bg-transparent py-6",
+          "fixed left-0 right-0 z-50 transition-all duration-500",
+          scrolled ? "glass-dark py-3 shadow-soft" : "bg-transparent py-6",
         )}
       >
         <div className="container mx-auto px-4 md:px-6 max-w-full overflow-hidden flex justify-between items-center">
@@ -375,11 +375,12 @@ export default function PizzeriaWebsite() {
               <motion.a
                 key={id}
                 href={`#${id}`}
-                className="text-gray-300 hover:text-[#8c9a56] transition-colors text-sm uppercase tracking-widest"
+                className="text-gray-300 hover:text-[#8c9a56] transition-all duration-300 text-sm uppercase tracking-widest relative group"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
                 {label}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8c9a56] to-[#a0b266] transition-all duration-300 group-hover:w-full" />
               </motion.a>
             ))}
             <a
@@ -436,7 +437,7 @@ export default function PizzeriaWebsite() {
               onClick={toggleMobileMenu}
             />
             <motion.div
-              className="fixed top-0 right-0 h-full w-64 bg-gray-900 z-50 flex flex-col p-6 md:hidden"
+              className="fixed top-0 right-0 h-full w-64 glass-dark z-50 flex flex-col p-6 md:hidden shadow-2xl"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}

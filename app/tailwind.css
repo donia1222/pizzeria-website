@@ -1,13 +1,65 @@
 @import 'tailwindcss/base';
-@import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-html,
-body {
-  background-color: theme('colors.white');
-  @media (prefers-color-scheme: dark) {
-    background-color: theme('colors.gray.950');
+@layer base {
+  html,
+  body {
+    background-color: theme('colors.black');
     color-scheme: dark;
+    @apply antialiased;
+  }
+}
+
+@layer utilities {
+  /* Glassmorphism effect */
+  .glass {
+    @apply backdrop-blur-md bg-white/5 border border-white/10;
+  }
+  
+  .glass-dark {
+    @apply backdrop-blur-lg bg-black/40 border border-white/5;
+  }
+  
+  /* Modern gradient backgrounds */
+  .gradient-radial {
+    background: radial-gradient(circle at 30% 50%, rgba(140, 154, 86, 0.1) 0%, transparent 50%);
+  }
+  
+  .gradient-glow {
+    background: linear-gradient(135deg, rgba(140, 154, 86, 0.15) 0%, transparent 40%);
+  }
+  
+  /* Smooth animations */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  /* Modern shadows */
+  .shadow-glow {
+    box-shadow: 0 0 40px rgba(140, 154, 86, 0.3);
+  }
+  
+  .shadow-soft {
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Text effects */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#8c9a56] to-[#a0b266];
+  }
+  
+  /* Hover effects */
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl;
+  }
+  
+  .hover-glow {
+    @apply transition-all duration-300 hover:shadow-glow;
   }
 }

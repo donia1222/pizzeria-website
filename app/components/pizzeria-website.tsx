@@ -534,6 +534,11 @@ export default function PizzeriaWebsite() {
                   <span className="text-gradient font-semibold">Frisch eröffnet!</span> Erleben Sie unsere handgemachten Pizzen mit traditionellen Rezepten und besten
                   Zutaten
                 </p>
+                <div className="mt-6 p-4 bg-red-900/30 border border-red-500/50 rounded-lg max-w-xl mx-auto">
+                  <p className="text-lg md:text-xl text-red-200 font-semibold">
+                    🌴 Betriebsferien bis und mit 19. Oktober 2025
+                  </p>
+                </div>
                 <div className="flex items-center justify-center mt-10">
                   <div className="glass rounded-2xl p-6 shadow-glow hover-lift transition-all duration-500">
                     <a href="#home" className="block">

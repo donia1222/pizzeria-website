@@ -522,23 +522,7 @@ export default function PizzeriaWebsite() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
-                <div className="mb-6 relative">
-                  <div className="inline-block relative">
-                    <span className="absolute -top-6 -left-2 bg-gradient-to-r from-[#8c9a56] to-[#a0b266] text-black font-bold text-sm px-5 py-2 rounded-full transform -rotate-6 shadow-2xl animate-pulse">
-                      Neu in Sevelen
-                    </span>
-                    <h2 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">Cucina Mediterranea & Pizza</h2>
-                  </div>
-                </div>
-                <p className="text-xl md:text-2xl text-gray-300 max-w-xl mx-auto leading-relaxed">
-                  <span className="text-gradient font-semibold">Frisch eröffnet!</span> Erleben Sie unsere handgemachten Pizzen mit traditionellen Rezepten und besten
-                  Zutaten
-                </p>
-                <div className="mt-6 p-4 bg-red-900/30 border border-red-500/50 rounded-lg max-w-xl mx-auto">
-                  <p className="text-lg md:text-xl text-red-200 font-semibold">
-                    🌴 Betriebsferien bis und mit 19. Oktober 2025
-                  </p>
-                </div>
+
                 <div className="flex items-center justify-center mt-10">
                   <div className="glass rounded-2xl p-6 shadow-glow hover-lift transition-all duration-500">
                     <a href="#home" className="block">

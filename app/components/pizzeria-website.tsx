@@ -410,7 +410,7 @@ export default function PizzeriaWebsite() {
           </nav>
 
           <div className="flex items-center space-x-4">
-            <ReservationButton onClick={() => setReservationOpen(true)} />
+  
 
             <CartButton
               onClick={() => setOrderOpen(true)}

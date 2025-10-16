@@ -367,7 +367,7 @@ export default function PizzeriaWebsite() {
           <nav className="hidden md:flex items-center space-x-8">
             {[
               ["Startseite", "home"],
-              ["Speisekarte", "menu"],
+              ["Pizza Take Away", "menu"],
               ["Über uns", "about"],
               ["Galerie", "gallery"],
               ["Kontakt", "contact"],
@@ -643,102 +643,61 @@ export default function PizzeriaWebsite() {
           </motion.div>
 
           <div className="mb-12">
-            <div className="flex justify-start md:justify-center overflow-x-auto pb-4 px-2">
-              {[
-                ["pizzas", "Pizza"],
-                ["starters", "Antipasti e Primi"],
-                ["desserts", "Desserts"],
-              ].map(([category, label]) => (
-                <motion.button
-                  key={category}
-                  onClick={() => setActiveCategory(category)}
-                  className={cn(
-                    "px-6 py-2 mx-2 text-sm uppercase tracking-wider transition-colors rounded-md flex-shrink-0",
-                    activeCategory === category
-                      ? "bg-green-800 text-white"
-                      : "bg-gray-900 text-gray-300 hover:bg-gray-800",
-                  )}
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {label}
-                </motion.button>
-              ))}
-            </div>
 
             {/* Pizza subcategory filter */}
-            {activeCategory === "pizzas" && (
-              <div className="flex justify-start md:justify-center overflow-x-auto mt-4 pb-4 px-2">
-                <motion.button
-                  onClick={() => setPizzaSubcategory("all")}
-                  className={cn(
-                    "px-4 py-1 mx-2 text-xs uppercase tracking-wider transition-colors rounded-md flex-shrink-0",
-                    pizzaSubcategory === "all"
-                      ? "bg-[#8c9a56] text-black"
-                      : "bg-gray-800 text-gray-300 hover:bg-gray-700",
-                  )}
-                  whileHover={{ y: -1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Alle Pizzen
-                </motion.button>
+            <div className="flex justify-start md:justify-center overflow-x-auto mt-4 pb-4 px-2">
+              <motion.button
+                onClick={() => setPizzaSubcategory("all")}
+                className={cn(
+                  "px-4 py-1 mx-2 text-xs uppercase tracking-wider transition-colors rounded-md flex-shrink-0",
+                  pizzaSubcategory === "all"
+                    ? "bg-[#8c9a56] text-black"
+                    : "bg-gray-800 text-gray-300 hover:bg-gray-700",
+                )}
+                whileHover={{ y: -1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Alle Pizzen
+              </motion.button>
 
-                <motion.button
-                  onClick={() => setPizzaSubcategory("vegetarian")}
-                  className={cn(
-                    "px-4 py-1 mx-2 text-xs uppercase tracking-wider transition-colors rounded-md flex-shrink-0",
-                    pizzaSubcategory === "vegetarian"
-                      ? "bg-[#8c9a56] text-black"
-                      : "bg-gray-800 text-gray-300 hover:bg-gray-700",
-                  )}
-                  whileHover={{ y: -1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Vegetarische
-                </motion.button>
-              </div>
-            )}
+              <motion.button
+                onClick={() => setPizzaSubcategory("vegetarian")}
+                className={cn(
+                  "px-4 py-1 mx-2 text-xs uppercase tracking-wider transition-colors rounded-md flex-shrink-0",
+                  pizzaSubcategory === "vegetarian"
+                    ? "bg-[#8c9a56] text-black"
+                    : "bg-gray-800 text-gray-300 hover:bg-gray-700",
+                )}
+                whileHover={{ y: -1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Vegetarische
+              </motion.button>
+            </div>
           </div>
 
           {/* Category Header Images */}
-          <motion.div 
+          <motion.div
             className="mb-12 relative overflow-hidden rounded-2xl shadow-2xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            key={activeCategory}
           >
             <div className="relative h-64 md:h-80">
-              <img 
-                src={
-                  activeCategory === "pizzas" 
-                    ? "/DSC08346.jpg" 
-                    : activeCategory === "starters"
-                    ? "/DSC08427.jpg"
-                    : "/desserts-header.jpg"
-                }
-                alt={
-                  activeCategory === "pizzas" 
-                    ? "Pizza Take Away" 
-                    : activeCategory === "starters"
-                    ? "Antipasti e Primi"
-                    : "Desserts"
-                }
+              <img
+                src="/DSC08346.jpg"
+                alt="Pizza Take Away"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-              
+
               {/* Text Overlay */}
               <div className="absolute bottom-0 left-0 right-0 p-8">
                 <h3 className="text-3xl md:text-4xl font-bold text-white mb-2">
-                  {activeCategory === "pizzas" && "Pizza Take Away"}
-                  {activeCategory === "starters" && "Antipasti e Primi"}
-                  {activeCategory === "desserts" && "Dolci"}
+                  Pizza Take Away
                 </h3>
                 <p className="text-gray-200 text-lg">
-                  {activeCategory === "pizzas" && "Frisch aus dem Holzofen - Perfekt zum Mitnehmen"}
-                  {activeCategory === "starters" && "Traditionelle italienische Vorspeisen und Pasta"}
-                  {activeCategory === "desserts" && "Süße Verführungen zum Abschluss"}
+                  Frisch aus dem Holzofen - Perfekt zum Mitnehmen
                 </p>
               </div>
             </div>

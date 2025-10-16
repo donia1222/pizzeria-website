@@ -453,7 +453,7 @@ export default function PizzeriaWebsite() {
               <nav className="flex flex-col space-y-6">
                 {[
                   ["Startseite", "home"],
-                  ["Speisekarte", "menu"],
+                  ["Pizza Take Away", "menu"],
                   ["Über uns", "about"],
                   ["Galerie", "gallery"],
                   ["Kontakt", "contact"],
@@ -470,16 +470,7 @@ export default function PizzeriaWebsite() {
               </nav>
 
               <div className="mt-auto space-y-4">
-                <Button
-                  onClick={() => {
-                    setReservationOpen(true)
-                    toggleMobileMenu()
-                  }}
-                  className="w-full bg-transparent border border-[#8c9a56] text-[#8c9a56] hover:bg-[#8c9a56] hover:text-black"
-                >
-                  <Calendar className="h-4 w-4 mr-2" />
-                  Tisch reservieren
-                </Button>
+        
 
                 <Button
                   onClick={() => {

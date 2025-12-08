@@ -430,9 +430,9 @@ function getAvailableHours(): string[] {
     return []
   }
 
-  // Domingo (0) solo tiene horario de cena
-  if (day === 0) {
-    // Solo horarios de cena para domingo
+  // Sábado (6) y Domingo (0) solo tienen horario de cena
+  if (day === 0 || day === 6) {
+    // Solo horarios de cena para sábado y domingo
     return ["17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00"]
   }
 
@@ -441,8 +441,8 @@ function getAvailableHours(): string[] {
 
   // Horarios de cena según el día
   let dinnerHours = []
-  if (day === 5 || day === 6) {
-    // Viernes y sábado
+  if (day === 5) {
+    // Viernes
     dinnerHours = ["17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00"]
   } else {
     // Martes, miércoles y jueves
@@ -592,8 +592,8 @@ export const OrderDialog = ({
 
     // Set available hours based on the selected date
     let hours = []
-    if (day === 0) {
-      // Sunday - dinner hours only
+    if (day === 0 || day === 6) {
+      // Saturday and Sunday - dinner hours only
       hours = ["17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00"]
     } else {
       // Other days - both lunch and dinner
@@ -613,8 +613,8 @@ export const OrderDialog = ({
         "21:00",
       ]
 
-      // Add extended hours for Friday and Saturday
-      if (day === 5 || day === 6) {
+      // Add extended hours for Friday
+      if (day === 5) {
         hours.push("21:30", "22:00")
       }
     }
@@ -669,8 +669,8 @@ export const OrderDialog = ({
 
     // Set available hours based on day
     let hours = []
-    if (day === 0) {
-      // Sunday - dinner hours only
+    if (day === 0 || day === 6) {
+      // Saturday and Sunday - dinner hours only
       hours = ["17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00"]
     } else {
       // Other days - both lunch and dinner
@@ -690,8 +690,8 @@ export const OrderDialog = ({
         "21:00",
       ]
 
-      // Add extended hours for Friday and Saturday
-      if (day === 5 || day === 6) {
+      // Add extended hours for Friday
+      if (day === 5) {
         hours.push("21:30", "22:00")
       }
     }
@@ -941,9 +941,9 @@ export const OrderDialog = ({
                       <br />
                       Dienstag - Donnerstag: 11:30–13:30, 17:30–21:00 Uhr
                       <br />
-                      Freitag - Samstag: 11:30–13:30, 17:30–22:00 Uhr
+                      Freitag: 11:30–13:30, 17:30–22:00 Uhr
                       <br />
-                      Sonntag: 17:30–22:00 Uhr (nur Abendessen)
+                      Samstag - Sonntag: 17:30–22:00 Uhr (nur Abendessen)
                       <br />
                       Montag: Geschlossen
                     </p>

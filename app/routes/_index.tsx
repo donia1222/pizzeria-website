@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import type { LinksFunction, MetaFunction } from "@remix-run/node"
 import styles from "../styles/bouquet.css?url"
 
@@ -145,6 +145,182 @@ function Sterne() {
   )
 }
 
+/* =====================================================================
+   RESERVAS DE MUESTRA (20/11/2026)
+   Formulario completo y bonito, pero no envía nada a ningún sitio:
+   al pulsar «reservieren» enseña que el restaurante está cerrado.
+   Sirve de escaparate para restaurantes que quieran un sistema así.
+   ===================================================================== */
+const TAGE_KURZ = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"]
+const MONATE = ["Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."]
+
+function slots(tag: number) {
+  // Mo Ruhetag · Di–Fr Mittag + Abend · Sa–So nur Abend (wie die Öffnungszeiten)
+  if (tag === 1) return { mittag: [], abend: [] }
+  const mittag = tag >= 2 && tag <= 5 ? ["11:30", "12:00", "12:30", "13:00"] : []
+  const abend = ["17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00"]
+  return { mittag, abend }
+}
+
+function TischIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 11h16M8 11v8M16 11v8M2.5 6.5v12.5M2.5 15h3.5v4M21.5 6.5v12.5M21.5 15H18v4" />
+      <path d="M10.6 3.2h2.8l-.35 2.9a1.05 1.05 0 0 1-2.1 0zM12 7.2v3.8" />
+    </svg>
+  )
+}
+
+function Reservieren({ onClose }: { onClose: () => void }) {
+  const [tage] = useState(() => {
+    const out: Date[] = []
+    const d = new Date(); d.setHours(12, 0, 0, 0)
+    for (let i = 0; i < 21; i++) { out.push(new Date(d)); d.setDate(d.getDate() + 1) }
+    return out
+  })
+  const ersterOffen = tage.findIndex((t) => t.getDay() !== 1)
+  const [personen, setPersonen] = useState(2)
+  const [tagI, setTagI] = useState(ersterOffen)
+  const [zeit, setZeit] = useState("19:00")
+  const [bereich, setBereich] = useState("Innen")
+  const [anlass, setAnlass] = useState("")
+  const [name, setName] = useState("")
+  const [tel, setTel] = useState("")
+  const [mail, setMail] = useState("")
+  const [wunsch, setWunsch] = useState("")
+  const [hinweis, setHinweis] = useState(false)
+
+  const tag = tage[tagI]
+  const sl = slots(tag.getDay())
+  const alle = [...sl.mittag, ...sl.abend]
+  const zeitOk = alle.includes(zeit) ? zeit : alle[0]
+  const datumLang = `${TAGE_KURZ[tag.getDay()]}, ${tag.getDate()}. ${MONATE[tag.getMonth()]}`
+
+  useEffect(() => {
+    const k = (e: KeyboardEvent) => { if (e.key === "Escape") onClose() }
+    window.addEventListener("keydown", k)
+    document.body.style.overflow = "hidden"
+    return () => { window.removeEventListener("keydown", k); document.body.style.overflow = "" }
+  }, [onClose])
+
+  return (
+    <div className="bq-res" role="dialog" aria-modal="true" aria-labelledby="bq-res-titel" onClick={onClose}>
+      <div className="bq-res__karte" onClick={(e) => e.stopPropagation()}>
+        <button className="bq-res__zu" aria-label="Schliessen" onClick={onClose}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+        </button>
+        <aside className="bq-res__bild">
+          <img src="/neu/u-tavola.webp" alt="" />
+          <div className="bq-res__bildtxt">
+            <Olive className="bq-res__olive" />
+            <p>«Un tavolo per voi.»</p>
+            <span>Bahnhofstrasse 46 · Sevelen</span>
+          </div>
+        </aside>
+
+        <div className="bq-res__inhalt">
+
+          {!hinweis ? (
+            <form className="bq-res__form" noValidate onSubmit={(e) => { e.preventDefault(); setHinweis(true) }}>
+              <p className="bq-kicker">Prenotazione</p>
+              <h2 id="bq-res-titel">Tisch <em>reservieren</em></h2>
+
+              <fieldset className="bq-res__feld">
+                <legend>Personen</legend>
+                <div className="bq-res__chips">
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+                    <button type="button" key={n} className={"bq-chip" + (personen === n ? " is-an" : "")} aria-pressed={personen === n} onClick={() => setPersonen(n)}>{n}</button>
+                  ))}
+                  <button type="button" className={"bq-chip bq-chip--breit" + (personen > 8 ? " is-an" : "")} aria-pressed={personen > 8} onClick={() => setPersonen(10)}>9+</button>
+                </div>
+              </fieldset>
+
+              <fieldset className="bq-res__feld">
+                <legend>Datum</legend>
+                <div className="bq-res__tage">
+                  {tage.map((t, i) => {
+                    const zu = t.getDay() === 1
+                    return (
+                      <button type="button" key={i} disabled={zu} className={"bq-tag" + (i === tagI ? " is-an" : "") + (zu ? " is-zu" : "")} aria-pressed={i === tagI}
+                        onClick={() => setTagI(i)} aria-label={zu ? `${t.getDate()}. ${MONATE[t.getMonth()]}: Ruhetag` : undefined}>
+                        <span>{i === 0 ? "Heute" : i === 1 ? "Morgen" : TAGE_KURZ[t.getDay()]}</span>
+                        <b>{t.getDate()}</b>
+                        <small>{zu ? "Ruhetag" : MONATE[t.getMonth()]}</small>
+                      </button>
+                    )
+                  })}
+                </div>
+              </fieldset>
+
+              <fieldset className="bq-res__feld">
+                <legend>Uhrzeit</legend>
+                {sl.mittag.length > 0 && (
+                  <div className="bq-res__gruppe"><span>Mittag</span>
+                    <div className="bq-res__chips">{sl.mittag.map((z) => <button type="button" key={z} className={"bq-chip" + (zeitOk === z ? " is-an" : "")} aria-pressed={zeitOk === z} onClick={() => setZeit(z)}>{z}</button>)}</div>
+                  </div>
+                )}
+                <div className="bq-res__gruppe"><span>Abend</span>
+                  <div className="bq-res__chips">{sl.abend.map((z) => <button type="button" key={z} className={"bq-chip" + (zeitOk === z ? " is-an" : "")} aria-pressed={zeitOk === z} onClick={() => setZeit(z)}>{z}</button>)}</div>
+                </div>
+              </fieldset>
+
+              <div className="bq-res__zwei">
+                <fieldset className="bq-res__feld">
+                  <legend>Bereich</legend>
+                  <div className="bq-seg">
+                    {["Innen", "Terrasse"].map((b) => <button type="button" key={b} className={bereich === b ? "is-an" : ""} aria-pressed={bereich === b} onClick={() => setBereich(b)}>{b}</button>)}
+                  </div>
+                </fieldset>
+                <label className="bq-res__feld">
+                  <span className="bq-res__lbl">Anlass <i>(optional)</i></span>
+                  <select value={anlass} onChange={(e) => setAnlass(e.target.value)}>
+                    <option value="">Kein besonderer</option>
+                    <option>Geburtstag</option>
+                    <option>Jahrestag</option>
+                    <option>Geschäftsessen</option>
+                    <option>Familienfeier</option>
+                  </select>
+                </label>
+              </div>
+
+              <div className="bq-res__zwei">
+                <label className="bq-res__feld"><span className="bq-res__lbl">Name</span>
+                  <input value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" placeholder="Vor- und Nachname" /></label>
+                <label className="bq-res__feld"><span className="bq-res__lbl">Telefon</span>
+                  <input value={tel} onChange={(e) => setTel(e.target.value)} type="tel" autoComplete="tel" placeholder="+41 …" /></label>
+              </div>
+              <label className="bq-res__feld"><span className="bq-res__lbl">E-Mail</span>
+                <input value={mail} onChange={(e) => setMail(e.target.value)} type="email" autoComplete="email" placeholder="Für die Bestätigung" /></label>
+              <label className="bq-res__feld"><span className="bq-res__lbl">Wünsche <i>(optional)</i></span>
+                <textarea value={wunsch} onChange={(e) => setWunsch(e.target.value)} rows={2} placeholder="Allergien, Kinderstuhl, Tisch am Fenster …" /></label>
+
+              <div className="bq-res__fuss">
+                <p className="bq-res__summe">
+                  <TischIcon className="bq-res__summe-i" />
+                  <span><b>{datumLang} · {zeitOk}</b>{personen > 8 ? "9+ Personen" : `${personen} ${personen === 1 ? "Person" : "Personen"}`} · {bereich}</span>
+                </p>
+                <button type="submit" className="bq-btn bq-res__los">Tisch reservieren</button>
+              </div>
+            </form>
+          ) : (
+            <div className="bq-res__zu-info" role="alert">
+              <div className="bq-res__zu-icon"><TischIcon /></div>
+              <p className="bq-kicker">Chiuso</p>
+              <h2 id="bq-res-titel">Reservationen sind <em>derzeit nicht möglich</em></h2>
+              <p>Das Restaurant Bouquet Mediterraneo ist zurzeit nicht geöffnet. Ihre Anfrage wurde deshalb <b>nicht gesendet</b> und es wurden keine Daten gespeichert.</p>
+              <p className="bq-res__lweb">Ein Reservationssystem wie dieses für Ihr eigenes Restaurant? <a href="https://www.lweb.ch" target="_blank" rel="noopener">Website von Lweb →</a></p>
+              <div className="bq-res__knoepfe">
+                <button className="bq-btn" onClick={onClose}>Schliessen</button>
+                <button className="bq-btn bq-btn--linie" onClick={() => setHinweis(false)}>Zurück zum Formular</button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function Bouquet() {
   const [tab, setTab] = useState("pizze")
   const [menu, setMenu] = useState(false)
@@ -164,11 +340,15 @@ export default function Bouquet() {
   }, [])
 
   useEffect(() => {
-    document.body.style.overflow = menu ? "hidden" : ""
+    if (!menu) return
+    document.body.style.overflow = "hidden"
     return () => { document.body.style.overflow = "" }
   }, [menu])
 
   const [lb, setLb] = useState<number | null>(null)
+  const [res, setRes] = useState(false)
+  const offen = () => { setMenu(false); setRes(true) }
+  const zu = useCallback(() => setRes(false), [])
   useEffect(() => {
     if (lb === null) return
     const k = (e: KeyboardEvent) => {
@@ -198,7 +378,7 @@ export default function Bouquet() {
         <nav className="bq-nav" aria-label="Hauptnavigation">
           {NAV.map((l) => <a key={l.h} href={l.h}>{l.t}</a>)}
         </nav>
-        <a href="#karte" className="bq-btn bq-btn--klein bq-hdr__cta">Zur Karte</a>
+        <button type="button" className="bq-btn bq-btn--klein bq-hdr__cta" onClick={offen}>Tisch reservieren</button>
         <button className={"bq-burger" + (menu ? " is-open" : "")} aria-label="Menü" aria-expanded={menu} onClick={() => setMenu(!menu)}>
           <span /><span />
         </button>
@@ -212,6 +392,7 @@ export default function Bouquet() {
             </a>
           ))}
         </nav>
+        <button type="button" className="bq-btn bq-sheet__res" onClick={offen}><TischIcon className="bq-btn__i" />Tisch reservieren</button>
         <p className="bq-sheet__fuss">Bahnhofstrasse 46 · 9475 Sevelen</p>
       </div>
 
@@ -231,7 +412,7 @@ export default function Bouquet() {
             </p>
             <div className="bq-hero__cta bq-auf" style={{ ["--d" as string]: "360ms" } as React.CSSProperties}>
               <a href="#karte" className="bq-btn">Speisekarte ansehen</a>
-              <a href="#besuch" className="bq-btn bq-btn--linie">Öffnungszeiten</a>
+              <button type="button" className="bq-btn bq-btn--linie" onClick={offen}>Tisch reservieren</button>
             </div>
             <ul className="bq-hero__fakten bq-auf" style={{ ["--d" as string]: "480ms" } as React.CSSProperties}>
               <li><b>16</b><span>Pizze napoletane</span></li>
@@ -453,6 +634,7 @@ export default function Bouquet() {
                 </dl>
               </div>
             </div>
+            <button type="button" className="bq-btn bq-besuch__res" onClick={offen}><TischIcon className="bq-btn__i" />Tisch reservieren</button>
           </div>
         </section>
       </main>
@@ -474,6 +656,14 @@ export default function Bouquet() {
           <span>Website von <a href="https://www.lweb.ch" target="_blank" rel="noopener">Lweb</a></span>
         </div>
       </footer>
+
+      {/* Botón flotante con la mesa: abre la reserva directamente */}
+      <button type="button" className={"bq-fab" + (res || menu || lb !== null ? " is-weg" : "")} onClick={offen} aria-label="Tisch reservieren">
+        <TischIcon className="bq-fab__i" />
+        <span className="bq-fab__t">Tisch reservieren</span>
+      </button>
+
+      {res && <Reservieren onClose={zu} />}
     </div>
   )
 }

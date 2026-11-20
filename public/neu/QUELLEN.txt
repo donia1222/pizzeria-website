@@ -1,0 +1,22 @@
+Bilder in diesem Ordner
+=======================
+Eigene Fotos des Restaurants (aus der alten Website): forno, forno-pizza, pasta, zutaten, aperitivo, teig, pizzas, terrasse, ofen, tagliere, tiramisu, lasagna, spritz.
+
+Von Unsplash (Unsplash-Lizenz: frei nutzbar, auch kommerziell, ohne Namensnennung):
+p-margherita   photo-1604068549290-dea0e4a305ca
+p-bufalina     photo-1595854341625-f33ee10dbf94
+p-formaggi     photo-1513104890138-7c749659a591
+p-diavola      photo-1520201163981-8cc95007dd2a
+p-napoli       photo-1585238342024-78d387f4a707
+p-vegetariana  photo-1617470702892-e01504297e84
+p-crudo        photo-1528137871618-79d2761e3fd5
+p-friarielli   photo-1593560708920-61dd98c46a4e
+u-forno-fuoco  photo-1579751626657-72bc17010498
+u-filante      photo-1542834369-f10ebf06d3e0
+u-vino         photo-1553361371-9b22f78e8b1d
+u-brindisi     photo-1510812431401-41d2bd2722f3
+u-sala         photo-1517248135467-4c7edcad34c4
+u-tavola       photo-1414235077428-338989a2e8c0
+u-sala2        photo-1555396273-367ea4eb4db5
+u-pasta        photo-1546549032-9571cd6b27df
+(https://unsplash.com/photos/<id>)
